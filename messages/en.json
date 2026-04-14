@@ -1,0 +1,94 @@
+{
+  "common": {
+    "title": "Transformer Robotics",
+    "subtitle": "Intelligent Furniture for Modern Living",
+    "login": "Login",
+    "signup": "Sign Up",
+    "logout": "Logout",
+    "home": "Home",
+    "about": "About",
+    "catalog": "Catalog",
+    "contact": "Contact",
+    "admin": "Admin Dashboard",
+    "search": "Search products...",
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "footer": {
+      "desc": "Leading the revolution of smart internal spaces with cutting-edge robotics.",
+      "rights": "All rights reserved."
+    }
+  },
+  "hero": {
+    "title": "Future of Furniture is Robotic",
+    "description": "Smart, adaptable, and elegant furniture designed to transform your space with intelligent robotics.",
+    "cta": "Explore Catalog",
+    "stats": {
+      "patents": "Smart Patents",
+      "homes": "Homes Transformed"
+    },
+    "badge": "Robotics Engineering Meet Aesthetics",
+    "card": {
+      "title": "Smart Adaptation",
+      "desc": "Adjusts to your posture"
+    }
+  },
+  "catalog": {
+    "title": "Smart Collections",
+    "featured": "Featured Innovations",
+    "subtitle": "Explore our range of intelligent furniture",
+    "viewAll": "View All Products",
+    "categories": {
+      "living": "Living Room",
+      "bedroom": "Bedroom",
+      "office": "Office",
+      "dining": "Dining"
+    },
+    "details": "Details",
+    "buyNow": "Buy Now",
+    "shipping": "Free Worldwide Shipping",
+    "warranty": "10-Year Robotic Warranty",
+    "installation": "Smart Installation Included"
+  },
+  "auth": {
+    "welcome": "Welcome back",
+    "createAccount": "Create your account",
+    "email": "Email address",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "signIn": "Sign In",
+    "signUp": "Register",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "loginHere": "Login here",
+    "registerHere": "Register here"
+  },
+  "chat": {
+    "placeholder": "Ask about our furniture...",
+    "limitReached": "You've reached the guest limit. Please login to chat more.",
+    "title": "Transformer Assistant",
+    "greeting": "Hello! How can I help you transform your home today?"
+  },
+  "contact": {
+    "title": "Let's Transform Your Space",
+    "desc": "Have questions? Our experts are here to help.",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "subject": "Subject",
+      "message": "Message",
+      "send": "Send Message",
+      "sending": "Sending...",
+      "success": "Message Sent!",
+      "successDesc": "We'll get back to you within 24 hours."
+    }
+  },
+  "testimonials": {
+    "title": "Loved by Visionaries",
+    "subtitle": "Join thousands of satisfied owners worldwide",
+    "reviews": [
+      { "name": "David Chen", "role": "Architect", "content": "The robotic sofa is a game changer for small urban apartments. Incredible engineering." },
+      { "name": "Sarah Miller", "role": "Tech Enthusiast", "content": "Finally, furniture that understands technology. The Lumina bed has improved my sleep quality tenfold." },
+      { "name": "James Wilson", "role": "CEO, Nexus Design", "content": "Modern aesthetics combined with futuristic robotics. Transformer Robotics is the Tesla of furniture." }
+    ]
+  }
+}
