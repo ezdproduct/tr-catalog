@@ -82,11 +82,19 @@ export default function AdminPage() {
 
     const handleDelete = async (type: 'products' | 'categories', id: string) => {
         if (!confirm('Are you sure you want to delete this item?')) return;
-        const { error } = await supabase.from(type).delete().eq('id', id);
-        if (error) setMessage({ text: error.message, type: 'error' });
-        else {
-            setMessage({ text: 'Deleted successfully', type: 'success' });
+
+        try {
+            if (type === 'categories') {
+                // First delete all products belonging to this category
+                const { error: prodErr } = await supabase.from('products').delete().eq('category_id', id);
+                if (prodErr) throw prodErr;
+            }
+            const { error } = await supabase.from(type).delete().eq('id', id);
+            if (error) throw error;
+            setMessage({ text: 'Đã xóa thành công', type: 'success' });
             fetchData();
+        } catch (err: any) {
+            setMessage({ text: 'Lỗi: ' + err.message, type: 'error' });
         }
     };
 
