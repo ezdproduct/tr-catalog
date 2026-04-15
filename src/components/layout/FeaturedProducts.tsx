@@ -41,7 +41,7 @@ export default function FeaturedProducts() {
             >
               <div style={{ position: 'relative', height: '280px', background: '#f8fafc', overflow: 'hidden' }}>
                 {product.image_urls && product.image_urls.length > 0 ? (
-                   <img src={product.image_urls[0]} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src={product.image_urls[0]} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 ) : (
                   <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#cbd5e1' }}>
                     [ No Image ]
@@ -50,14 +50,14 @@ export default function FeaturedProducts() {
               </div>
               <div style={{ padding: '1.5rem' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                   <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#64748b' }}>
+                  <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#64748b' }}>
                     {product.categories?.name || 'Furniture'}
-                   </span>
-                   <span style={{ fontWeight: 900, color: '#ef4444', fontSize: '1.2rem' }}>${product.price}</span>
+                  </span>
+                  <span style={{ fontWeight: 900, color: '#ef4444', fontSize: '1.2rem' }}>${product.price}</span>
                 </div>
                 <h3 style={{ fontSize: '1.1rem', fontWeight: 800, marginBottom: '1.2rem', color: '#000' }}>{product.name}</h3>
-                
-                <Link href={`/catalog/${product.id}`} style={{ 
+
+                <Link href={`/catalog/${product.id}`} style={{
                   display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
                   width: '100%', padding: '0.8rem', borderRadius: '12px', background: '#000', color: 'white',
                   fontWeight: 700, fontSize: '0.9rem', textDecoration: 'none'

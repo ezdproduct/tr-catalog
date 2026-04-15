@@ -32,8 +32,8 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`} style={{ 
-      background: '#ffffff', 
+    <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`} style={{
+      background: '#ffffff',
       height: '70px', display: 'flex', alignItems: 'center',
       borderBottom: '1px solid #f0f0f0'
     }}>
@@ -45,25 +45,25 @@ export default function Navbar() {
         {/* Desktop Menu */}
         <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }} className="desktop-only">
           {navLinks.map((link, i) => (
-            <Link 
-              key={i} 
+            <Link
+              key={i}
               href={link.href as any}
               style={{ fontWeight: 600, color: '#000000', textTransform: 'uppercase', fontSize: '0.9rem' }}
             >
               {link.label}
             </Link>
           ))}
-          
-          <button onClick={toggleLanguage} style={{ 
-            display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 700, 
+
+          <button onClick={toggleLanguage} style={{
+            display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 700,
             padding: '8px 12px', background: '#f8fafc', borderRadius: '8px'
           }}>
             <Globe size={16} />
             <span style={{ textTransform: 'uppercase', fontSize: '0.8rem' }}>{locale}</span>
           </button>
 
-          <Link href="/login" style={{ 
-            background: '#ef4444', color: 'white', padding: '0.7rem 1.4rem', 
+          <Link href="/login" style={{
+            background: '#ef4444', color: 'white', padding: '0.7rem 1.4rem',
             fontWeight: 700, borderRadius: '8px', textTransform: 'uppercase', fontSize: '0.85rem'
           }}>
             <LogIn size={16} style={{ marginRight: '6px' }} />
@@ -79,14 +79,14 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div style={{ 
-          position: 'absolute', top: '70px', left: 0, right: 0, 
+        <div style={{
+          position: 'absolute', top: '70px', left: 0, right: 0,
           padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.5rem',
           background: 'white', borderBottom: '1px solid #eee', zIndex: 2000
         }}>
           {navLinks.map((link, i) => (
-            <Link 
-              key={i} 
+            <Link
+              key={i}
               href={link.href as any}
               onClick={() => setIsMenuOpen(false)}
               style={{ fontSize: '1.1rem', fontWeight: 700, textTransform: 'uppercase' }}

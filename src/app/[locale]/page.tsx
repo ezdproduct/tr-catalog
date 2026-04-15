@@ -67,17 +67,19 @@ export default function Home() {
       <Footer />
 
       <style jsx>{`
-        .hero-title { font-size: 4rem; }
-        .hero-desc { font-size: 1.25rem; line-height: 1.6; }
+        .hero-title { font-size: 6.5rem; }
+        .hero-desc { font-size: 1.8rem; line-height: 1.6; }
         @media (max-width: 1024px) {
-          .hero-title { font-size: 3rem; }
+          .hero-title { font-size: 5rem; }
+          .hero-desc { font-size: 1.5rem; }
         }
         @media (max-width: 768px) {
-          .hero-title { font-size: 2.2rem; letter-spacing: 0; }
-          .hero-desc { font-size: 1.05rem; }
+          .hero-title { font-size: 4rem; letter-spacing: 0; }
+          .hero-desc { font-size: 1.3rem; }
         }
         @media (max-width: 480px) {
-          .hero-title { font-size: 1.8rem; }
+          .hero-title { font-size: 2.8rem; }
+          .hero-desc { font-size: 1.15rem; }
         }
       `}</style>
     </main>

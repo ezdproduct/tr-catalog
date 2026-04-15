@@ -8,6 +8,39 @@ import { supabase } from '@/lib/supabase';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 
+function Accordion({ title, icon, children, defaultOpen = false }: any) {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
+  return (
+    <div style={{ borderBottom: '1px solid #e2e8f0' }}>
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'transparent', border: 'none', padding: '1.5rem 0', cursor: 'pointer' }}
+      >
+        <span style={{ fontSize: '1rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.8rem', color: '#1a1a1a', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+          {icon} {title}
+        </span>
+        <motion.div animate={{ rotate: isOpen ? 90 : 0 }} transition={{ duration: 0.2 }} style={{ color: '#1a1a1a' }}>
+          <ChevronRight size={20} />
+        </motion.div>
+      </button>
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            style={{ overflow: 'hidden' }}
+          >
+            <div style={{ paddingBottom: '1.5rem' }}>
+              {children}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
 export default function ProductDetailPage() {
   const { id } = useParams();
   const [product, setProduct] = useState<any>(null);
@@ -112,24 +145,7 @@ export default function ProductDetailPage() {
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#ef4444', fontWeight: 800, textTransform: 'uppercase', fontSize: '1rem', marginBottom: '1rem' }}>
                 <Box size={18} /> {product.categories?.name || 'SẢN PHẨM'}
               </div>
-              <h1 style={{ fontSize: '3rem', fontWeight: 900, marginBottom: '1rem', lineHeight: 1.1, letterSpacing: '-1px' }}>{product.name}</h1>
-
-              <div style={{ display: 'flex', alignItems: 'end', gap: '1rem', marginBottom: '1rem' }}>
-                <div style={{ fontSize: '2.5rem', fontWeight: 900, color: '#ef4444' }}>
-                  $ {(product.price || 0).toLocaleString()}
-                </div>
-                {metadata?.price?.compare && (
-                  <div style={{ fontSize: '1.2rem', fontWeight: 700, color: '#94a3b8', textDecoration: 'line-through', paddingBottom: '0.5rem' }}>
-                    {metadata.price.compare}
-                  </div>
-                )}
-              </div>
-
-              {metadata?.price?.savings && (
-                <div style={{ display: 'inline-block', background: '#fef2f2', color: '#ef4444', padding: '0.4rem 0.8rem', borderRadius: '8px', fontWeight: 800, fontSize: '0.9rem' }}>
-                  {metadata.price.savings}
-                </div>
-              )}
+              <h1 style={{ fontSize: '2rem', fontWeight: 900, marginBottom: '1rem', lineHeight: 1.1, letterSpacing: '-1px' }}>{product.name}</h1>
             </motion.div>
 
             {metadata?.variants && metadata.variants.length > 0 && (
@@ -146,31 +162,27 @@ export default function ProductDetailPage() {
               </div>
             )}
 
-            <div style={{ borderTop: '2px solid #f1f5f9', paddingTop: '2rem' }}>
-              <h3 style={{ fontSize: '1.2rem', fontWeight: 900, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                <Info size={20} color="#64748b" /> MÔ TẢ SẢN PHẨM
-              </h3>
-              <p style={{ fontSize: '1.05rem', color: '#475569', lineHeight: 1.7, whiteSpace: 'pre-wrap' }}>
-                {product.description || metadata?.meta?.vi?.description || metadata?.meta?.en?.description || 'Sản phẩm cao cấp từ Transformer Robotics.'}
-              </p>
-            </div>
+            <div style={{ borderTop: '1px solid #e2e8f0', marginTop: '1.5rem' }}>
+              <Accordion title="MÔ TẢ SẢN PHẨM" icon={<Info size={18} color="#64748b" />} defaultOpen={true}>
+                <p style={{ fontSize: '1.05rem', color: '#475569', lineHeight: 1.7, whiteSpace: 'pre-wrap', margin: 0 }}>
+                  {product.description || metadata?.meta?.vi?.description || metadata?.meta?.en?.description || 'Sản phẩm cao cấp từ Transformer Robotics.'}
+                </p>
+              </Accordion>
 
-            <div style={{ background: '#f8fafc', padding: '2rem', borderRadius: '24px' }}>
-              <h3 style={{ fontSize: '1.2rem', fontWeight: 900, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                <Settings size={20} color="#ef4444" /> THÔNG SỐ KỸ THUẬT
-              </h3>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                {[
-                  { label: 'MÃ SẢN PHẨM', value: metadata?.sku },
-                  { label: 'PHÂN LOẠI', value: metadata?.type === 'bundle' ? 'Bộ Sản Phẩm' : metadata?.type === 'accessory' ? 'Phụ Kiện' : metadata?.type },
-                  { label: 'TÌNH TRẠNG', value: metadata?.status === 'inStock' ? 'Còn hàng' : metadata?.status === 'soldOut' ? 'Hết hàng' : metadata?.status === 'onlyLeft' ? `Chỉ còn ${metadata.stockCount} sản phẩm` : metadata?.status }
-                ].filter(item => item.value).map((spec, i) => (
-                  <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e2e8f0', paddingBottom: '1rem' }}>
-                    <div style={{ fontWeight: 800, color: '#64748b', fontSize: '0.85rem' }}>{spec.label}</div>
-                    <div style={{ fontWeight: 700, color: '#1a1a1a', fontSize: '1rem' }}>{spec.value}</div>
-                  </div>
-                ))}
-              </div>
+              <Accordion title="THÔNG SỐ KỸ THUẬT" icon={<Settings size={18} color="#64748b" />}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                  {metadata && Object.entries(metadata).filter(([_, v]) => typeof v === 'string' || typeof v === 'number').map(([key, value], i) => (
+                    <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', padding: '0.8rem 0', borderBottom: '1px dashed #f1f5f9' }}>
+                      <div style={{ fontWeight: 800, color: '#64748b', fontSize: '0.85rem', textTransform: 'uppercase', minWidth: '120px' }}>{key}</div>
+                      <div style={{ fontWeight: 700, color: '#1a1a1a', fontSize: '0.95rem', textAlign: 'right', flex: 1, paddingLeft: '1rem' }}>{value as any}</div>
+                    </div>
+                  ))}
+
+                  {(!metadata || Object.entries(metadata).filter(([_, v]) => typeof v === 'string' || typeof v === 'number').length === 0) && (
+                    <div style={{ color: '#94a3b8', fontSize: '0.9rem', fontStyle: 'italic', padding: '1rem 0' }}>Chưa có thông số kỹ thuật.</div>
+                  )}
+                </div>
+              </Accordion>
             </div>
           </div>
 

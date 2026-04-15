@@ -55,7 +55,7 @@ export default function CategoryCatalog() {
             alignItems: 'center',
             gap: '3rem',
             overflowX: 'auto',
-            padding: '2rem 1rem 4rem',
+            padding: '2rem 1rem 0rem',
             marginBottom: '3rem',
             scrollSnapType: 'x mandatory'
           }}
