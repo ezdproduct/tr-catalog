@@ -5,55 +5,102 @@ export default function Footer() {
   const t = useTranslations('common');
 
   return (
-    <footer style={{ background: '#ffffff', padding: '6rem 0 3rem', borderTop: '1px solid #f1f5f9' }}>
+    <footer style={{ background: '#0a0a0a', padding: '6rem 1rem 3rem' }}>
       <div className="container">
-        <div className="footer-grid">
-          <div>
-            <h4 style={{ fontSize: '0.75rem', fontWeight: 800, marginBottom: '1.5rem', letterSpacing: '1px', color: '#1a1a1a' }}>ABOUT US</h4>
-            <p style={{ fontSize: '0.85rem', color: '#64748b', lineHeight: 1.6 }}>
-              {t('footer.desc') || 'We bring excellence in furniture design and create something new, simply different and very own.'}
-            </p>
-          </div>
-          <div>
-            <h4 style={{ fontSize: '0.75rem', fontWeight: 800, marginBottom: '1.5rem', letterSpacing: '1px', color: '#1a1a1a' }}>CONTACT INFO</h4>
-            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.8rem', fontSize: '0.85rem', color: '#64748b', padding: 0 }}>
-              <li>Phone:<br /><span style={{ color: '#1a1a1a' }}>+1 555 123 4567</span></li>
-              <li>Email:<br /><span style={{ color: '#1a1a1a' }}>info@transformerrobotics.com</span></li>
-            </ul>
-          </div>
-          <div>
-            <h4 style={{ fontSize: '0.75rem', fontWeight: 800, marginBottom: '1.5rem', letterSpacing: '1px', color: '#1a1a1a' }}>ADDRESS</h4>
-            <p style={{ fontSize: '0.85rem', color: '#64748b', lineHeight: 1.6 }}>
-              Al Wasl Road, Al Badaa<br />
-              Dubai Unit no. 6<br /><br />
-              Bldg. Plot No. 333-1103<br />
-              Dubai — United Arab Emirates
-            </p>
-          </div>
-          <div>
-            <h4 style={{ fontSize: '0.75rem', fontWeight: 800, marginBottom: '1.5rem', letterSpacing: '1px', color: '#1a1a1a' }}>SOCIAL MEDIA</h4>
-            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.8rem', fontSize: '0.85rem', padding: 0 }}>
-              <li><a href="#" style={{ color: '#64748b', textDecoration: 'none' }}>Instagram</a></li>
-              <li><a href="#" style={{ color: '#64748b', textDecoration: 'none' }}>Facebook</a></li>
-              <li><a href="#" style={{ color: '#64748b', textDecoration: 'none' }}>Twitter</a></li>
-            </ul>
+
+        {/* Dark Rounded Container */}
+        <div style={{
+          background: '#141414',
+          borderRadius: '30px',
+          padding: '4rem 3rem',
+          boxShadow: '0 10px 40px rgba(0,0,0,0.5)'
+        }}>
+          <div className="footer-grid">
+
+            {/* Column 1: WHY RETAILERS PARTNER WITH US */}
+            <div>
+              <h4 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '2rem', letterSpacing: '0.5px', color: '#ffffff' }}>
+                Why Retailers Partner With Us
+              </h4>
+              <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '1.2rem', fontSize: '1rem', color: '#d1d5db', padding: 0 }}>
+                <li style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
+                  <span style={{ color: '#ef4444', fontWeight: 'bold' }}>✓</span>
+                  <span>We offer dropshipping</span>
+                </li>
+                <li style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
+                  <span style={{ color: '#ef4444', fontWeight: 'bold' }}>✓</span>
+                  <span>Free floor model + shipping included</span>
+                </li>
+                <li style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
+                  <span style={{ color: '#ef4444', fontWeight: 'bold' }}>✓</span>
+                  <span>Minimum order quantity is 1 set</span>
+                </li>
+                <li style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
+                  <span style={{ color: '#ef4444', fontWeight: 'bold' }}>✓</span>
+                  <span>Easy to demonstrate and sell</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Column 2: CONTACT INFO */}
+            <div>
+              <h4 style={{ fontSize: '0.9rem', fontWeight: 800, marginBottom: '2rem', letterSpacing: '1px', color: '#ffffff', textTransform: 'uppercase' }}>
+                Contact Info
+              </h4>
+              <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '1.2rem', fontSize: '0.95rem', color: '#9ca3af', padding: 0 }}>
+                <li>
+                  Liên hệ:<br />
+                  <span style={{ color: '#ffffff', fontWeight: 500, fontSize: '1.1rem', display: 'inline-block', marginTop: '0.4rem' }}>Mr. Hồng</span>
+                </li>
+                <li>
+                  <span style={{ color: '#ffffff', fontWeight: 500, fontSize: '1.2rem' }}>📞 0944 078 585</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Column 3: SOCIAL MEDIA */}
+            <div>
+              <h4 style={{ fontSize: '0.9rem', fontWeight: 800, marginBottom: '2rem', letterSpacing: '1px', color: '#ffffff', textTransform: 'uppercase' }}>
+                Social Media
+              </h4>
+              <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '1rem', fontSize: '1rem', padding: 0 }}>
+                <li><a href="#" className="social-link">Instagram</a></li>
+                <li><a href="#" className="social-link">Facebook</a></li>
+                <li><a href="#" className="social-link">Twitter</a></li>
+              </ul>
+            </div>
           </div>
         </div>
-        <div style={{ marginTop: '5rem', paddingTop: '2rem', borderTop: '1px solid #f1f5f9', display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#94a3b8', fontWeight: 500 }}>
-          <span>© 2026 Transformer Robotics. All rights reserved.</span>
-          <div style={{ display: 'flex', gap: '2rem' }}>
-            <span style={{ cursor: 'pointer' }}>Terms & Conditions</span>
-            <span style={{ cursor: 'pointer' }}>Privacy Policy</span>
+
+        {/* Copyright Section */}
+        <div style={{
+          marginTop: '4rem',
+          textAlign: 'center',
+          fontSize: '0.8rem',
+          color: '#6b7280',
+          fontWeight: 500
+        }}>
+          <div>© 2026 Transformer Robotics. All rights reserved.</div>
+          <div style={{ marginTop: '0.5rem', letterSpacing: '1px', fontSize: '0.7rem', textTransform: 'uppercase' }}>
+            Supporting Retail Partners Globally
           </div>
         </div>
+
       </div>
       <style jsx>{`
         .footer-grid {
           display: grid;
-          grid-template-columns: 1.5fr 1fr 1fr 1fr;
+          grid-template-columns: 1.5fr 1fr 1fr;
           gap: 4rem;
         }
-        li a:hover { color: #1a1a1a !important; }
+        .social-link {
+          color: #d1d5db;
+          text-decoration: none;
+          transition: color 0.2s;
+        }
+        .social-link:hover {
+          color: #ffffff;
+        }
         @media (max-width: 1024px) {
           .footer-grid { grid-template-columns: 1fr 1fr; gap: 3rem; }
         }

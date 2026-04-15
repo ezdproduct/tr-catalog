@@ -43,8 +43,8 @@ export default function CategoryCatalog() {
       <div className="container">
 
         {/* Title */}
-        <div style={{ marginBottom: '3rem' }}>
-          <h2 style={{ fontSize: '2.5rem', fontWeight: 700, color: '#000' }}>Shop By Category</h2>
+        <div style={{ marginBottom: '0rem' }}>
+          <h2 style={{ fontSize: '1.2rem', fontWeight: 400, color: '#535252ff' }}>Product Catalog</h2>
         </div>
 
         {/* Minimalist Horizontal Categories Slider */}
