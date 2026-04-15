@@ -26,16 +26,24 @@ export default function AdminDashboard() {
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
+
+  // Debounce search input
+  useEffect(() => {
+    const timer = setTimeout(() => setDebouncedSearch(searchQuery), 500);
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
 
   const fetchData = async () => {
     setLoading(true);
     try {
       if (activeTab === 'Sản phẩm') {
-        const { data: products, count } = await getProducts(currentPage, PAGE_SIZE);
+        const { data: products, count } = await getProducts(currentPage, PAGE_SIZE, debouncedSearch);
         setData(products || []);
         setTotalCount(count || 0);
       } else {
-        const { data: cats, count } = await getCategories(currentPage, PAGE_SIZE);
+        const { data: cats, count } = await getCategories(currentPage, PAGE_SIZE, debouncedSearch);
         setData(cats || []);
         setTotalCount(count || 0);
       }
@@ -48,7 +56,7 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     fetchData();
-  }, [activeTab, currentPage]);
+  }, [activeTab, currentPage, debouncedSearch]);
 
   const handleTabChange = (label: string) => {
     setActiveTab(label);
@@ -118,11 +126,31 @@ export default function AdminDashboard() {
 
       <main className="main-content">
         <div className="main-header">
-          <h1 style={{ fontSize: '1.8rem', fontWeight: 900 }}>{activeTab}</h1>
+          <h1 style={{ fontSize: '1.8rem', fontWeight: 900, flexShrink: 0 }}>{activeTab}</h1>
+
+          <div className="search-wrapper">
+            <Search size={18} color="#94a3b8" />
+            <input
+              type="text"
+              placeholder={`Tìm kiếm ${activeTab.toLowerCase()}...`}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              style={{
+                border: 'none',
+                background: 'transparent',
+                outline: 'none',
+                width: '100%',
+                fontSize: '0.95rem',
+                fontWeight: 600,
+                color: '#1a1a1a'
+              }}
+            />
+          </div>
+
           <button onClick={openAdd} style={{
             background: '#ef4444', color: 'white', padding: '0.8rem 1.5rem',
             borderRadius: '10px', fontWeight: 700, cursor: 'pointer', border: 'none',
-            display: 'flex', alignItems: 'center', gap: '0.5rem'
+            display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0
           }}>
             <Plus size={20} /> THÊM {activeTab === 'Sản phẩm' ? 'SẢN PHẨM' : 'DANH MỤC'}
           </button>
@@ -138,7 +166,7 @@ export default function AdminDashboard() {
                   <tr style={{ textAlign: 'left', borderBottom: '1px solid #f1f5f9', color: '#64748b' }}>
                     <th style={{ padding: '1.2rem 1rem', fontSize: '0.8rem' }}>ẢNH/ICON</th>
                     <th style={{ padding: '1.2rem 1rem', fontSize: '0.8rem' }}>TÊN</th>
-                    <th style={{ padding: '1.2rem 1rem', fontSize: '0.8rem' }}>MÔ TẢ / GIÁ</th>
+                    <th style={{ padding: '1.2rem 1rem', fontSize: '0.8rem' }}>MÔ TẢ</th>
                     <th style={{ padding: '1.2rem 1rem', textAlign: 'right', fontSize: '0.8rem' }}>THAO TÁC</th>
                   </tr>
                 </thead>
@@ -150,11 +178,7 @@ export default function AdminDashboard() {
                       </td>
                       <td style={{ padding: '1rem', fontWeight: 700 }}>{item.name}</td>
                       <td style={{ padding: '1rem', fontSize: '0.85rem', color: '#64748b' }}>
-                        {activeTab === 'Sản phẩm' ? (
-                          <span style={{ color: '#ef4444', fontWeight: 800 }}>$ {(item.price || 0).toLocaleString()}</span>
-                        ) : (
-                          item.description || 'Chưa có mô tả'
-                        )}
+                        {item.description || 'Chưa có mô tả'}
                       </td>
                       <td style={{ padding: '1rem', textAlign: 'right' }}>
                         <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'flex-end' }}>
@@ -176,7 +200,7 @@ export default function AdminDashboard() {
                     <div style={{ flex: 1 }}>
                       <h3 style={{ fontSize: '1.1rem', fontWeight: 800 }}>{item.name}</h3>
                       <p style={{ fontSize: '0.85rem', color: '#64748b', marginTop: '4px' }}>
-                        {activeTab === 'Sản phẩm' ? `$ ${(item.price || 0).toLocaleString()}` : item.description}
+                        {item.description}
                       </p>
                     </div>
                   </div>
@@ -248,7 +272,19 @@ export default function AdminDashboard() {
         .sidebar { width: 260px; background: white; padding: 2rem 1.5rem; position: fixed; height: 100vh; z-index: 1100; left: 0; top: 0; border-right: 1px solid #f1f5f9; }
         .main-content { flex: 1; margin-left: 260px; padding: 3rem; width: calc(100% - 260px); }
         .mobile-header { display: none; position: fixed; top: 0; left: 0; right: 0; height: 60px; background: white; padding: 0 1.5rem; border-bottom: 1px solid #eee; z-index: 1000; align-items: center; justify-content: space-between; }
-        .main-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; }
+        .main-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; gap: 2rem; }
+        .search-wrapper { 
+          flex: 1; 
+          max-width: 500px; 
+          background: white; 
+          padding: 0.8rem 1.2rem; 
+          border-radius: 12px; 
+          display: flex; 
+          align-items: center; 
+          gap: 0.8rem; 
+          border: 1px solid #e2e8f0;
+          box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
         .table-view { background: white; border-radius: 20px; padding: 1rem; box-shadow: 0 10px 40px rgba(0,0,0,0.01); }
         .cards-view { display: none; }
         .close-btn { display: none; background: none; border: none; }
@@ -262,6 +298,10 @@ export default function AdminDashboard() {
           .table-view { display: none; }
           .close-btn { display: block; }
           .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 1050; }
+          .main-header { flex-direction: column; align-items: stretch; gap: 1rem; }
+          .search-wrapper { max-width: none; order: 2; }
+          .main-header h1 { order: 1; font-size: 1.5rem !important; }
+          .main-header button { order: 3; }
         }
       `}</style>
     </div>

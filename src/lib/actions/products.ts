@@ -4,14 +4,20 @@ import { supabase } from '@/lib/supabase';
 import { uploadImage } from '@/lib/r2';
 import { revalidatePath } from 'next/cache';
 
-export async function getProducts(page: number = 1, pageSize: number = 10) {
+export async function getProducts(page: number = 1, pageSize: number = 10, search: string = '') {
   const from = (page - 1) * pageSize;
   const to = from + pageSize - 1;
 
   try {
-    const { data, error, count } = await supabase
+    let query = supabase
       .from('products')
-      .select('*, categories(name)', { count: 'exact' })
+      .select('*, categories(name)', { count: 'exact' });
+
+    if (search) {
+      query = query.ilike('name', `%${search}%`);
+    }
+
+    const { data, error, count } = await query
       .order('created_at', { ascending: false })
       .range(from, to);
 

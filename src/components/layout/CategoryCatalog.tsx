@@ -160,7 +160,7 @@ export default function CategoryCatalog() {
                       {/* Image Center */}
                       <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
                         {product.image_urls?.[0] ? (
-                          <img src={product.image_urls[0]} alt={product.name} style={{ width: '100%', height: '100%', maxHeight: '180px', objectFit: 'contain', mixBlendMode: 'darken', filter: 'brightness(1.05) contrast(1.05)' }} />
+                          <img src={product.image_urls[0]} alt={product.name} style={{ width: '105%', height: '105%', maxHeight: '190px', objectFit: 'contain', mixBlendMode: 'darken', filter: 'brightness(1.05) contrast(1.05)' }} />
                         ) : (
                           <div style={{ color: '#cbd5e1' }}><LayoutGrid size={24} /></div>
                         )}
