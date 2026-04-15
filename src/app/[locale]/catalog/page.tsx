@@ -11,16 +11,17 @@ export default function CatalogPage() {
 
   return (
     <main>
+      <Navbar />
       <div style={{ padding: '60px 0 60px', background: 'radial-gradient(circle at top, #f0f7ff 0%, #ffffff 100%)' }}>
         <div className="container" style={{ textAlign: 'center' }}>
-          <motion.h1 
+          <motion.h1
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             style={{ fontSize: '3.5rem', marginBottom: '1rem' }}
           >
             {t('title')}
           </motion.h1>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
@@ -33,7 +34,7 @@ export default function CatalogPage() {
       <Categories />
       <FeaturedProducts />
       <div style={{ padding: '0 0 100px' }}>
-         <FeaturedProducts />
+        <FeaturedProducts />
       </div>
       <Footer />
     </main>

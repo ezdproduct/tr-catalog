@@ -53,24 +53,24 @@ export default function Footer() {
             {/* Column 1: LÝ DO HỢP TÁC CÙNG CHÚNG TÔI */}
             <div>
               <h4 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '2rem', letterSpacing: '0.5px', color: '#ffffff' }}>
-                TẠI SAO ĐẠI LÝ NÊN HỢP TÁC VỚI CHÚNG TÔI
+                {t('footer.whyPartner')}
               </h4>
               <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '1.2rem', fontSize: '1rem', color: '#d1d5db', padding: 0 }}>
                 <li style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
                   <span style={{ color: '#ef4444', fontWeight: 'bold' }}>✓</span>
-                  <span>Hỗ trợ mô hình dropshipping</span>
+                  <span>{t('footer.partner1')}</span>
                 </li>
                 <li style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
                   <span style={{ color: '#ef4444', fontWeight: 'bold' }}>✓</span>
-                  <span>Miễn phí hàng trưng bày, bao gồm phí vận chuyển</span>
+                  <span>{t('footer.partner2')}</span>
                 </li>
                 <li style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
                   <span style={{ color: '#ef4444', fontWeight: 'bold' }}>✓</span>
-                  <span>Số lượng đặt hàng tối thiểu chỉ từ 1 bộ</span>
+                  <span>{t('footer.partner3')}</span>
                 </li>
                 <li style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
                   <span style={{ color: '#ef4444', fontWeight: 'bold' }}>✓</span>
-                  <span>Dễ dàng trưng bày và tư vấn khách hàng</span>
+                  <span>{t('footer.partner4')}</span>
                 </li>
               </ul>
             </div>
@@ -78,12 +78,12 @@ export default function Footer() {
             {/* Column 2: THÔNG TIN LIÊN HỆ */}
             <div>
               <h4 style={{ fontSize: '0.9rem', fontWeight: 800, marginBottom: '2rem', letterSpacing: '1px', color: '#ffffff', textTransform: 'uppercase' }}>
-                Thông tin liên hệ
+                {t('footer.contactInfo')}
               </h4>
               <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '1.2rem', fontSize: '0.95rem', color: '#9ca3af', padding: 0 }}>
                 <li>
-                  Liên hệ:<br />
-                  <span style={{ color: '#ffffff', fontWeight: 500, fontSize: '1.1rem', display: 'inline-block', marginTop: '0.4rem' }}>Mr. Hồng</span>
+                  {t('footer.contactPersonLabel')}<br />
+                  <span style={{ color: '#ffffff', fontWeight: 500, fontSize: '1.1rem', display: 'inline-block', marginTop: '0.4rem' }}>{t('footer.contactPerson')}</span>
                 </li>
                 <li>
                   <span style={{ color: '#ffffff', fontWeight: 500, fontSize: '1.2rem' }}>📞 0944 078 585</span>
@@ -94,7 +94,7 @@ export default function Footer() {
             {/* Column 3: MẠNG XÃ HỘI */}
             <div>
               <h4 style={{ fontSize: '0.9rem', fontWeight: 800, marginBottom: '2rem', letterSpacing: '1px', color: '#ffffff', textTransform: 'uppercase' }}>
-                Mạng xã hội
+                {t('footer.social')}
               </h4>
               <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'row', gap: '1.5rem', padding: 0, flexWrap: 'wrap' }}>
                 <li>
@@ -135,9 +135,9 @@ export default function Footer() {
           color: '#6b7280',
           fontWeight: 500
         }}>
-          <div>© 2026 Transformer Robotics. Mọi quyền được bảo lưu.</div>
+          <div>© 2026 Transformer Robotics. {t('footer.rights')}</div>
           <div style={{ marginTop: '0.5rem', letterSpacing: '1px', fontSize: '0.7rem', textTransform: 'uppercase' }}>
-            Đồng hành cùng các đối tác đại lý trên toàn cầu
+            {t('footer.globalPartner')}
           </div>
         </div>
 

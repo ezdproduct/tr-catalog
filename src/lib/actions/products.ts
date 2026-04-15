@@ -4,7 +4,7 @@ import { supabase } from '@/lib/supabase';
 import { uploadImage } from '@/lib/r2';
 import { revalidatePath } from 'next/cache';
 
-export async function getProducts(page: number = 1, pageSize: number = 10, search: string = '') {
+export async function getProducts(page: number = 1, pageSize: number = 10, search: string = '', categoryId?: string) {
   const from = (page - 1) * pageSize;
   const to = from + pageSize - 1;
 
@@ -15,6 +15,10 @@ export async function getProducts(page: number = 1, pageSize: number = 10, searc
 
     if (search) {
       query = query.ilike('name', `%${search}%`);
+    }
+
+    if (categoryId) {
+      query = query.eq('category_id', categoryId);
     }
 
     const { data, error, count } = await query
@@ -118,5 +122,20 @@ export async function deleteProduct(id: string) {
   } catch (err: any) {
     console.error('deleteProduct Error:', err);
     throw new Error(err.message || 'Lỗi khi xóa sản phẩm');
+  }
+}
+
+export async function getMediaLibrary() {
+  try {
+    const { data, error } = await supabase
+      .from('media')
+      .select('url')
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
+    return data.map(m => m.url);
+  } catch (err) {
+    console.error('getMediaLibrary Error:', err);
+    return [];
   }
 }

@@ -2,8 +2,9 @@
 
 import { useTranslations, useLocale } from 'next-intl';
 import { Link, usePathname, useRouter } from '@/routing';
-import { useState, useEffect } from 'react';
-import { Menu, X, Globe, LogIn } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { Menu, X, Globe, LogIn, ChevronDown } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Navbar() {
   const t = useTranslations('common');
@@ -12,18 +13,40 @@ export default function Navbar() {
   const router = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLangOpen, setIsLangOpen] = useState(false);
+  const langRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
+
+    const handleClickOutside = (event: MouseEvent) => {
+      if (langRef.current && !langRef.current.contains(event.target as Node)) {
+        setIsLangOpen(false);
+      }
+    };
+
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, []);
 
-  const toggleLanguage = () => {
-    const nextLocale = locale === 'en' ? 'vi' : locale === 'vi' ? 'fr' : 'en';
-    router.replace(pathname, { locale: nextLocale });
+  const languages = [
+    { code: 'en', label: 'EN', flag: 'us', name: 'US' },
+    { code: 'vi', label: 'VI', flag: 'vn', name: 'VN' },
+  ];
+
+  const currentLang = languages.find(l => l.code === locale) || languages[0];
+
+  const handleLangChange = (code: string) => {
+    router.replace(pathname, { locale: code as any });
+    setIsLangOpen(false);
+    setIsMenuOpen(false);
   };
 
   const navLinks = [
@@ -32,83 +55,86 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`} style={{
-      background: '#ffffff',
-      height: '70px', display: 'flex', alignItems: 'center',
-      borderBottom: '1px solid #f0f0f0'
+    <div style={{
+      position: 'absolute', top: '20px', right: '20px', zIndex: 1100,
+      display: 'flex', gap: '1rem', alignItems: 'center'
     }}>
-      <div className="container" style={{ display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'center' }}>
-        <Link href="/" style={{ fontSize: '1.4rem', fontWeight: 800, color: '#ef4444', letterSpacing: '-1.5px', textTransform: 'uppercase' }}>
-          TRANSFORMER<span style={{ color: '#000000' }}>CATALOG</span>
-        </Link>
-
-        {/* Desktop Menu */}
-        <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }} className="desktop-only">
-          {navLinks.map((link, i) => (
-            <Link
-              key={i}
-              href={link.href as any}
-              style={{ fontWeight: 600, color: '#000000', textTransform: 'uppercase', fontSize: '0.9rem' }}
-            >
-              {link.label}
-            </Link>
-          ))}
-
-          <button onClick={toggleLanguage} style={{
-            display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 700,
-            padding: '8px 12px', background: '#f8fafc', borderRadius: '8px'
-          }}>
-            <Globe size={16} />
-            <span style={{ textTransform: 'uppercase', fontSize: '0.8rem' }}>{locale}</span>
-          </button>
-
-          <Link href="/login" style={{
-            background: '#ef4444', color: 'white', padding: '0.7rem 1.4rem',
-            fontWeight: 700, borderRadius: '8px', textTransform: 'uppercase', fontSize: '0.85rem'
-          }}>
-            <LogIn size={16} style={{ marginRight: '6px' }} />
-            {t('login')}
-          </Link>
-        </div>
-
-        {/* Mobile Toggle */}
-        <button className="mobile-only" onClick={() => setIsMenuOpen(!isMenuOpen)} style={{ padding: '8px' }}>
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+      {/* Language Switcher Dropdown Only */}
+      <div style={{ position: 'relative' }} ref={langRef}>
+        <button
+          onClick={() => setIsLangOpen(!isLangOpen)}
+          style={{
+            display: 'flex', alignItems: 'center', gap: '10px',
+            padding: '10px 18px',
+            background: 'rgba(255, 255, 255, 0.15)',
+            backdropFilter: 'blur(10px)',
+            borderRadius: '14px', border: '1px solid rgba(255, 255, 255, 0.2)',
+            cursor: 'pointer', transition: 'all 0.3s',
+            color: '#ffffff',
+            boxShadow: '0 4px 15px rgba(0,0,0,0.1)'
+          }}
+          onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255, 255, 255, 0.25)')}
+          onMouseLeave={(e) => (e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)')}
+        >
+          <img
+            src={`https://flagcdn.com/w40/${currentLang.flag}.png`}
+            style={{ width: '22px', height: '16px', objectFit: 'cover', borderRadius: '3px' }}
+            alt={currentLang.name}
+          />
+          <span style={{ fontWeight: 800, fontSize: '0.9rem', letterSpacing: '0.5px' }}>{currentLang.label}</span>
+          <motion.div animate={{ rotate: isLangOpen ? 180 : 0 }}>
+            <ChevronDown size={14} />
+          </motion.div>
         </button>
+
+        <AnimatePresence>
+          {isLangOpen && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 10 }}
+              style={{
+                position: 'absolute', top: '120%', right: 0,
+                background: 'rgba(255, 255, 255, 0.95)',
+                backdropFilter: 'blur(20px)',
+                borderRadius: '18px',
+                boxShadow: '0 15px 50px rgba(0,0,0,0.2)',
+                border: '1px solid #ffffff', overflow: 'hidden',
+                width: '180px', zIndex: 1200
+              }}
+            >
+              {languages.map((lang, idx) => (
+                <button
+                  key={`${lang.code}-${idx}`}
+                  onClick={() => handleLangChange(lang.code)}
+                  style={{
+                    width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                    padding: '14px 22px', border: 'none', background: 'transparent',
+                    cursor: 'pointer', transition: 'all 0.2s', color: '#000000',
+                    textAlign: 'left'
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.background = '#f1f5f9')}
+                  onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
+                >
+                  <span style={{ fontSize: '0.85rem', color: '#64748b', fontWeight: 700, width: '35px' }}>{lang.name}</span>
+                  <img
+                    src={`https://flagcdn.com/w40/${lang.flag}.png`}
+                    style={{ width: '24px', height: '18px', objectFit: 'cover', borderRadius: '3px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}
+                    alt={lang.name}
+                  />
+                  <span style={{ fontWeight: 900, fontSize: '0.9rem', width: '35px', textAlign: 'right' }}>{lang.label}</span>
+                </button>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
-      {/* Mobile Menu */}
-      {isMenuOpen && (
-        <div style={{
-          position: 'absolute', top: '70px', left: 0, right: 0,
-          padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.5rem',
-          background: 'white', borderBottom: '1px solid #eee', zIndex: 2000
-        }}>
-          {navLinks.map((link, i) => (
-            <Link
-              key={i}
-              href={link.href as any}
-              onClick={() => setIsMenuOpen(false)}
-              style={{ fontSize: '1.1rem', fontWeight: 700, textTransform: 'uppercase' }}
-            >
-              {link.label}
-            </Link>
-          ))}
-          <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
-            <button onClick={toggleLanguage} style={{ fontWeight: 700, padding: '0.8rem', flex: 1, background: '#f8fafc', borderRadius: '8px' }}>
-              <Globe size={18} /> {locale.toUpperCase()}
-            </button>
-            <Link href="/login" onClick={() => setIsMenuOpen(false)} style={{ background: '#ef4444', color: 'white', padding: '0.8rem', borderRadius: '8px', fontWeight: 700, flex: 2, textAlign: 'center' }}>
-              LOGIN
-            </Link>
-          </div>
-        </div>
-      )}
-
       <style jsx>{`
-        @media (min-width: 769px) { .mobile-only { display: none; } }
-        @media (max-width: 768px) { .desktop-only { display: none; } }
+        @media (max-width: 768px) {
+          div { top: 15px; right: 15px; }
+        }
       `}</style>
-    </nav>
+    </div>
   );
 }

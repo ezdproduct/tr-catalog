@@ -1,12 +1,15 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '@/lib/supabase';
 import { LayoutGrid } from 'lucide-react';
 import { Link } from '@/routing';
 
 export default function CategoryCatalog() {
+  const t_common = useTranslations('common');
+  const t_catalog = useTranslations('catalog');
   const [categories, setCategories] = useState<any[]>([]);
   const [selectedCat, setSelectedCat] = useState<string | null>(null);
   const [products, setProducts] = useState<any[]>([]);
@@ -44,7 +47,7 @@ export default function CategoryCatalog() {
 
         {/* Title */}
         <div className="category-title-wrapper">
-          <h2 style={{ fontSize: '1.2rem', fontWeight: 400, color: '#535252ff', margin: 0 }}>Danh mục sản phẩm</h2>
+          <h2 style={{ fontSize: '1.2rem', fontWeight: 400, color: '#535252ff', margin: 0 }}>{t_catalog('title')}</h2>
         </div>
 
         {/* Minimalist Horizontal Categories Slider */}
@@ -71,14 +74,12 @@ export default function CategoryCatalog() {
                   flexShrink: 0,
                   scrollSnapAlign: 'center',
                   display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-                  transition: 'all 0.4s ease-in-out'
                 }}
               >
                 <div
                   className="category-image-wrapper"
                   style={{
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    transition: 'all 0.4s ease-in-out'
                   }}
                 >
                   {cat.image_url ? (
@@ -90,17 +91,15 @@ export default function CategoryCatalog() {
                         mixBlendMode: 'darken',
                         filter: 'brightness(1.05) contrast(1.05)',
                         transformOrigin: 'center bottom',
-                        transition: 'all 0.4s ease-in-out'
                       }}
                     />
                   ) : (
-                    <LayoutGrid className="category-icon" color={isSelected ? '#ef4444' : '#94a3b8'} style={{ transition: 'all 0.4s ease-in-out' }} />
+                    <LayoutGrid className="category-icon" color={isSelected ? '#ef4444' : '#94a3b8'} />
                   )}
                 </div>
 
                 <div className="category-name-wrapper" style={{
                   overflow: 'hidden',
-                  transition: 'all 0.4s ease-in-out'
                 }}>
                   <h3
                     style={{
@@ -128,7 +127,7 @@ export default function CategoryCatalog() {
 
         {/* Dynamic Product Grid */}
         {loading ? (
-          <div style={{ textAlign: 'center', padding: '5rem', color: '#000', fontWeight: 900, letterSpacing: '2px' }}>LOADING CATALOG...</div>
+          <div style={{ textAlign: 'center', padding: '5rem', color: '#000', fontWeight: 900, letterSpacing: '2px' }}>{t_common('loading')}</div>
         ) : (
           <div className="catalog-grid" style={{ borderTop: '1px solid #f1f5f9', borderLeft: '1px solid #f1f5f9', background: '#fff' }}>
             <AnimatePresence mode="popLayout">
@@ -151,11 +150,8 @@ export default function CategoryCatalog() {
                       }}
                       className="product-card-frame"
                     >
-                      {/* Top Status */}
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.65rem', fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '1px' }}>
-                        <span>{catName}</span>
-                        <span style={{ fontSize: '1rem', lineHeight: 0, paddingBottom: '4px' }}>•</span>
-                      </div>
+                      {/* Top Status Removed */}
+                      <div style={{ height: '30px' }} />
 
                       {/* Image Center */}
                       <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
@@ -185,7 +181,7 @@ export default function CategoryCatalog() {
           padding: 80px 0 100px;
         }
         .category-title-wrapper {
-          margin-bottom: 2rem;
+          // margin-bottom: 2rem;
         }
         .category-slider {
           -ms-overflow-style: none;
@@ -195,26 +191,27 @@ export default function CategoryCatalog() {
           margin-bottom: 3rem;
         }
         .category-item {
-          width: 120px;
-          opacity: 0.4;
+          width: 180px;
+          opacity: 0.6;
+          transition: opacity 0.3s;
         }
         .category-item.selected {
-          width: 380px;
           opacity: 1;
         }
         .category-image-wrapper {
           width: 100%;
-          height: 120px;
+          height: 140px;
         }
         .category-item.selected .category-image-wrapper {
-          height: 240px;
+          height: 140px;
         }
         .category-name-wrapper {
-          height: 0;
-          opacity: 0;
+          height: 40px;
+          opacity: 0.5;
+          transition: opacity 0.3s;
         }
         .category-item.selected .category-name-wrapper {
-          height: 50px;
+          height: 40px;
           opacity: 1;
         }
         .category-icon { width: 30px; height: 30px; }
@@ -245,7 +242,7 @@ export default function CategoryCatalog() {
             padding: 40px 0 60px;
           }
           .category-title-wrapper {
-            margin-bottom: 1rem;
+            // margin-bottom: 1rem;
           }
           .category-slider {
             gap: 1.5rem;

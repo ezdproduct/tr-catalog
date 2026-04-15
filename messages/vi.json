@@ -14,8 +14,17 @@
     "loading": "Đang tải...",
     "error": "Có lỗi xảy ra",
     "footer": {
-      "desc": "Dẫn đầu cuộc cách mạng không gian thông minh với công nghệ robot tiên tiến.",
-      "rights": "Bản quyền được bảo lưu."
+      "whyPartner": "TẠI SAO ĐẠI LÝ NÊN HỢP TÁC VỚI CHÚNG TÔI",
+      "partner1": "Hỗ trợ mô hình dropshipping",
+      "partner2": "Miễn phí hàng trưng bày, bao gồm phí vận chuyển",
+      "partner3": "Số lượng đặt hàng tối thiểu chỉ từ 1 bộ",
+      "partner4": "Dễ dàng trưng bày và tư vấn khách hàng",
+      "contactInfo": "Thông tin liên hệ",
+      "contactPersonLabel": "Liên hệ:",
+      "contactPerson": "Mr. Hồng",
+      "social": "Mạng xã hội",
+      "rights": "Mọi quyền được bảo lưu.",
+      "globalPartner": "ĐỒNG HÀNH CÙNG CÁC ĐỐI TÁC ĐẠI LÝ TRÊN TOÀN CẦU"
     }
   },
   "hero": {
@@ -86,9 +95,31 @@
     "title": "Được các nhà tầm nhìn yêu thích",
     "subtitle": "Tham gia cùng hàng ngàn chủ sở hữu hài lòng trên toàn cầu",
     "reviews": [
-      { "name": "David Chen", "role": "Kiến trúc sư", "content": "Ghế sofa robot là một bước ngoặt cho những căn hộ đô thị nhỏ. Kỹ thuật tuyệt vời." },
-      { "name": "Sarah Miller", "role": "Người đam mê công nghệ", "content": "Cuối cùng đã có nội thất hiểu công nghệ. Giường Lumina đã cải thiện giấc ngủ của tôi gấp mười lần." },
-      { "name": "James Wilson", "role": "CEO, Nexus Design", "content": "Thẩm mỹ hiện đại kết hợp với robot tương lai. Transformer Robotics là Tesla của ngành nội thất." }
+      {
+        "name": "David Chen",
+        "role": "Kiến trúc sư",
+        "content": "Ghế sofa robot là một bước ngoặt cho những căn hộ đô thị nhỏ. Kỹ thuật tuyệt vời."
+      },
+      {
+        "name": "Sarah Miller",
+        "role": "Người đam mê công nghệ",
+        "content": "Cuối cùng đã có nội thất hiểu công nghệ. Giường Lumina đã cải thiện giấc ngủ của tôi gấp mười lần."
+      },
+      {
+        "name": "Lê Hoàng Nam",
+        "role": "Chuyên gia nội thất",
+        "content": "Thiết kế tối giản nhưng công năng tối đa. Transformer Table giúp tận dụng từng mét vuông không gian."
+      }
     ]
+  },
+  "product": {
+    "back": "Quay lại",
+    "loading": "Đang tải...",
+    "notFound": "Sản phẩm không tồn tại.",
+    "colorOptions": "Tùy chọn màu sắc",
+    "description": "Mô tả",
+    "specifications": "Thông số kỹ thuật",
+    "noSpecs": "Chưa có thông số kỹ thuật.",
+    "premiumNote": "Sản phẩm cao cấp từ Transformer Robotics."
   }
 }

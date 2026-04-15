@@ -1,15 +1,15 @@
 'use client';
 import Navbar from '@/components/layout/Navbar';
-import Footer from '@/components/layout/Footer';
 import CategoryCatalog from '@/components/layout/CategoryCatalog';
 import { motion } from 'framer-motion';
 
 export default function Home() {
   return (
     <main style={{ background: '#ffffff' }}>
+      <Navbar />
 
       {/* Cinematic Video Hero Section */}
-      <section className="hero-section" style={{ position: 'relative', width: '100%', height: '85vh', minHeight: '600px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: '#000' }}>
+      <section className="hero-section" style={{ position: 'relative', width: '100%', height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: '#000' }}>
 
         {/* Responsive Background Video Player */}
         <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
@@ -37,49 +37,67 @@ export default function Home() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             className="hero-title"
-            style={{ fontWeight: 900, marginBottom: '1rem', letterSpacing: '-1px', textTransform: 'uppercase', color: '#ffffff', textShadow: '0 4px 20px rgba(0,0,0,0.6)' }}
+            style={{
+              fontSize: 'clamp(2.5rem, 7vw, 5.5rem)',
+              fontWeight: 900,
+              lineHeight: 0.9,
+              letterSpacing: '-0.05em',
+              marginBottom: '2rem',
+              color: '#ef4444',
+              textShadow: '0 4px 20px rgba(0,0,0,0.3)',
+              textTransform: 'uppercase'
+            }}
           >
-            Transformer <span style={{ color: '#ef4444' }}>Robotics</span>
+            TRANSFORMER<br />ROBOTICS
           </motion.h1>
 
           <motion.div
-            initial={{ width: 0 }}
-            animate={{ width: '80px' }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-            style={{ height: '4px', background: '#ef4444', margin: '0 auto 1.5rem', boxShadow: '0 2px 10px rgba(0,0,0,0.5)' }}
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 0.8 }}
+            style={{ height: '4px', background: '#ef4444', margin: '0 auto 1.5rem', boxShadow: '0 2px 10px rgba(0,0,0,0.5)', width: '100px' }}
           />
 
-          <motion.p
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="hero-desc"
-            style={{ color: '#f8fafc', maxWidth: '700px', margin: '0 auto', fontWeight: 500, fontSize: '1.25rem', textShadow: '0 2px 12px rgba(0,0,0,0.8)' }}
+            style={{ maxWidth: '800px', margin: '0 auto' }}
           >
-            Khám phá bộ sưu tập nội thất thông minh hàng đầu.<br />Thiết kế tinh xảo, công nghệ hiện đại.
-          </motion.p>
+            <p style={{
+              fontSize: 'clamp(1.1rem, 3vw, 1.8rem)',
+              fontWeight: 500,
+              color: '#f8fafc',
+              opacity: 0.9,
+              letterSpacing: '0.02em',
+              lineHeight: 1.4,
+              textShadow: '0 2px 12px rgba(0,0,0,0.8)'
+            }}>
+              Khám phá bộ sưu tập nội thất thông minh hàng đầu.
+              <br />
+              Thiết kế tinh xảo, công nghệ hiện đại.
+            </p>
+          </motion.div>
         </div>
       </section>
 
       {/* Modern Category & Product Catalog */}
       <CategoryCatalog />
 
-      <Footer />
-
       <style jsx>{`
-        .hero-title { font-size: 6.5rem; }
-        .hero-desc { font-size: 1.8rem; line-height: 1.6; }
+        .hero-title { font-size: 5.5rem; }
+        .hero-desc { font-size: 1.6rem; line-height: 1.6; }
         @media (max-width: 1024px) {
-          .hero-title { font-size: 5rem; }
-          .hero-desc { font-size: 1.5rem; }
+          .hero-title { font-size: 4.5rem; }
+          .hero-desc { font-size: 1.4rem; }
         }
         @media (max-width: 768px) {
-          .hero-title { font-size: 4rem; letter-spacing: 0; }
-          .hero-desc { font-size: 1.3rem; }
+          .hero-title { font-size: 3.5rem; letter-spacing: 0; }
+          .hero-desc { font-size: 1.2rem; }
         }
         @media (max-width: 480px) {
-          .hero-title { font-size: 2.8rem; }
-          .hero-desc { font-size: 1.15rem; }
+          .hero-title { font-size: 2.5rem; }
+          .hero-desc { font-size: 1.1rem; }
         }
       `}</style>
     </main>

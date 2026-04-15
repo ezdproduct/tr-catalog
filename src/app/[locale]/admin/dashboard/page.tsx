@@ -7,23 +7,27 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from '@/routing';
 
 // Import Server Actions
-import { getProducts, createProduct, deleteProduct, updateProduct } from '@/lib/actions/products';
+import { getProducts, createProduct, deleteProduct, updateProduct, getMediaLibrary } from '@/lib/actions/products';
 import { getCategories, createCategory, deleteCategory, updateCategory } from '@/lib/actions/categories';
 
 const PAGE_SIZE = 6;
 
 const sidebarItems = [
-  { icon: <Box size={20} />, label: 'Sản phẩm' },
-  { icon: <List size={20} />, label: 'Danh mục' },
+  { id: 'Catalog', icon: <Box size={20} />, label: 'Quản lý Catalog' },
+  { id: 'Media', icon: <ImageIcon size={20} />, label: 'Thư viện Media' },
 ];
 
 export default function AdminDashboard() {
-  const [activeTab, setActiveTab] = useState('Sản phẩm');
+  const [activeTab, setActiveTab] = useState('Catalog');
+  const [selectedCatId, setSelectedCatId] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const [modalType, setModalType] = useState<'Products' | 'Categories'>('Products');
   const [editingItem, setEditingItem] = useState<any>(null);
-  const [data, setData] = useState<any[]>([]);
+  const [products, setProducts] = useState<any[]>([]);
+  const [categories, setCategories] = useState<any[]>([]);
+  const [mediaItems, setMediaItems] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -38,14 +42,15 @@ export default function AdminDashboard() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      if (activeTab === 'Sản phẩm') {
-        const { data: products, count } = await getProducts(currentPage, PAGE_SIZE, debouncedSearch);
-        setData(products || []);
+      if (activeTab === 'Catalog') {
+        const { data: cats } = await getCategories(1, 100);
+        setCategories(cats || []);
+        const { data, count } = await getProducts(currentPage, PAGE_SIZE, debouncedSearch, selectedCatId === 'all' ? undefined : selectedCatId);
+        setProducts(data || []);
         setTotalCount(count || 0);
       } else {
-        const { data: cats, count } = await getCategories(currentPage, PAGE_SIZE, debouncedSearch);
-        setData(cats || []);
-        setTotalCount(count || 0);
+        const media = await getMediaLibrary();
+        setMediaItems(media);
       }
     } catch (err) {
       console.error(err);
@@ -56,27 +61,42 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     fetchData();
-  }, [activeTab, currentPage, debouncedSearch]);
+  }, [selectedCatId, currentPage, debouncedSearch, activeTab]);
 
-  const handleTabChange = (label: string) => {
-    setActiveTab(label);
-    setCurrentPage(1);
-  };
-
-  const openAdd = () => {
+  const openAddProduct = () => {
+    setModalType('Products');
     setEditingItem(null);
     setShowModal(true);
   };
 
-  const openEdit = (item: any) => {
+  const openAddCategory = () => {
+    setModalType('Categories');
+    setEditingItem(null);
+    setShowModal(true);
+  };
+
+  const openEditProduct = (item: any) => {
+    setModalType('Products');
     setEditingItem(item);
     setShowModal(true);
   };
 
-  const handleDelete = async (id: string) => {
-    if (confirm('Xóa vĩnh viễn dữ liệu này?')) {
-      if (activeTab === 'Sản phẩm') await deleteProduct(id);
-      else await deleteCategory(id);
+  const openEditCategory = (cat: any) => {
+    setModalType('Categories');
+    setEditingItem(cat);
+    setShowModal(true);
+  };
+
+  const handleDeleteProduct = async (id: string) => {
+    if (confirm('Xóa vĩnh viễn sản phẩm này?')) {
+      await deleteProduct(id);
+      fetchData();
+    }
+  };
+
+  const handleDeleteCategory = async (id: string) => {
+    if (confirm('Xóa danh mục này sẽ ảnh hưởng đến các sản phẩm bên trong. Tiếp tục?')) {
+      await deleteCategory(id);
       fetchData();
     }
   };
@@ -87,7 +107,7 @@ export default function AdminDashboard() {
     <div style={{ display: 'flex', minHeight: '100vh', background: '#f8fafc', color: '#1a1a1a' }}>
 
       <header className="mobile-header">
-        <h2 style={{ fontSize: '0.9rem', fontWeight: 900, color: '#ef4444' }}>ROBOTICS ADMIN</h2>
+        <h2 style={{ fontSize: '0.9rem', fontWeight: 900, color: '#ef4444' }}>TRANSFORMER ROBOTICS</h2>
         <button onClick={() => setIsSidebarOpen(true)}><Menu size={24} /></button>
       </header>
 
@@ -96,7 +116,7 @@ export default function AdminDashboard() {
       <aside className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
         <div style={{ padding: '0 1rem', marginBottom: '3rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
-            <h2 style={{ fontSize: '1.2rem', fontWeight: 900, color: '#ef4444' }}>T. ROBOTICS</h2>
+            <h2 style={{ fontSize: '1.2rem', fontWeight: 900, color: '#ef4444' }}>TRANSFORMER ROBOTICS</h2>
             <p style={{ fontSize: '0.7rem', color: '#64748b', fontWeight: 600 }}>Quản lý kho</p>
           </div>
           <button className="close-btn" onClick={() => setIsSidebarOpen(false)}><X size={24} /></button>
@@ -105,12 +125,12 @@ export default function AdminDashboard() {
         <nav style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
           {sidebarItems.map((item) => (
             <button
-              key={item.label}
-              onClick={() => handleTabChange(item.label)}
+              key={item.id}
+              onClick={() => { setActiveTab(item.id); setIsSidebarOpen(false); }}
               style={{
                 display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem 1.2rem',
-                borderRadius: '12px', background: activeTab === item.label ? '#ef4444' : 'transparent',
-                color: activeTab === item.label ? '#ffffff' : '#1a1a1a',
+                borderRadius: '12px', background: activeTab === item.id ? '#ef4444' : 'transparent',
+                color: activeTab === item.id ? '#ffffff' : '#1a1a1a',
                 border: 'none', fontWeight: 700, cursor: 'pointer', transition: '0.2s'
               }}
             >
@@ -125,142 +145,241 @@ export default function AdminDashboard() {
       </aside>
 
       <main className="main-content">
-        <div className="main-header">
-          <h1 style={{ fontSize: '1.8rem', fontWeight: 900, flexShrink: 0 }}>{activeTab}</h1>
-
-          <div className="search-wrapper">
-            <Search size={18} color="#94a3b8" />
-            <input
-              type="text"
-              placeholder={`Tìm kiếm ${activeTab.toLowerCase()}...`}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              style={{
-                border: 'none',
-                background: 'transparent',
-                outline: 'none',
-                width: '100%',
-                fontSize: '0.95rem',
-                fontWeight: 600,
-                color: '#1a1a1a'
-              }}
-            />
-          </div>
-
-          <button onClick={openAdd} style={{
-            background: '#ef4444', color: 'white', padding: '0.8rem 1.5rem',
-            borderRadius: '10px', fontWeight: 700, cursor: 'pointer', border: 'none',
-            display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0
-          }}>
-            <Plus size={20} /> THÊM {activeTab === 'Sản phẩm' ? 'SẢN PHẨM' : 'DANH MỤC'}
-          </button>
-        </div>
-
-        {loading ? (
-          <div style={{ padding: '5rem', textAlign: 'center', color: '#64748b' }}>Đang tải...</div>
-        ) : (
+        {activeTab === 'Catalog' ? (
           <>
-            <div className="desktop-only table-view">
-              <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                <thead>
-                  <tr style={{ textAlign: 'left', borderBottom: '1px solid #f1f5f9', color: '#64748b' }}>
-                    <th style={{ padding: '1.2rem 1rem', fontSize: '0.8rem' }}>ẢNH/ICON</th>
-                    <th style={{ padding: '1.2rem 1rem', fontSize: '0.8rem' }}>TÊN</th>
-                    <th style={{ padding: '1.2rem 1rem', fontSize: '0.8rem' }}>MÔ TẢ</th>
-                    <th style={{ padding: '1.2rem 1rem', textAlign: 'right', fontSize: '0.8rem' }}>THAO TÁC</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {data.map((item: any) => (
-                    <tr key={item.id} style={{ borderBottom: '1px solid #f8fafc' }}>
-                      <td style={{ padding: '1rem' }}>
-                        <img src={activeTab === 'Sản phẩm' ? item.image_urls?.[0] : item.image_url} style={{ width: '45px', height: '45px', borderRadius: '10px', objectFit: 'cover', background: '#f1f5f9' }} />
-                      </td>
-                      <td style={{ padding: '1rem', fontWeight: 700 }}>{item.name}</td>
-                      <td style={{ padding: '1rem', fontSize: '0.85rem', color: '#64748b' }}>
-                        {item.description || 'Chưa có mô tả'}
-                      </td>
-                      <td style={{ padding: '1rem', textAlign: 'right' }}>
-                        <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'flex-end' }}>
-                          <button onClick={() => openEdit(item)} style={{ background: '#f8fafc', padding: '0.6rem', borderRadius: '8px', border: 'none' }}><Edit size={16} /></button>
-                          <button onClick={() => handleDelete(item.id)} style={{ background: '#fff1f2', padding: '0.6rem', borderRadius: '8px', border: 'none' }}><Trash2 size={16} color="#ef4444" /></button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <div className="main-header">
+              <h1 style={{ fontSize: '1.8rem', fontWeight: 900, flexShrink: 0 }}>Catalog</h1>
+
+              <div className="search-wrapper">
+                <Search size={18} color="#94a3b8" />
+                <input
+                  type="text"
+                  placeholder="Tìm kiếm sản phẩm..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  style={{
+                    border: 'none', background: 'transparent', outline: 'none', width: '100%',
+                    fontSize: '0.95rem', fontWeight: 600, color: '#1a1a1a'
+                  }}
+                />
+              </div>
+
+              <div style={{ display: 'flex', gap: '1rem', flexShrink: 0 }}>
+                <button onClick={openAddCategory} style={{
+                  background: 'white', color: '#ef4444', padding: '0.8rem 1.2rem',
+                  borderRadius: '10px', fontWeight: 700, cursor: 'pointer', border: '2px solid #ef4444',
+                  display: 'flex', alignItems: 'center', gap: '0.5rem'
+                }}>
+                  <Plus size={20} /> DANH MỤC
+                </button>
+                <button onClick={openAddProduct} style={{
+                  background: '#ef4444', color: 'white', padding: '0.8rem 1.2rem',
+                  borderRadius: '10px', fontWeight: 700, cursor: 'pointer', border: 'none',
+                  display: 'flex', alignItems: 'center', gap: '0.5rem'
+                }}>
+                  <Plus size={20} /> SẢN PHẨM
+                </button>
+              </div>
             </div>
 
-            <div className="mobile-only cards-view">
-              {data.map((item: any) => (
-                <div key={item.id} style={{ background: 'white', borderRadius: '20px', padding: '1.5rem', marginBottom: '1rem' }}>
-                  <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
-                    <img src={activeTab === 'Sản phẩm' ? item.image_urls?.[0] : item.image_url} style={{ width: '70px', height: '70px', borderRadius: '14px', objectFit: 'cover' }} />
-                    <div style={{ flex: 1 }}>
-                      <h3 style={{ fontSize: '1.1rem', fontWeight: 800 }}>{item.name}</h3>
-                      <p style={{ fontSize: '0.85rem', color: '#64748b', marginTop: '4px' }}>
-                        {item.description}
-                      </p>
+            {/* Category Selector Bar */}
+            <div style={{ marginBottom: '2.5rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                <h3 style={{ fontSize: '0.9rem', fontWeight: 800, color: '#64748b' }}>DANH MỤC</h3>
+              </div>
+              <div style={{
+                display: 'flex', gap: '0.8rem', overflowX: 'auto', paddingBottom: '0.5rem',
+                scrollbarWidth: 'none', msOverflowStyle: 'none'
+              }}>
+                <button
+                  onClick={() => { setSelectedCatId('all'); setCurrentPage(1); }}
+                  style={{
+                    padding: '0.6rem 1.2rem', borderRadius: '10px', whiteSpace: 'nowrap', fontWeight: 700, cursor: 'pointer',
+                    background: selectedCatId === 'all' ? '#1a1a1a' : 'white',
+                    color: selectedCatId === 'all' ? 'white' : '#64748b',
+                    border: '1px solid #e2e8f0', transition: '0.2s'
+                  }}
+                >
+                  Tất cả
+                </button>
+                {categories.map((cat) => (
+                  <div key={cat.id} style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+                    <button
+                      onClick={() => { setSelectedCatId(cat.id); setCurrentPage(1); }}
+                      style={{
+                        padding: '0.6rem 2.8rem 0.6rem 1.2rem', borderRadius: '10px', whiteSpace: 'nowrap', fontWeight: 700, cursor: 'pointer',
+                        background: selectedCatId === cat.id ? '#1a1a1a' : 'white',
+                        color: selectedCatId === cat.id ? 'white' : '#64748b',
+                        border: '1px solid #e2e8f0', transition: '0.2s'
+                      }}
+                    >
+                      {cat.name}
+                    </button>
+                    <div style={{ position: 'absolute', right: '0.5rem', display: 'flex', gap: '0.2rem' }}>
+                      <button onClick={() => openEditCategory(cat)} style={{ background: 'none', border: 'none', padding: '0.2rem', cursor: 'pointer', color: selectedCatId === cat.id ? '#ef4444' : '#94a3b8' }}><Settings size={14} /></button>
+                      <button onClick={() => handleDeleteCategory(cat.id)} style={{ background: 'none', border: 'none', padding: '0.2rem', cursor: 'pointer', color: '#fca5a5' }}><X size={14} /></button>
                     </div>
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.8rem', borderTop: '1px solid #f8fafc', paddingTop: '1rem' }}>
-                    <button onClick={() => openEdit(item)} style={{ background: '#f8fafc', padding: '0.8rem', borderRadius: '10px', border: 'none' }}><Edit size={18} /></button>
-                    <button onClick={() => handleDelete(item.id)} style={{ background: '#fff1f2', padding: '0.8rem', borderRadius: '10px', border: 'none' }}><Trash2 size={18} color="#ef4444" /></button>
+                ))}
+              </div>
+            </div>
+
+            {loading ? (
+              <div style={{ padding: '5rem', textAlign: 'center', color: '#64748b' }}>Đang tải...</div>
+            ) : (
+              <>
+                <div className="desktop-only table-view">
+                  <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                    <thead>
+                      <tr style={{ textAlign: 'left', borderBottom: '1px solid #f1f5f9', color: '#64748b' }}>
+                        <th style={{ padding: '1.2rem 1rem', fontSize: '0.8rem' }}>ẢNH/ICON</th>
+                        <th style={{ padding: '1.2rem 1rem', fontSize: '0.8rem' }}>TÊN</th>
+                        <th style={{ padding: '1.2rem 1rem', fontSize: '0.8rem' }}>MÔ TẢ</th>
+                        <th style={{ padding: '1.2rem 1rem', textAlign: 'right', fontSize: '0.8rem' }}>THAO TÁC</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {products.map((item: any) => (
+                        <tr key={item.id} style={{ borderBottom: '1px solid #f8fafc' }}>
+                          <td style={{ padding: '1rem' }}>
+                            <img src={item.image_urls?.[0]} style={{ width: '45px', height: '45px', borderRadius: '10px', objectFit: 'cover', background: '#f1f5f9' }} />
+                          </td>
+                          <td style={{ padding: '1rem', fontWeight: 700 }}>{item.name}</td>
+                          <td style={{ padding: '1rem', fontSize: '0.85rem', color: '#64748b' }}>
+                            {item.description || 'Chưa có mô tả'}
+                          </td>
+                          <td style={{ padding: '1rem', textAlign: 'right' }}>
+                            <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'flex-end' }}>
+                              <button onClick={() => openEditProduct(item)} style={{ background: '#f8fafc', padding: '0.6rem', borderRadius: '8px', border: 'none' }}><Edit size={16} /></button>
+                              <button onClick={() => handleDeleteProduct(item.id)} style={{ background: '#fff1f2', padding: '0.6rem', borderRadius: '8px', border: 'none' }}><Trash2 size={16} color="#ef4444" /></button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                <div className="mobile-only cards-view">
+                  {products.map((item: any) => (
+                    <div key={item.id} style={{ background: 'white', borderRadius: '20px', padding: '1.5rem', marginBottom: '1rem' }}>
+                      <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
+                        <img src={item.image_urls?.[0]} style={{ width: '70px', height: '70px', borderRadius: '14px', objectFit: 'cover' }} />
+                        <div style={{ flex: 1 }}>
+                          <h3 style={{ fontSize: '1.1rem', fontWeight: 800 }}>{item.name}</h3>
+                          <p style={{ fontSize: '0.85rem', color: '#64748b', marginTop: '4px' }}>
+                            {item.description}
+                          </p>
+                        </div>
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.8rem', borderTop: '1px solid #f8fafc', paddingTop: '1rem' }}>
+                        <button onClick={() => openEditProduct(item)} style={{ background: '#f8fafc', padding: '0.8rem', borderRadius: '10px', border: 'none' }}><Edit size={18} /></button>
+                        <button onClick={() => handleDeleteProduct(item.id)} style={{ background: '#fff1f2', padding: '0.8rem', borderRadius: '10px', border: 'none' }}><Trash2 size={18} color="#ef4444" /></button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {totalPages > 0 && (
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', marginTop: '3rem', paddingBottom: '2rem' }}>
+                    <div style={{ display: 'flex', gap: '0.6rem' }}>
+                      <button
+                        onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                        disabled={currentPage === 1}
+                        style={{ padding: '0.8rem', borderRadius: '12px', background: 'white', border: '1px solid #e2e8f0', cursor: currentPage === 1 ? 'not-allowed' : 'pointer', opacity: currentPage === 1 ? 0.5 : 1 }}
+                      >
+                        <ChevronLeft size={20} />
+                      </button>
+
+                      {[...Array(totalPages)].map((_, i) => (
+                        <button
+                          key={i}
+                          onClick={() => setCurrentPage(i + 1)}
+                          style={{
+                            width: '45px', height: '45px', borderRadius: '12px',
+                            background: currentPage === i + 1 ? '#ef4444' : 'white',
+                            color: currentPage === i + 1 ? 'white' : '#1a1a1a',
+                            border: '1px solid #e2e8f0', fontWeight: 900,
+                            cursor: 'pointer', transition: '0.2s',
+                            boxShadow: currentPage === i + 1 ? '0 8px 20px rgba(239, 68, 68, 0.25)' : 'none'
+                          }}
+                        >
+                          {i + 1}
+                        </button>
+                      ))}
+
+                      <button
+                        onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                        disabled={currentPage === totalPages}
+                        style={{ padding: '0.8rem', borderRadius: '12px', background: 'white', border: '1px solid #e2e8f0', cursor: currentPage === totalPages ? 'not-allowed' : 'pointer', opacity: currentPage === totalPages ? 0.5 : 1 }}
+                      >
+                        <ChevronRight size={20} />
+                      </button>
+                    </div>
+                    <div style={{ fontSize: '0.85rem', color: '#64748b', fontWeight: 600 }}>
+                      Trang {currentPage} / {totalPages} — Tổng {totalCount} mục
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
+          </>
+        ) : (
+          <div style={{ padding: '0.5rem' }}>
+            <div className="main-header" style={{ marginBottom: '2rem' }}>
+              <h1 style={{ fontSize: '1.8rem', fontWeight: 900 }}>Thư viện Media</h1>
+              <p style={{ color: '#64748b', fontWeight: 600 }}>{mediaItems.length} hình ảnh trong hệ thống</p>
+            </div>
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))',
+              gap: '1.5rem'
+            }}>
+              {mediaItems.map((url, idx) => (
+                <div key={idx} style={{
+                  background: 'white',
+                  borderRadius: '16px',
+                  overflow: 'hidden',
+                  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                  position: 'relative',
+                  aspectRatio: '1/1'
+                }}>
+                  <img
+                    src={url}
+                    alt={`Media ${idx}`}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                  <div style={{
+                    position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.5)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    opacity: 0, transition: '0.2s', cursor: 'pointer'
+                  }}
+                    onMouseEnter={(e) => e.currentTarget.style.opacity = '1'}
+                    onMouseLeave={(e) => e.currentTarget.style.opacity = '0'}
+                    onClick={() => {
+                      navigator.clipboard.writeText(url);
+                      alert('Đã sao chép liên kết ảnh!');
+                    }}
+                  >
+                    <button style={{
+                      padding: '0.5rem 1rem', background: 'white', border: 'none',
+                      borderRadius: '8px', fontWeight: 700, fontSize: '0.8rem'
+                    }}>
+                      SAO CHÉP LINK
+                    </button>
                   </div>
                 </div>
               ))}
             </div>
-
-            {totalPages > 0 && (
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', marginTop: '3rem', paddingBottom: '2rem' }}>
-                <div style={{ display: 'flex', gap: '0.6rem' }}>
-                  <button
-                    onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
-                    disabled={currentPage === 1}
-                    style={{ padding: '0.8rem', borderRadius: '12px', background: 'white', border: '1px solid #e2e8f0', cursor: currentPage === 1 ? 'not-allowed' : 'pointer', opacity: currentPage === 1 ? 0.5 : 1 }}
-                  >
-                    <ChevronLeft size={20} />
-                  </button>
-
-                  {[...Array(totalPages)].map((_, i) => (
-                    <button
-                      key={i}
-                      onClick={() => setCurrentPage(i + 1)}
-                      style={{
-                        width: '45px', height: '45px', borderRadius: '12px',
-                        background: currentPage === i + 1 ? '#ef4444' : 'white',
-                        color: currentPage === i + 1 ? 'white' : '#1a1a1a',
-                        border: '1px solid #e2e8f0', fontWeight: 900,
-                        cursor: 'pointer', transition: '0.2s',
-                        boxShadow: currentPage === i + 1 ? '0 8px 20px rgba(239, 68, 68, 0.25)' : 'none'
-                      }}
-                    >
-                      {i + 1}
-                    </button>
-                  ))}
-
-                  <button
-                    onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
-                    disabled={currentPage === totalPages}
-                    style={{ padding: '0.8rem', borderRadius: '12px', background: 'white', border: '1px solid #e2e8f0', cursor: currentPage === totalPages ? 'not-allowed' : 'pointer', opacity: currentPage === totalPages ? 0.5 : 1 }}
-                  >
-                    <ChevronRight size={20} />
-                  </button>
-                </div>
-                <div style={{ fontSize: '0.85rem', color: '#64748b', fontWeight: 600 }}>
-                  Trang {currentPage} / {totalPages} — Tổng {totalCount} mục
-                </div>
-              </div>
-            )}
-          </>
+          </div>
         )}
       </main>
 
       <AnimatePresence>
         {showModal && (
           <WorkerFriendlyModal
-            activeTab={activeTab === 'Sản phẩm' ? 'Products' : 'Categories'}
+            activeTab={modalType}
             item={editingItem}
             onClose={() => setShowModal(false)}
             onSuccess={() => { setShowModal(false); fetchData(); }}
@@ -326,17 +445,20 @@ function WorkerFriendlyModal({ activeTab, item, onClose, onSuccess }: any) {
   // Trạng thái ảnh mới chọn
   const [newFiles, setNewFiles] = useState<{ file: File, preview: string }[]>([]);
 
+  // Media Library Selection
+  const [mediaLibrary, setMediaLibrary] = useState<string[]>([]);
+  const [showLibrary, setShowLibrary] = useState(false);
+
   useEffect(() => {
     getCategories(1, 100).then(res => {
       setCategories(res.data || []);
-      // If categories load after mount and item exists, ensure selected is correct
       if (item?.category_id) setSelectedCategoryId(item.category_id);
     });
+    getMediaLibrary().then(setMediaLibrary);
   }, [item]);
 
   useEffect(() => {
     return () => {
-      // Dọn dẹp object url để tránh rò rỉ bộ nhớ
       newFiles.forEach(f => URL.revokeObjectURL(f.preview));
     };
   }, [newFiles]);
@@ -361,10 +483,21 @@ function WorkerFriendlyModal({ activeTab, item, onClose, onSuccess }: any) {
       setNewFiles(prev => [...prev, ...newFilesWithPreview]);
     } else {
       setNewFiles(newFilesWithPreview.slice(0, 1));
-      setExistingImages([]); // Đối với danh mục chỉ có 1 ảnh, chọn ảnh mới thì bỏ ảnh cũ
+      setExistingImages([]);
     }
+    e.target.value = null;
+  };
 
-    e.target.value = null; // reset input
+  const handleSelectFromLibrary = (url: string) => {
+    if (activeTab === 'Products') {
+      if (!existingImages.includes(url)) {
+        setExistingImages(prev => [...prev, url]);
+      }
+    } else {
+      setExistingImages([url]);
+      setNewFiles([]); // Clear new file if choosing from library for category
+    }
+    setShowLibrary(false);
   };
 
   const handleRemoveExistingImage = (index: number) => {
@@ -389,7 +522,6 @@ function WorkerFriendlyModal({ activeTab, item, onClose, onSuccess }: any) {
     fields.forEach(f => { if (f.key) metadata[f.key] = f.value; });
     formData.append('metadata', JSON.stringify(metadata));
 
-    // Phân bổ hình ảnh vào FormData
     if (activeTab === 'Products') {
       formData.append('existing_images', JSON.stringify(existingImages));
       newFiles.forEach(f => formData.append('images', f.file));
@@ -418,7 +550,7 @@ function WorkerFriendlyModal({ activeTab, item, onClose, onSuccess }: any) {
 
   return (
     <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(6px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2000, padding: '1rem' }}>
-      <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} style={{ background: 'white', width: '100%', maxWidth: '600px', padding: '2rem', borderRadius: '32px', maxHeight: '95vh', overflowY: 'auto' }}>
+      <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} style={{ background: 'white', width: '100%', maxWidth: '600px', padding: '2rem', borderRadius: '32px', maxHeight: '95vh', overflowY: 'auto', position: 'relative' }}>
         <h2 style={{ fontSize: '1.4rem', fontWeight: 900, marginBottom: '2rem' }}>{item ? 'CẬP NHẬT' : 'THÊM MỚI'} {activeTab === 'Products' ? 'SẢN PHẨM' : 'DANH MỤC'}</h2>
 
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
@@ -460,9 +592,19 @@ function WorkerFriendlyModal({ activeTab, item, onClose, onSuccess }: any) {
           )}
 
           <div style={{ padding: '1.5rem', background: '#f8fafc', borderRadius: '20px', border: '1px dashed #cbd5e1' }}>
-            <label style={{ fontWeight: 800, display: 'block', marginBottom: '0.8rem', fontSize: '0.9rem' }}>
-              {activeTab === 'Products' ? 'Hình ảnh (Nhiều ảnh cho sản phẩm):' : 'Hình ảnh (Chọn 1 ảnh):'}
-            </label>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+              <label style={{ fontWeight: 800, fontSize: '0.9rem' }}>
+                {activeTab === 'Products' ? 'Hình ảnh (Nhiều ảnh):' : 'Hình ảnh (1 ảnh):'}
+              </label>
+              <button
+                type="button"
+                onClick={() => setShowLibrary(true)}
+                style={{ background: '#3b82f6', color: 'white', padding: '0.4rem 0.8rem', borderRadius: '8px', border: 'none', fontSize: '0.75rem', fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.4rem' }}
+              >
+                <ImageIcon size={14} /> CHỌN TỪ THƯ VIỆN
+              </button>
+            </div>
+
             <input
               type="file"
               multiple={activeTab === 'Products'}
@@ -470,10 +612,10 @@ function WorkerFriendlyModal({ activeTab, item, onClose, onSuccess }: any) {
               onChange={handleFileChange}
             />
 
-            {/* Vùng hiển thị ảnh cũ */}
+            {/* Existing Images Gallery */}
             {existingImages.length > 0 && (
               <div style={{ marginTop: '1rem' }}>
-                <p style={{ fontSize: '0.8rem', fontWeight: 700, color: '#64748b', marginBottom: '0.5rem' }}>Ảnh đã lưu hiện tại:</p>
+                <p style={{ fontSize: '0.8rem', fontWeight: 700, color: '#64748b', marginBottom: '0.5rem' }}>Ảnh đã chọn:</p>
                 <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
                   {existingImages.map((img, idx) => (
                     <div key={idx} style={{ position: 'relative', width: '80px', height: '80px' }}>
@@ -485,7 +627,7 @@ function WorkerFriendlyModal({ activeTab, item, onClose, onSuccess }: any) {
               </div>
             )}
 
-            {/* Vùng hiển thị ảnh mới chọn */}
+            {/* New Files Preview */}
             {newFiles.length > 0 && (
               <div style={{ marginTop: '1rem' }}>
                 <p style={{ fontSize: '0.8rem', fontWeight: 700, color: '#3b82f6', marginBottom: '0.5rem' }}>Ảnh mới chuẩn bị tải lên:</p>
@@ -500,6 +642,39 @@ function WorkerFriendlyModal({ activeTab, item, onClose, onSuccess }: any) {
               </div>
             )}
           </div>
+
+          {/* Media Library Picker Modal (Overlay) */}
+          <AnimatePresence>
+            {showLibrary && (
+              <motion.div
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                style={{ position: 'absolute', inset: 0, background: 'white', zIndex: 100, display: 'flex', flexDirection: 'column', borderRadius: '32px' }}
+              >
+                <div style={{ padding: '1.5rem', borderBottom: '1px solid #f1f5f9', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <h3 style={{ fontWeight: 900, fontSize: '1rem' }}>CHỌN ẢNH TỪ HỆ THỐNG</h3>
+                  <button type="button" onClick={() => setShowLibrary(false)} style={{ background: '#f1f5f9', border: 'none', padding: '0.5rem', borderRadius: '50%', cursor: 'pointer' }}><X size={20} /></button>
+                </div>
+                <div style={{ flex: 1, overflowY: 'auto', padding: '1.5rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: '1rem' }}>
+                  {mediaLibrary.map((url, idx) => (
+                    <div
+                      key={idx}
+                      onClick={() => handleSelectFromLibrary(url)}
+                      style={{
+                        aspectRatio: '1', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer',
+                        border: existingImages.includes(url) ? '3px solid #ef4444' : '1px solid #f1f5f9',
+                        transition: 'transform 0.2s'
+                      }}
+                      onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
+                      onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+                    >
+                      <img src={url} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    </div>
+                  ))}
+                  {mediaLibrary.length === 0 && <p style={{ textAlign: 'center', gridColumn: '1/-1', color: '#94a3b8', padding: '2rem' }}>Chưa có ảnh nào trong thư viện.</p>}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           <div style={{ borderTop: '1px solid #f1f5f9', paddingTop: '1rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>

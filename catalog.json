@@ -1,0 +1,1061 @@
+{
+  "_meta": {
+    "version": "1.1.0",
+    "generatedAt": "2026-04-15",
+    "description": "Full ecommerce product catalog for Transformer Robotics – fe-transformer project. Covers category tree, product listings, variants, images, videos, description content, navbar previews, shop dropdown feature panels, Nova banner, brand assets, and social video slider.",
+    "locales": ["en", "vi"],
+    "sections": ["categories", "products", "banners", "heroBannerVideo", "novaBannerVideo", "navbarPreviewVideos", "shopDropdownFeatures", "brandAssets", "materials", "socialVideos"]
+  },
+
+  "categories": [
+    {
+      "id": "dining",
+      "slug": "dining",
+      "parentId": null,
+      "sortOrder": 1,
+      "bannerImage": "//transformertable.com/cdn/shop/files/MENU_IMG_MD_c09716f6-f250-4d74-9843-f2313eca2431.jpg?v=1771390982&width=1000",
+      "meta": {
+        "en": { "name": "Dining Collections", "description": "Extendable and transforming dining furniture for every home." },
+        "vi": { "name": "Bộ sưu tập bàn ăn", "description": "Nội thất bàn ăn biến hình, mở rộng linh hoạt cho mọi ngôi nhà." }
+      },
+      "children": [
+        {
+          "id": "round-dining-set",
+          "slug": "round-dining-set",
+          "parentId": "dining",
+          "sortOrder": 1,
+          "collectionPageUrl": "/collections/round-dining-set",
+          "bannerImage": "https://row.transformertable.com/cdn/shop/files/woman_round_table.png?v=1746734537&width=1000",
+          "bannerImageMobile": "https://row.transformertable.com/cdn/shop/files/woman_3.png?v=1746734537&width=1000",
+          "collectionCard": {
+            "image": "https://row.transformertable.com/cdn/shop/files/hp_round_table.png?v=1762287045&width=1100",
+            "video": "https://row.transformertable.com/cdn/shop/videos/c/vp/efe4797c88a34db8aefe6d475a6760eb/efe4797c88a34db8aefe6d475a6760eb.HD-720p-3.0Mbps-47268162.mp4?v=0",
+            "poster": "https://row.transformertable.com/cdn/shop/files/preview_images/efe4797c88a34db8aefe6d475a6760eb.thumbnail.0000000000_1100x.jpg?v=1746734552"
+          },
+          "meta": {
+            "en": {
+              "name": "Round Dining Set",
+              "title": "Transformer Round Table Collection",
+              "description": "Elegantly designed, effortlessly extendable. Our most luxurious expandable dining sets seat up to 10 and feature built in storage compartments. Crisp, clean lines and refined wooden detailing will make this table the focal point of any room.",
+              "cta": "SHOP COLLECTION"
+            },
+            "vi": {
+              "name": "Bàn Tròn",
+              "title": "Bộ sưu tập Transformer Round Table",
+              "description": "Thiết kế trang nhã, mở rộng dễ dàng. Những bộ bàn ăn mở rộng sang trọng nhất của chúng tôi có thể chứa đến 10 người và có các ngăn lưu trữ tích hợp.",
+              "cta": "Mua bộ sưu tập"
+            }
+          },
+          "descriptionMedia": [
+            {
+              "type": "video",
+              "label": "extendable",
+              "src": "https://row.transformertable.com/cdn/shop/videos/c/vp/efe4797c88a34db8aefe6d475a6760eb/efe4797c88a34db8aefe6d475a6760eb.HD-720p-3.0Mbps-47268162.mp4?v=0",
+              "poster": "https://row.transformertable.com/cdn/shop/files/preview_images/efe4797c88a34db8aefe6d475a6760eb.thumbnail.0000000000_1100x.jpg?v=1746734552",
+              "aspect": "16/12",
+              "meta": { "en": { "title": "Extendable and Space-Saving" }, "vi": { "title": "Có thể mở rộng và tiết kiệm không gian" } }
+            },
+            {
+              "type": "image",
+              "label": "woodGrain",
+              "src": "https://row.transformertable.com/cdn/shop/files/Frame_256_2ddb8c9a-c942-4ab1-ac11-50e42809615b.png?v=1746734537&width=1500",
+              "aspect": "square / 4:3",
+              "meta": { "en": { "title": "Natural Wood Grain" }, "vi": { "title": "Vân gỗ tự nhiên" } }
+            },
+            {
+              "type": "image",
+              "label": "detailing",
+              "src": "https://row.transformertable.com/cdn/shop/files/Frame_257_3f729c56-5f61-4757-ad50-dfb6e3c3e725.png?v=1746734537&width=1500",
+              "aspect": "square / 4:3",
+              "meta": { "en": { "title": "Beautiful Detailing" }, "vi": { "title": "Chi tiết tinh xảo" } }
+            },
+            {
+              "type": "image",
+              "label": "easyToStore",
+              "src": "https://row.transformertable.com/cdn/shop/files/Frame_255_5c22ef9f-bff2-4ce8-9939-8bfc14becfea.png?v=1756135346&width=1500",
+              "aspect": "16/7",
+              "meta": { "en": { "title": "Easy to Store" }, "vi": { "title": "Dễ dàng lưu trữ" } }
+            }
+          ]
+        },
+        {
+          "id": "dining-set",
+          "slug": "dining-set",
+          "parentId": "dining",
+          "sortOrder": 2,
+          "collectionPageUrl": "/collections/dining-set",
+          "bannerImage": "https://row.transformertable.com/cdn/shop/files/test-1.png?v=1746734537&width=1000",
+          "bannerImageMobile": "https://row.transformertable.com/cdn/shop/files/woman_transformer_table.png?v=1746734537&width=1000",
+          "collectionCard": {
+            "image": "https://row.transformertable.com/cdn/shop/files/Table_bf.png?v=1762287625&width=1100",
+            "video": "https://row.transformertable.com/cdn/shop/videos/c/vp/c52d9b73430c40999aacb485572a27de/c52d9b73430c40999aacb485572a27de.HD-720p-3.0Mbps-47268161.mp4?v=0",
+            "poster": "https://row.transformertable.com/cdn/shop/files/preview_images/c52d9b73430c40999aacb485572a27de.thumbnail.0000000000_1100x.jpg?v=1746734552"
+          },
+          "meta": {
+            "en": {
+              "name": "Dining Table",
+              "title": "Transformer Robotics Collection",
+              "description": "The original transforming tables. Versatile, extendable dining sets that expand from 1 to 10 ft. to fit any home or lifestyle.",
+              "cta": "SHOP COLLECTION"
+            },
+            "vi": {
+              "name": "Bàn Ăn",
+              "title": "Bộ sưu tập Transformer Robotics",
+              "description": "Những bộ bàn biến hình nguyên bản. Các bộ bàn ăn linh hoạt, có thể mở rộng từ 1 đến 10 feet, phù hợp với mọi ngôi nhà và phong cách sống.",
+              "cta": "Mua bộ sưu tập"
+            }
+          },
+          "descriptionMedia": [
+            {
+              "type": "video",
+              "label": "extendable",
+              "src": "https://row.transformertable.com/cdn/shop/videos/c/vp/c52d9b73430c40999aacb485572a27de/c52d9b73430c40999aacb485572a27de.HD-720p-3.0Mbps-47268161.mp4?v=0",
+              "poster": "https://row.transformertable.com/cdn/shop/files/preview_images/c52d9b73430c40999aacb485572a27de.thumbnail.0000000000_1100x.jpg?v=1746734552",
+              "aspect": "16/12",
+              "meta": { "en": { "title": "Extendable and Space-Saving" }, "vi": { "title": "Có thể mở rộng và tiết kiệm không gian" } }
+            },
+            {
+              "type": "image",
+              "label": "woodGrain",
+              "src": "https://row.transformertable.com/cdn/shop/files/Frame_256_2ddb8c9a-c942-4ab1-ac11-50e42809615b.png?v=1746734537&width=1500",
+              "aspect": "square / 4:3",
+              "meta": { "en": { "title": "Natural Wood Grain" }, "vi": { "title": "Vân gỗ tự nhiên" } }
+            },
+            {
+              "type": "image",
+              "label": "detailing",
+              "src": "https://row.transformertable.com/cdn/shop/files/Frame_257_3f729c56-5f61-4757-ad50-dfb6e3c3e725.png?v=1746734537&width=1500",
+              "aspect": "square / 4:3",
+              "meta": { "en": { "title": "Beautiful Detailing" }, "vi": { "title": "Chi tiết tinh xảo" } }
+            },
+            {
+              "type": "image",
+              "label": "easyToStore",
+              "src": "https://row.transformertable.com/cdn/shop/files/Frame_255_5c22ef9f-bff2-4ce8-9939-8bfc14becfea.png?v=1756135346&width=1500",
+              "aspect": "16/7",
+              "meta": { "en": { "title": "Easy to Store" }, "vi": { "title": "Dễ dàng lưu trữ" } }
+            }
+          ]
+        },
+        {
+          "id": "table-to-desk",
+          "slug": "table-to-desk",
+          "parentId": "dining",
+          "sortOrder": 3,
+          "collectionPageUrl": "/collections/table-to-desk",
+          "bannerImage": "https://row.transformertable.com/cdn/shop/files/table-to-desk-hero-image.png?v=1746734537&width=1000",
+          "bannerImageMobile": "https://row.transformertable.com/cdn/shop/files/Mobileimage_txd.png?v=1746734537&width=1000",
+          "collectionCard": {
+            "image": "https://row.transformertable.com/cdn/shop/files/hp_txd_main_image.png?v=1762287046&width=1100",
+            "video": "https://row.transformertable.com/cdn/shop/videos/c/vp/7b72ad3ffb7b4459807e074a93618d88/7b72ad3ffb7b4459807e074a93618d88.HD-720p-1.6Mbps-47268219.mp4?v=0",
+            "poster": "https://row.transformertable.com/cdn/shop/files/preview_images/7b72ad3ffb7b4459807e074a93618d88.thumbnail.0000000000_1100x.jpg?v=1746734558"
+          },
+          "meta": {
+            "en": {
+              "name": "Work Desk",
+              "title": "Transformer Robotics to Desk",
+              "description": "Seamlessly switch from 9-5 to 5-9, with the dining table that becomes two desks. Complete with integrated storage and cable management.",
+              "cta": "SHOP COLLECTION"
+            },
+            "vi": {
+              "name": "Bàn Làm Việc",
+              "title": "Transformer Robotics to Desk",
+              "description": "Chuyển đổi liền mạch từ 9 giờ sáng đến 9 giờ tối, với bàn ăn có thể biến thành hai bàn làm việc.",
+              "cta": "Mua bộ sưu tập"
+            }
+          },
+          "descriptionMedia": [
+            {
+              "type": "video",
+              "label": "workToPlay",
+              "src": "https://row.transformertable.com/cdn/shop/videos/c/vp/f057d638a9fe4f09b0added3e113efe2/f057d638a9fe4f09b0added3e113efe2.HD-720p-1.6Mbps-47268218.mp4?v=0",
+              "poster": "https://row.transformertable.com/cdn/shop/files/preview_images/f057d638a9fe4f09b0added3e113efe2.thumbnail.0000000000_1100x.jpg?v=1746734563",
+              "aspect": "16/12",
+              "meta": { "en": { "title": "From Work to Play" }, "vi": { "title": "Từ công việc đến vui chơi" } }
+            },
+            {
+              "type": "image",
+              "label": "cableSystem",
+              "src": "https://row.transformertable.com/cdn/shop/files/Frame_260_5049f705-7e91-4b6f-8ca7-f9cc84e7561d.png?v=1746734537&width=1500",
+              "aspect": "square / 4:3",
+              "meta": { "en": { "title": "Hidden Cable System" }, "vi": { "title": "Hệ thống dây cáp ẩn" } }
+            },
+            {
+              "type": "image",
+              "label": "speaker",
+              "src": "https://row.transformertable.com/cdn/shop/files/Frame_261_daeaa479-9e4c-49a8-b3e7-fec40f7a5288.png?v=1763483183&width=1500",
+              "aspect": "square / 4:3",
+              "meta": { "en": { "title": "Portable Speaker" }, "vi": { "title": "Loa di động" } }
+            },
+            {
+              "type": "image",
+              "label": "mechanism",
+              "src": "https://row.transformertable.com/cdn/shop/files/Rectangle_757_381daa73-3d55-4d48-8d7d-49c583f10f59.png?v=1746734537&width=1500",
+              "aspect": "16/7",
+              "meta": { "en": { "title": "Hydraulic Flip-top Mechanism" }, "vi": { "title": "Cơ chế nắp đậy thủy lực" } }
+            }
+          ]
+        },
+        {
+          "id": "outdoor-dining",
+          "slug": "outdoor-dining",
+          "parentId": "dining",
+          "sortOrder": 4,
+          "collectionPageUrl": "/collections/outdoor-dining",
+          "bannerImage": "https://row.transformertable.com/cdn/shop/files/Transformer-outdoor-table-light-oak-the-practical-banner.jpg?v=1746734648&width=1000",
+          "bannerImageMobile": "https://row.transformertable.com/cdn/shop/files/Transformer-outdoor-table-light-oak-the-practical-banner-mobile.jpg?v=1746734648&width=1000",
+          "collectionCard": {
+            "image": "https://row.transformertable.com/cdn/shop/files/Tot_Bf.png?v=1762287626&width=1100",
+            "video": "https://row.transformertable.com/cdn/shop/videos/c/vp/8eb268ae3ab54084bebb132e75c4e8c7/8eb268ae3ab54084bebb132e75c4e8c7.HD-1080p-2.5Mbps-47268353.mp4?v=0",
+            "poster": "https://row.transformertable.com/cdn/shop/files/preview_images/8eb268ae3ab54084bebb132e75c4e8c7.thumbnail.0000000000_1100x.jpg?v=1746734664"
+          },
+          "meta": {
+            "en": {
+              "name": "Outdoor Table",
+              "title": "Transformer Outdoor Table Collection",
+              "description": "The world's only extendable patio table. A 6-in-1 outdoor dining set that expands to over 9' long. All-weather resistant and made for easy storage.",
+              "cta": "SHOP COLLECTION"
+            },
+            "vi": {
+              "name": "Bàn Ngoài Trời",
+              "title": "Bộ sưu tập Transformer Outdoor Table",
+              "description": "Bàn ngoài trời mở rộng duy nhất trên thế giới. Bộ bàn ăn ngoài trời 6 trong 1 có thể mở rộng dài hơn 2.7 meters.",
+              "cta": "Mua bộ sưu tập"
+            }
+          },
+          "descriptionMedia": [
+            {
+              "type": "video",
+              "label": "extends",
+              "src": "https://row.transformertable.com/cdn/shop/videos/c/vp/2fc4a8d8477b40e09d36b09bbd2f0b44/2fc4a8d8477b40e09d36b09bbd2f0b44.HD-720p-1.6Mbps-47268361.mp4?v=0",
+              "poster": "https://row.transformertable.com/cdn/shop/files/preview_images/2fc4a8d8477b40e09d36b09bbd2f0b44.thumbnail.0000000000_1100x.jpg?v=1746734663",
+              "aspect": "16/12",
+              "meta": { "en": { "title": "Extends to Over 9' Long" }, "vi": { "title": "Mở rộng dài hơn 2.7 meters" } }
+            },
+            {
+              "type": "image",
+              "label": "weather",
+              "src": "https://row.transformertable.com/cdn/shop/files/Transformer-outdoor-table-light-oak-middle-panel-hole-closed-closeup_68e215ae-5b8c-4681-b2c3-63f47c020022.jpg?v=1751568051&width=1500",
+              "aspect": "square / 4:3",
+              "meta": { "en": { "title": "All-Weather Resistant" }, "vi": { "title": "Chống chịu mọi thời tiết" } }
+            },
+            {
+              "type": "image",
+              "label": "longLasting",
+              "src": "https://row.transformertable.com/cdn/shop/files/Transformer-outdoor-table-light-oak-corner-texture-closeup_8473b97a-cbd0-4944-9e4a-76554e1d8bd4.jpg?v=1751568051&width=1500",
+              "aspect": "square / 4:3",
+              "meta": { "en": { "title": "Long-Lasting" }, "vi": { "title": "Bền bỉ theo thời gian" } }
+            },
+            {
+              "type": "image",
+              "label": "easyToStore",
+              "src": "https://row.transformertable.com/cdn/shop/files/image-easy-to-store.jpg?v=1746734648&width=1500",
+              "aspect": "16/7",
+              "meta": { "en": { "title": "Easy to Store" }, "vi": { "title": "Dễ dàng lưu trữ" } }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nova",
+      "slug": "nova",
+      "parentId": null,
+      "sortOrder": 2,
+      "bannerImage": "https://transformertable.com/cdn/shop/files/PSD-rafale-hp.jpg?v=1771359656&width=2000",
+      "meta": {
+        "en": { "name": "Nova Collection", "description": "Our most luxurious dining set — elegantly designed, seats up to 10." },
+        "vi": { "name": "Bộ sưu tập Nova", "description": "Bộ bàn ăn sang trọng nhất — thiết kế thanh lịch, chứa đến 10 người." }
+      },
+      "children": []
+    },
+    {
+      "id": "clearance",
+      "slug": "clearance",
+      "parentId": null,
+      "sortOrder": 3,
+      "heroVideo": {
+        "src": "//transformertable.com/cdn/shop/videos/c/vp/86b952c5e3434b43960884bf3777d94d/86b952c5e3434b43960884bf3777d94d.SD-480p-1.2Mbps-37777874.mp4?v=0",
+        "poster": "//transformertable.com/cdn/shop/files/preview_images/86b952c5e3434b43960884bf3777d94d.thumbnail.0000000000_150x.jpg?v=1731008086"
+      },
+      "meta": {
+        "en": { "name": "Clearance Items", "description": "Final stock at our best prices. Limited quantities, shop now before they're gone." },
+        "vi": { "name": "Hàng thanh lý chưa mở hộp", "description": "Lượng hàng cuối cùng với mức giá tốt nhất. Số lượng có hạn, mua ngay trước khi hết." }
+      },
+      "children": []
+    }
+  ],
+
+  "products": [
+    {
+      "id": "7924951973957",
+      "sku": "DINING-PRACTICAL-SILVER-BIRCH",
+      "categoryId": "dining-set",
+      "type": "bundle",
+      "status": "soldOut",
+      "sortOrder": 1,
+      "price": { "current": "$2,499", "compare": "$5,326", "savings": "$2,827 OFF", "emi": "$69.41" },
+      "rating": null,
+      "reviewsCount": null,
+      "ctaLink": "/#dining-set",
+      "images": {
+        "primary": "//transformertable.com/cdn/shop/files/Transformer-table-american-silver-birch-the-practical-CT-WB.jpg?v=1767806920&width=1500",
+        "hover": "//transformertable.com/cdn/shop/files/Transformer-table-american-silver-birch-the-practical-4-panels-CT-lifestyle-4x3.jpg?v=1767806920&width=1500",
+        "gallery": []
+      },
+      "meta": {
+        "en": { "name": "Ultimate Transformer Dining Set (Practical)" },
+        "vi": { "name": "Bộ bàn ăn Transformer Robotics (Practical)" }
+      },
+      "variants": [
+        { "id": "v1", "name": "American Silver Birch", "swatch": "//transformertable.com/cdn/shop/files/swatch-v2-american-silver-birch.jpg?v=1721282004&width=200" },
+        { "id": "v2", "name": "American Mahogany", "swatch": "//transformertable.com/cdn/shop/files/swatch-v2-american-mahogany.jpg?v=1721409637&width=200" }
+      ]
+    },
+    {
+      "id": "7924957413445",
+      "sku": "DINING-STORAGE-SILVER-BIRCH",
+      "categoryId": "dining-set",
+      "type": "bundle",
+      "status": "soldOut",
+      "sortOrder": 2,
+      "price": { "current": "$1,749", "compare": "$3,926", "savings": "$2,177 OFF", "emi": "$48.58" },
+      "rating": null,
+      "reviewsCount": null,
+      "ctaLink": "/#dining-set",
+      "images": {
+        "primary": "//transformertable.com/cdn/shop/files/Transformer-table-american-silver-birch-the-table-CT-WB.jpg?v=1767800606&width=1500",
+        "hover": null,
+        "gallery": []
+      },
+      "meta": {
+        "en": { "name": "Ultimate Transformer Robotics Storage Bundle" },
+        "vi": { "name": "Bộ lưu trữ Transformer Robotics" }
+      },
+      "variants": [
+        { "id": "v1", "name": "American Silver Birch", "swatch": "//transformertable.com/cdn/shop/files/swatch-v2-american-silver-birch.jpg?v=1721282004&width=200" }
+      ]
+    },
+    {
+      "id": "7924960067653",
+      "sku": "DINING-PRACTICAL-RED-OAK",
+      "categoryId": "dining-set",
+      "type": "bundle",
+      "status": "onlyLeft",
+      "stockCount": 4,
+      "sortOrder": 3,
+      "price": { "current": "$2,249", "compare": "$5,540", "savings": "$3,291 OFF", "emi": "$62.47" },
+      "rating": null,
+      "reviewsCount": null,
+      "ctaLink": "/#dining-set",
+      "images": {
+        "primary": "//transformertable.com/cdn/shop/files/Transformer-table-northern-red-oak-the-practical-bundle-WB_dc473dbe-27f3-4570-a724-000f97d83660.jpg?v=1767901234&width=1500",
+        "hover": "//transformertable.com/cdn/shop/files/Transformer-table-northern-red-oak-the-practical-bundle-compact-WB_b13daa71-2d0d-4296-80dd-fd96140a83eb.jpg?v=1767901234&width=1500",
+        "gallery": []
+      },
+      "meta": {
+        "en": { "name": "Transformer Practical Dining Set Special Offer" },
+        "vi": { "name": "Bộ bàn ăn Transformer Robotics Practical – Ưu đãi đặc biệt" }
+      },
+      "variants": [
+        { "id": "v1", "name": "Northern Red Oak", "swatch": "//transformertable.com/cdn/shop/files/swatch-v2-northern-red-oak.jpg?v=1721281940&width=200" }
+      ]
+    },
+    {
+      "id": "7924961017925",
+      "sku": "DINING-HOST-RED-OAK",
+      "categoryId": "dining-set",
+      "type": "bundle",
+      "status": "onlyLeft",
+      "stockCount": 2,
+      "sortOrder": 4,
+      "price": { "current": "$2,749", "compare": "$5,540", "savings": "$2,791 OFF", "emi": "$76.36" },
+      "rating": null,
+      "reviewsCount": null,
+      "ctaLink": "/#dining-set",
+      "images": {
+        "primary": "//transformertable.com/cdn/shop/files/Transformer-table-northern-red-oak-the-host-bundle-WB_edc6ea25-dee3-4307-93a5-9903ed374a89.jpg?v=1767899635&width=1500",
+        "hover": "//transformertable.com/cdn/shop/files/Transformer-table-northern-red-oak-the-host-bundle-compact-WB_f9bc7cab-ad89-4cc2-a8d2-125e2be0c665.jpg?v=1767899635&width=1500",
+        "gallery": []
+      },
+      "meta": {
+        "en": { "name": "Transformer Host Dining Set Special Offer" },
+        "vi": { "name": "Bộ bàn ăn Transformer Robotics Host – Ưu đãi đặc biệt" }
+      },
+      "variants": [
+        { "id": "v1", "name": "Northern Red Oak", "swatch": "//transformertable.com/cdn/shop/files/swatch-v2-northern-red-oak.jpg?v=1721281940&width=200" }
+      ]
+    },
+    {
+      "id": "7924949418053",
+      "sku": "DINING-HOST-MAHOGANY",
+      "categoryId": "dining-set",
+      "type": "bundle",
+      "status": "soldOut",
+      "sortOrder": 5,
+      "price": { "current": "$2,999", "compare": "$6,610", "savings": "$3,611 OFF", "emi": "$83.30" },
+      "rating": null,
+      "reviewsCount": null,
+      "ctaLink": "/#dining-set",
+      "images": {
+        "primary": "//transformertable.com/cdn/shop/files/Transformer-table-american-mahogany-the-host-CT-WB.jpg?v=1767841718&width=1500",
+        "hover": "//transformertable.com/cdn/shop/files/Transformer-table-american-mahogany-the-host-3-panels-CT-lifestyle-4x3.jpg?v=1767813448&width=1500",
+        "gallery": []
+      },
+      "meta": {
+        "en": { "name": "Ultimate Transformer Dining Set (Host)" },
+        "vi": { "name": "Bộ bàn ăn Transformer Robotics (Host)" }
+      },
+      "variants": [
+        { "id": "v1", "name": "American Mahogany", "swatch": "//transformertable.com/cdn/shop/files/swatch-v2-american-mahogany.jpg?v=1721409637&width=200" }
+      ]
+    },
+    {
+      "id": "7924951810117",
+      "sku": "DINING-FAMILY-MAHOGANY",
+      "categoryId": "dining-set",
+      "type": "bundle",
+      "status": "soldOut",
+      "sortOrder": 6,
+      "price": { "current": "$2,999", "compare": "$5,710", "savings": "$2,711 OFF", "emi": "$83.30" },
+      "rating": null,
+      "reviewsCount": null,
+      "ctaLink": "/#dining-set",
+      "images": {
+        "primary": "//transformertable.com/cdn/shop/files/Transformer-table-american-mahogany-the-family-CT-WB.jpg?v=1767841690&width=1500",
+        "hover": "//transformertable.com/cdn/shop/files/Transformer-table-american-mahogany-the-family-3-panels-lifestyle-4x3.jpg?v=1767807745&width=1500",
+        "gallery": []
+      },
+      "meta": {
+        "en": { "name": "Ultimate Transformer Dining Set (Family)" },
+        "vi": { "name": "Bộ bàn ăn Transformer Robotics (Family)" }
+      },
+      "variants": [
+        { "id": "v1", "name": "American Mahogany", "swatch": "//transformertable.com/cdn/shop/files/swatch-v2-american-mahogany.jpg?v=1721409637&width=200" }
+      ]
+    },
+    {
+      "id": "7937240891461",
+      "sku": "COFFEE-TABLE-ACACIA",
+      "categoryId": "dining-set",
+      "type": "accessory",
+      "status": "inStock",
+      "sortOrder": 7,
+      "price": { "current": "$499", "compare": "$1,070", "savings": "$571 OFF", "emi": "$13.86" },
+      "rating": null,
+      "reviewsCount": null,
+      "ctaLink": "/",
+      "images": {
+        "primary": "//transformertable.com/cdn/shop/files/coffee-table-acacia_6f0aac00-6b09-4266-ad48-53581eff62d2.jpg?v=1741807435&width=1500",
+        "hover": null,
+        "gallery": []
+      },
+      "meta": {
+        "en": { "name": "Transformer Coffee Table - Special Offer" },
+        "vi": { "name": "Bàn trà Transformer Robotics – Ưu đãi đặc biệt" }
+      },
+      "variants": [
+        { "id": "v1", "name": "Australian Acacia", "swatch": "//transformertable.com/cdn/shop/files/swatch-v2-australian-acacia.jpg?v=1658349077&width=200" }
+      ]
+    },
+    {
+      "id": "7937254260805",
+      "sku": "LIFT-COFFEE-TABLE",
+      "categoryId": "dining-set",
+      "type": "accessory",
+      "status": "onlyLeft",
+      "stockCount": 9,
+      "sortOrder": 8,
+      "price": { "current": "$499", "compare": "$1,070", "savings": "$571 OFF", "emi": "$13.86" },
+      "rating": null,
+      "reviewsCount": null,
+      "ctaLink": "/",
+      "images": {
+        "primary": "//transformertable.com/cdn/shop/files/Transformer-table-brazilian-sequoia-coffee-table-closed-WB-big.jpg?v=1741807437&width=1500",
+        "hover": "//transformertable.com/cdn/shop/files/Transformer-table-brazilian-sequoia-coffee-table-open-WB-big.jpg?v=1741807437&width=1500",
+        "gallery": []
+      },
+      "meta": {
+        "en": { "name": "Lift Top Coffee Table - Special Offer" },
+        "vi": { "name": "Bàn trà mặt nâng – Ưu đãi đặc biệt" }
+      },
+      "variants": [
+        { "id": "v1", "name": "Dark Walnut", "swatch": "//transformertable.com/cdn/shop/files/swatch-v2-dark-walnut.jpg?v=1721231035&width=200" },
+        { "id": "v2", "name": "Aged Elm", "swatch": "//transformertable.com/cdn/shop/files/swatch-v2-aged-elm.jpg?v=1705344743&width=200" }
+      ]
+    },
+    {
+      "id": "6892120997957",
+      "sku": "OUTDOOR-SET-DARK-TEAK",
+      "categoryId": "outdoor-dining",
+      "type": "bundle",
+      "status": "inStock",
+      "sortOrder": 1,
+      "price": { "current": "$2,999", "compare": "$4,848", "savings": "SAVE UP TO $1722", "emi": "$83.30" },
+      "rating": 4.9,
+      "reviewsCount": 11,
+      "ctaLink": "/#outdoor-dining",
+      "images": {
+        "primary": "//transformertable.com/cdn/shop/files/TOT-dark-teak-5-panels-no-umbrella-bundle.jpg?v=1724356559&width=1500",
+        "hover": "//transformertable.com/cdn/shop/files/TOT-dark-teak-4-panels-bar-cart-lifestyle-models.jpg?v=1721265505&width=1500",
+        "gallery": []
+      },
+      "meta": {
+        "en": { "name": "Transformer Outdoor Dining Set" },
+        "vi": { "name": "Bộ bàn ăn ngoài trời Transformer" }
+      },
+      "variants": [
+        { "id": "v1", "name": "Mocha Brown", "swatch": "//transformertable.com/cdn/shop/files/swatch-v2-mocha-brown.jpg?v=1769024289&width=200" }
+      ]
+    },
+    {
+      "id": "nova-collection",
+      "sku": "NOVA-COLLECTION",
+      "categoryId": "nova",
+      "type": "collection",
+      "status": "inStock",
+      "sortOrder": 1,
+      "price": null,
+      "rating": null,
+      "reviewsCount": null,
+      "ctaLink": "#contact",
+      "images": {
+        "primary": "https://transformertable.com/cdn/shop/files/PSD-rafale-hp.jpg?v=1771359656&width=2000",
+        "thumbnail": "https://transformertable.com/cdn/shop/files/PSD-rafale-hp.jpg?v=1771359656&width=200",
+        "hover": null,
+        "gallery": []
+      },
+      "meta": {
+        "en": {
+          "name": "Transformer Nova Collection",
+          "badge": "NEW",
+          "description": "Elegantly designed and effortlessly extendable, our most luxurious dining set seats up to 10 and features integrated storage."
+        },
+        "vi": {
+          "name": "Bộ sưu tập Transformer Nova",
+          "badge": "MỚI",
+          "description": "Thiết kế thanh lịch, mở rộng linh hoạt cho 10 người. Đây là bộ bàn ăn sang trọng nhất với ngăn chứa đồ tiện dụng."
+        }
+      },
+      "variants": []
+    }
+  ],
+
+  "banners": [
+    {
+      "id": "banner-clearance-promo",
+      "type": "grid-banner",
+      "categoryId": "clearance",
+      "image": "//transformertable.com/cdn/shop/files/MENU_IMG_MD_c09716f6-f250-4d74-9843-f2313eca2431.jpg?v=1771390982&width=1000"
+    }
+  ],
+
+  "heroBannerVideo": {
+    "note": "Fallback static hero video shown when no banners are loaded from Supabase. Managed dynamically via /api/banners.",
+    "desktop": {
+      "src": "https://transformertable.com/cdn/shop/videos/c/vp/11d3647621354c7cb208d78dc0da5852/11d3647621354c7cb208d78dc0da5852.SD-480p-1.2Mbps-74470836.mp4?v=0",
+      "poster": "https://transformertable.com/cdn/shop/files/preview_images/11d3647621354c7cb208d78dc0da5852.thumbnail.0000000000_150x.jpg?v=1771353747"
+    },
+    "mobile": {
+      "src": "https://transformertable.com/cdn/shop/videos/c/vp/d8184e44b38d464cac31eba99df3b7fd/d8184e44b38d464cac31eba99df3b7fd.HD-1080p-3.3Mbps-74470985.mp4?v=0",
+      "poster": "https://transformertable.com/cdn/shop/files/preview_images/d8184e44b38d464cac31eba99df3b7fd.thumbnail.0000000000_150x.jpg?v=1771353807"
+    },
+    "meta": {
+      "en": { "title": "Transformer Robotics", "description": "Discover the new collection designed to perfection.", "cta": "Discover now" },
+      "vi": { "title": "Transformer Robotics", "description": "Biến hóa tinh tế - Nâng tầm nghệ thuật sống", "cta": "Khám phá ngay" }
+    }
+  },
+
+  "novaBannerVideo": {
+    "note": "Full-width video banner section shown above the hero on the homepage (NovaBanner component).",
+    "desktop": {
+      "src": "https://transformertable.com/cdn/shop/videos/c/vp/11d3647621354c7cb208d78dc0da5852/11d3647621354c7cb208d78dc0da5852.SD-480p-1.2Mbps-74470836.mp4?v=0",
+      "poster": "https://transformertable.com/cdn/shop/files/preview_images/11d3647621354c7cb208d78dc0da5852.thumbnail.0000000000_150x.jpg?v=1771353747"
+    },
+    "mobile": {
+      "src": "https://transformertable.com/cdn/shop/videos/c/vp/d8184e44b38d464cac31eba99df3b7fd/d8184e44b38d464cac31eba99df3b7fd.HD-1080p-3.3Mbps-74470985.mp4?v=0",
+      "poster": "https://transformertable.com/cdn/shop/files/preview_images/d8184e44b38d464cac31eba99df3b7fd.thumbnail.0000000000_150x.jpg?v=1771353807"
+    },
+    "meta": {
+      "en": { "label": "New", "title": "Transformer Robotics", "description": "Discover the new collection designed to perfection.", "cta": "Discover now" },
+      "vi": { "label": "Mới", "title": "Transformer Robotics", "description": "Biến hóa tinh tế - Nâng tầm nghệ thuật sống", "cta": "Khám phá ngay" }
+    }
+  },
+
+  "navbarPreviewVideos": {
+    "note": "Hover preview videos shown in the desktop Navbar when user hovers over each section link.",
+    "items": [
+      {
+        "sectionId": "nova",
+        "video": "https://transformertable.com/cdn/shop/videos/c/vp/11d3647621354c7cb208d78dc0da5852/11d3647621354c7cb208d78dc0da5852.SD-480p-1.2Mbps-74470836.mp4?v=0",
+        "meta": { "en": { "label": "Nova Collection" }, "vi": { "label": "Bộ sưu tập Nova" } }
+      },
+      {
+        "sectionId": "round-dining-set",
+        "video": "https://row.transformertable.com/cdn/shop/videos/c/vp/efe4797c88a34db8aefe6d475a6760eb/efe4797c88a34db8aefe6d475a6760eb.HD-720p-3.0Mbps-47268162.mp4?v=0",
+        "meta": { "en": { "label": "Round Dining Set" }, "vi": { "label": "Bàn Tròn" } }
+      },
+      {
+        "sectionId": "dining-set",
+        "video": "https://row.transformertable.com/cdn/shop/videos/c/vp/c52d9b73430c40999aacb485572a27de/c52d9b73430c40999aacb485572a27de.HD-720p-3.0Mbps-47268161.mp4?v=0",
+        "meta": { "en": { "label": "Dining Set" }, "vi": { "label": "Bàn Ăn" } }
+      },
+      {
+        "sectionId": "table-to-desk",
+        "video": "https://row.transformertable.com/cdn/shop/videos/c/vp/f057d638a9fe4f09b0added3e113efe2/f057d638a9fe4f09b0added3e113efe2.HD-720p-1.6Mbps-47268218.mp4?v=0",
+        "meta": { "en": { "label": "Table to Desk" }, "vi": { "label": "Bàn Làm Việc" } }
+      },
+      {
+        "sectionId": "outdoor-dining",
+        "video": "https://row.transformertable.com/cdn/shop/videos/c/vp/2fc4a8d8477b40e09d36b09bbd2f0b44/2fc4a8d8477b40e09d36b09bbd2f0b44.HD-720p-1.6Mbps-47268361.mp4?v=0",
+        "meta": { "en": { "label": "Outdoor Dining" }, "vi": { "label": "Bàn Ngoài Trời" } }
+      }
+    ]
+  },
+
+  "shopDropdownFeatures": {
+    "note": "3 feature panels shown in the Shop mega-menu dropdown (ShopDropdown component). Each has a static image and a hover video.",
+    "items": [
+      {
+        "id": "nova",
+        "image": "https://transformertable.com/cdn/shop/files/nova-collection.png?v=1771348597&width=600",
+        "video": "https://transformertable.com/cdn/shop/videos/c/vp/d8184e44b38d464cac31eba99df3b7fd/d8184e44b38d464cac31eba99df3b7fd.HD-1080p-3.3Mbps-74470985.mp4?v=0",
+        "ctaLink": "#contact",
+        "meta": { "en": { "title": "Nova Collection", "cta": "Discover more" }, "vi": { "title": "Bộ sưu tập Nova", "cta": "Khám phá ngay" } }
+      },
+      {
+        "id": "extendable-dining",
+        "image": "https://transformertable.com/cdn/shop/files/hybrid.jpg?v=1731536944&width=600",
+        "video": "https://transformertable.com/cdn/shop/videos/c/vp/50c9153e0ee842128b2ee2ec59355f44/50c9153e0ee842128b2ee2ec59355f44.HD-720p-3.0Mbps-32846870.mp4?v=0",
+        "ctaLink": "#contact",
+        "meta": { "en": { "title": "Extendable Dining Tables", "cta": "Discover more" }, "vi": { "title": "Bàn ăn mở rộng", "cta": "Khám phá ngay" } }
+      },
+      {
+        "id": "anniversary-sale",
+        "image": "https://transformertable.com/cdn/shop/files/MENU_IMG_MD2.jpg?v=1771392251&width=600",
+        "video": "https://transformertable.com/cdn/shop/videos/c/vp/59c878e1ca6c4f9094811aa9437b2db6/59c878e1ca6c4f9094811aa9437b2db6.HD-720p-4.5Mbps-61569584.mp4?v=0",
+        "ctaLink": "#contact",
+        "meta": { "en": { "title": "10-Year Anniversary Sale", "cta": "Anniversary Sale" }, "vi": { "title": "Ưu đãi kỷ niệm 10 năm", "cta": "Ưu đãi kỷ niệm" } }
+      }
+    ]
+  },
+
+  "brandAssets": {
+    "note": "Static logos, brand images used site-wide.",
+    "logos": [
+      { "id": "logo-main", "src": "/logo-moi.png", "alt": "Transformer Robotics", "usage": "Navbar" },
+      { "id": "logo-red", "src": "/logo-do.svg", "alt": "Transformer Robotics Red", "usage": "Alt logo" },
+      { "id": "logo-blue", "src": "/logo-xanh.png", "alt": "Transformer Robotics Blue", "usage": "Alt logo" },
+      { "id": "logo-dark", "src": "/logo-den.png", "alt": "Transformer Robotics Dark", "usage": "Alt logo" },
+      { "id": "logo-svg", "src": "/logo.svg", "alt": "Transformer Robotics SVG", "usage": "Favicon / icon" }
+    ],
+    "heroBannerImage": {
+      "src": "/asset/hero-banner.jpg",
+      "usage": "Background parallax image for Contact section"
+    },
+    "loadingAnimation": {
+      "src": "/loading.webp",
+      "usage": "Page loading screen"
+    }
+  },
+
+  "socialVideos": {
+    "note": "Videos for the social-style vertical slider (VideoSocialSlider component). Data loaded dynamically from /api/components/social-videos. Fields per item: id, videoSrc, poster, likes, comments, avatar, userName, profileUrl.",
+    "apiEndpoint": "/api/components/social-videos",
+    "schema": {
+      "id": "string",
+      "videoSrc": "string (URL)",
+      "poster": "string (URL, optional)",
+      "likes": "string (e.g. '12.4K')",
+      "comments": "string (e.g. '234')",
+      "avatar": "string (URL)",
+      "userName": "string",
+      "profileUrl": "string (URL)"
+    }
+  },
+
+  "mediaMarqueeLogos": {
+    "note": "Media brand logos shown in the scrolling marquee strip. Loaded from /api/components/marquee. Fields: name, url.",
+    "apiEndpoint": "/api/components/marquee",
+    "schema": {
+      "name": "string",
+      "url": "string (image URL)"
+    }
+  },
+
+  "heroSliderBanners": {
+    "note": "Dynamic banner slides for the HeroSlider component. Loaded from /api/banners (Supabase). Falls back to static heroBannerVideo if empty.",
+    "apiEndpoint": "/api/banners",
+    "schema": {
+      "id": "string",
+      "title_vi": "string",
+      "title_en": "string (optional)",
+      "title_fr": "string (optional)",
+      "description_vi": "string (optional)",
+      "description_en": "string (optional)",
+      "description_fr": "string (optional)",
+      "cta_text_vi": "string (optional)",
+      "cta_text_en": "string (optional)",
+      "cta_link": "string (URL or #anchor)",
+      "desktop_video_url": "string (URL, supports Google Drive)",
+      "mobile_video_url": "string (URL, supports Google Drive)",
+      "desktop_poster_url": "string (URL)",
+      "mobile_poster_url": "string (URL)"
+    }
+  },
+
+  "clearanceHeroVideo": {
+    "note": "Video shown as hero background on the Clearance page.",
+    "src": "//transformertable.com/cdn/shop/videos/c/vp/86b952c5e3434b43960884bf3777d94d/86b952c5e3434b43960884bf3777d94d.SD-480p-1.2Mbps-37777874.mp4?v=0",
+    "poster": "//transformertable.com/cdn/shop/files/preview_images/86b952c5e3434b43960884bf3777d94d.thumbnail.0000000000_150x.jpg?v=1731008086"
+  },
+
+  "materials": [
+    {
+      "id": "scandinavian-oak", "sortOrder": 1,
+      "image": "https://transformertable.com/cdn/shop/files/TT-4.0-WB-0646.jpg?v=1693241096",
+      "swatch": "//transformertable.com/cdn/shop/files/swatch-v2-american-silver-birch.jpg?v=1721282004&width=200",
+      "meta": {
+        "en": { "name": "Scandinavian Oak", "description": "With a natural look and feel, our Scandinavian Oak furniture oozes a serene atmosphere into your dining room." },
+        "vi": { "name": "Sồi Scandinavian", "description": "Mang vẻ đẹp tự nhiên và thanh lịch, nội thất Sồi Scandinavian mang đến bầu không khí yên bình cho phòng ăn." }
+      }
+    },
+    {
+      "id": "smoked-hickory", "sortOrder": 2,
+      "image": "https://transformertable.com/cdn/shop/files/TT-4.0-WB-0652.jpg?v=1693241095",
+      "swatch": "//transformertable.com/cdn/shop/files/swatch-v2-american-mahogany.jpg?v=1721409637&width=200",
+      "meta": {
+        "en": { "name": "Smoked Hickory", "description": "Bold and masculine, Smoked Hickory brings depth and character to your space." },
+        "vi": { "name": "Gỗ Hickory Hun Khói", "description": "Đậm đà và nam tính, Hickory Hun Khói mang đến chiều sâu và cá tính cho không gian của bạn." }
+      }
+    },
+    {
+      "id": "american-walnut", "sortOrder": 3,
+      "image": "https://transformertable.com/cdn/shop/files/American_Walnut_solo.jpg?v=1729876765",
+      "swatch": "//transformertable.com/cdn/shop/files/swatch-v2-dark-walnut.jpg?v=1721231035&width=200",
+      "meta": {
+        "en": { "name": "American Walnut", "description": "Classic and timeless, American Walnut is prized for its warm tones and luxurious grain." },
+        "vi": { "name": "Gỗ Óc Chó Mỹ", "description": "Cổ điển và vượt thời gian, Gỗ Óc Chó Mỹ được đánh giá cao vì tông màu ấm áp và vân gỗ sang trọng." }
+      }
+    },
+    {
+      "id": "canadian-birch", "sortOrder": 4,
+      "image": "https://transformertable.com/cdn/shop/files/TT-4.0-WB-0654.jpg?v=1693241095",
+      "swatch": "//transformertable.com/cdn/shop/files/swatch-v2-northern-red-oak.jpg?v=1721281940&width=200",
+      "meta": {
+        "en": { "name": "Canadian Birch", "description": "Bright and clean, Canadian Birch offers a modern and fresh feel." },
+        "vi": { "name": "Gỗ Bạch Dương Canada", "description": "Sáng sủa và sạch sẽ, Gỗ Bạch Dương Canada mang đến hơi thở hiện đại và tươi mới." }
+      }
+    }
+  ],
+
+  "collectionImageWithText": {
+    "note": "Hero image pairs (desktop + mobile) used in the ImageWithText component rendered per collection on the homepage.",
+    "items": [
+      {
+        "collectionId": "round-dining-set",
+        "reverse": true,
+        "fillTextEffect": true,
+        "desktopImage": "https://row.transformertable.com/cdn/shop/files/woman_round_table.png?v=1746734537&width=1000",
+        "mobileImage": "https://row.transformertable.com/cdn/shop/files/woman_3.png?v=1746734537&width=1000",
+        "ctaLink": "#contact",
+        "translationKeys": {
+          "title": "ImageWithTextRound.title",
+          "description": "ImageWithTextRound.description",
+          "cta": "ImageWithTextRound.cta"
+        },
+        "meta": {
+          "en": {
+            "title": "Elegantly Designed, Effortlessly Extended",
+            "description": "Our most luxurious expandable dining sets seat up to 10 and feature built-in storage compartments. Crisp, clean lines and refined wooden detailing will make this table the focal point of any room.",
+            "cta": "SHOP COLLECTION"
+          },
+          "vi": {
+            "title": "Thiết kế thanh lịch, mở rộng dễ dàng",
+            "description": "Bộ bàn ăn mở rộng sang trọng nhất của chúng tôi chứa đến 10 người và có các ngăn lưu trữ tích hợp. Đường nét sắc sảo và chi tiết gỗ tinh xảo sẽ làm cho chiếc bàn này trở thành tâm điểm của mọi căn phòng.",
+            "cta": "MUA BỘ SƯU TẬP"
+          }
+        }
+      },
+      {
+        "collectionId": "dining-set",
+        "reverse": false,
+        "fillTextEffect": false,
+        "desktopImage": "https://row.transformertable.com/cdn/shop/files/test-1.png?v=1746734537&width=1000",
+        "mobileImage": "https://row.transformertable.com/cdn/shop/files/woman_transformer_table.png?v=1746734537&width=1000",
+        "ctaLink": "#contact",
+        "translationKeys": {
+          "title": "ImageWithText.title",
+          "description": "ImageWithText.description",
+          "cta": "ImageWithText.cta"
+        },
+        "meta": {
+          "en": {
+            "title": "The World's Most Versatile Table",
+            "description": "Versatile, extendable dining sets that expand from 1 to 10 ft. to fit any home or lifestyle. The original transforming table, now better than ever.",
+            "cta": "SHOP COLLECTION"
+          },
+          "vi": {
+            "title": "Chiếc bàn linh hoạt nhất thế giới",
+            "description": "Các bộ bàn ăn linh hoạt, có thể mở rộng từ 30cm đến 3 mét, phù hợp với mọi ngôi nhà và phong cách sống.",
+            "cta": "MUA BỘ SƯU TẬP"
+          }
+        }
+      },
+      {
+        "collectionId": "table-to-desk",
+        "reverse": false,
+        "fillTextEffect": false,
+        "desktopImage": "https://row.transformertable.com/cdn/shop/files/table-to-desk-hero-image.png?v=1746734537&width=1000",
+        "mobileImage": "https://row.transformertable.com/cdn/shop/files/Mobileimage_txd.png?v=1746734537&width=1000",
+        "ctaLink": "#contact",
+        "translationKeys": {
+          "title": "ImageWithTextDesk.title",
+          "description": "ImageWithTextDesk.description",
+          "cta": "ImageWithTextDesk.cta"
+        },
+        "meta": {
+          "en": {
+            "title": "Seamlessly Switch from 9-5 to 5-9",
+            "description": "The dining table that becomes two desks. Complete with integrated storage, cable management, and a detachable Bluetooth speaker.",
+            "cta": "SHOP COLLECTION"
+          },
+          "vi": {
+            "title": "Chuyển đổi liền mạch từ làm việc đến giải trí",
+            "description": "Bàn ăn có thể biến thành hai bàn làm việc, tích hợp ngăn lưu trữ, hệ thống quản lý dây cáp và loa Bluetooth có thể tháo rời.",
+            "cta": "MUA BỘ SƯU TẬP"
+          }
+        }
+      },
+      {
+        "collectionId": "outdoor-dining",
+        "reverse": true,
+        "fillTextEffect": false,
+        "desktopImage": "https://row.transformertable.com/cdn/shop/files/Transformer-outdoor-table-light-oak-the-practical-banner.jpg?v=1746734648&width=1000",
+        "mobileImage": "https://row.transformertable.com/cdn/shop/files/Transformer-outdoor-table-light-oak-the-practical-banner-mobile.jpg?v=1746734648&width=1000",
+        "ctaLink": "#contact",
+        "translationKeys": {
+          "title": "ImageWithTextOutdoor.title",
+          "description": "ImageWithTextOutdoor.description",
+          "cta": "ImageWithTextOutdoor.cta"
+        },
+        "meta": {
+          "en": {
+            "title": "Take the Party Outside",
+            "description": "The world's only extendable patio table. A 6-in-1 outdoor dining set that expands to over 9' long. All-weather resistant and made for easy storage.",
+            "cta": "SHOP COLLECTION"
+          },
+          "vi": {
+            "title": "Mang bữa tiệc ra ngoài trời",
+            "description": "Bàn ngoài trời có thể mở rộng duy nhất trên thế giới. Bộ bàn ăn ngoài trời 6 trong 1 mở rộng dài hơn 2.7m, chống chịu mọi thời tiết và dễ dàng lưu trữ.",
+            "cta": "MUA BỘ SƯU TẬP"
+          }
+        }
+      }
+    ]
+  },
+
+  "collectionFeaturedGrid": {
+    "note": "FeaturedFeatures grid media per collection. Each collection has: largeFeature (video), 2 smallFeatures (images), wideFeature (image). Rendered as a 12-col grid on homepage.",
+    "items": [
+      {
+        "collectionId": "round-dining-set",
+        "largeFeature": {
+          "type": "video",
+          "aspect": "aspect-[16/12]",
+          "src": "https://row.transformertable.com/cdn/shop/videos/c/vp/efe4797c88a34db8aefe6d475a6760eb/efe4797c88a34db8aefe6d475a6760eb.HD-720p-3.0Mbps-47268162.mp4?v=0",
+          "poster": "https://row.transformertable.com/cdn/shop/files/preview_images/efe4797c88a34db8aefe6d475a6760eb.thumbnail.0000000000_1100x.jpg?v=1746734552",
+          "translationKey": "DiningFeatures.extendable",
+          "meta": { "en": { "title": "Extendable and Space-Saving" }, "vi": { "title": "Có thể mở rộng và tiết kiệm không gian" } }
+        },
+        "smallFeatures": [
+          {
+            "type": "image",
+            "aspect": "aspect-square sm:aspect-[4/3]",
+            "src": "https://row.transformertable.com/cdn/shop/files/Frame_256_2ddb8c9a-c942-4ab1-ac11-50e42809615b.png?v=1746734537&width=1500",
+            "translationKey": "DiningFeatures.woodGrain",
+            "meta": { "en": { "title": "Natural Wood Grain" }, "vi": { "title": "Vân gỗ tự nhiên" } }
+          },
+          {
+            "type": "image",
+            "aspect": "aspect-square sm:aspect-[4/3]",
+            "src": "https://row.transformertable.com/cdn/shop/files/Frame_257_3f729c56-5f61-4757-ad50-dfb6e3c3e725.png?v=1746734537&width=1500",
+            "translationKey": "DiningFeatures.detailing",
+            "meta": { "en": { "title": "Beautiful Detailing" }, "vi": { "title": "Chi tiết tinh xảo" } }
+          }
+        ],
+        "wideFeature": {
+          "type": "image",
+          "aspect": "aspect-[16/7]",
+          "src": "https://row.transformertable.com/cdn/shop/files/Frame_255_5c22ef9f-bff2-4ce8-9939-8bfc14becfea.png?v=1756135346&width=1500",
+          "translationKey": "DiningFeatures.easyToStore",
+          "meta": { "en": { "title": "Easy to Store" }, "vi": { "title": "Dễ dàng lưu trữ" } }
+        }
+      },
+      {
+        "collectionId": "dining-set",
+        "largeFeature": {
+          "type": "video",
+          "aspect": "aspect-[16/12]",
+          "src": "https://row.transformertable.com/cdn/shop/videos/c/vp/c52d9b73430c40999aacb485572a27de/c52d9b73430c40999aacb485572a27de.HD-720p-3.0Mbps-47268161.mp4?v=0",
+          "poster": "https://row.transformertable.com/cdn/shop/files/preview_images/c52d9b73430c40999aacb485572a27de.thumbnail.0000000000_1100x.jpg?v=1746734552",
+          "translationKey": "DiningFeatures.extendable",
+          "meta": { "en": { "title": "Extendable and Space-Saving" }, "vi": { "title": "Có thể mở rộng và tiết kiệm không gian" } }
+        },
+        "smallFeatures": [
+          {
+            "type": "image",
+            "aspect": "aspect-square sm:aspect-[4/3]",
+            "src": "https://row.transformertable.com/cdn/shop/files/Frame_256_2ddb8c9a-c942-4ab1-ac11-50e42809615b.png?v=1746734537&width=1500",
+            "translationKey": "DiningFeatures.woodGrain",
+            "meta": { "en": { "title": "Natural Wood Grain" }, "vi": { "title": "Vân gỗ tự nhiên" } }
+          },
+          {
+            "type": "image",
+            "aspect": "aspect-square sm:aspect-[4/3]",
+            "src": "https://row.transformertable.com/cdn/shop/files/Frame_257_3f729c56-5f61-4757-ad50-dfb6e3c3e725.png?v=1746734537&width=1500",
+            "translationKey": "DiningFeatures.detailing",
+            "meta": { "en": { "title": "Beautiful Detailing" }, "vi": { "title": "Chi tiết tinh xảo" } }
+          }
+        ],
+        "wideFeature": {
+          "type": "image",
+          "aspect": "aspect-[16/7]",
+          "src": "https://row.transformertable.com/cdn/shop/files/Frame_255_5c22ef9f-bff2-4ce8-9939-8bfc14becfea.png?v=1756135346&width=1500",
+          "translationKey": "DiningFeatures.easyToStore",
+          "meta": { "en": { "title": "Easy to Store" }, "vi": { "title": "Dễ dàng lưu trữ" } }
+        }
+      },
+      {
+        "collectionId": "table-to-desk",
+        "largeFeature": {
+          "type": "video",
+          "aspect": "aspect-[16/12]",
+          "src": "https://row.transformertable.com/cdn/shop/videos/c/vp/f057d638a9fe4f09b0added3e113efe2/f057d638a9fe4f09b0added3e113efe2.HD-720p-1.6Mbps-47268218.mp4?v=0",
+          "poster": "https://row.transformertable.com/cdn/shop/files/preview_images/f057d638a9fe4f09b0added3e113efe2.thumbnail.0000000000_1100x.jpg?v=1746734563",
+          "translationKey": "FeaturedFeatures.workToPlay",
+          "meta": { "en": { "title": "From Work to Play" }, "vi": { "title": "Từ công việc đến giải trí" } }
+        },
+        "smallFeatures": [
+          {
+            "type": "image",
+            "aspect": "aspect-square sm:aspect-[4/3]",
+            "src": "https://row.transformertable.com/cdn/shop/files/Frame_260_5049f705-7e91-4b6f-8ca7-f9cc84e7561d.png?v=1746734537&width=1500",
+            "translationKey": "FeaturedFeatures.cableSystem",
+            "meta": { "en": { "title": "Hidden Cable System" }, "vi": { "title": "Hệ thống dây cáp ẩn" } }
+          },
+          {
+            "type": "image",
+            "aspect": "aspect-square sm:aspect-[4/3]",
+            "src": "https://row.transformertable.com/cdn/shop/files/Frame_261_daeaa479-9e4c-49a8-b3e7-fec40f7a5288.png?v=1763483183&width=1500",
+            "translationKey": "FeaturedFeatures.speaker",
+            "meta": { "en": { "title": "Portable Bluetooth Speaker" }, "vi": { "title": "Loa Bluetooth di động" } }
+          }
+        ],
+        "wideFeature": {
+          "type": "image",
+          "aspect": "aspect-[16/7]",
+          "src": "https://row.transformertable.com/cdn/shop/files/Rectangle_757_381daa73-3d55-4d48-8d7d-49c583f10f59.png?v=1746734537&width=1500",
+          "translationKey": "FeaturedFeatures.mechanism",
+          "meta": { "en": { "title": "Hydraulic Flip-top Mechanism" }, "vi": { "title": "Cơ chế nắp đậy thủy lực" } }
+        }
+      },
+      {
+        "collectionId": "outdoor-dining",
+        "largeFeature": {
+          "type": "video",
+          "aspect": "aspect-[16/12]",
+          "src": "https://row.transformertable.com/cdn/shop/videos/c/vp/2fc4a8d8477b40e09d36b09bbd2f0b44/2fc4a8d8477b40e09d36b09bbd2f0b44.HD-720p-1.6Mbps-47268361.mp4?v=0",
+          "poster": "https://row.transformertable.com/cdn/shop/files/preview_images/2fc4a8d8477b40e09d36b09bbd2f0b44.thumbnail.0000000000_1100x.jpg?v=1746734663",
+          "translationKey": "OutdoorFeatures.extends",
+          "meta": { "en": { "title": "Extends to Over 9' Long" }, "vi": { "title": "Mở rộng dài hơn 2.7 mét" } }
+        },
+        "smallFeatures": [
+          {
+            "type": "image",
+            "aspect": "aspect-square sm:aspect-[4/3]",
+            "src": "https://row.transformertable.com/cdn/shop/files/Transformer-outdoor-table-light-oak-middle-panel-hole-closed-closeup_68e215ae-5b8c-4681-b2c3-63f47c020022.jpg?v=1751568051&width=1500",
+            "translationKey": "OutdoorFeatures.weather",
+            "meta": { "en": { "title": "All-Weather Resistant" }, "vi": { "title": "Chống chịu mọi thời tiết" } }
+          },
+          {
+            "type": "image",
+            "aspect": "aspect-square sm:aspect-[4/3]",
+            "src": "https://row.transformertable.com/cdn/shop/files/Transformer-outdoor-table-light-oak-corner-texture-closeup_8473b97a-cbd0-4944-9e4a-76554e1d8bd4.jpg?v=1751568051&width=1500",
+            "translationKey": "OutdoorFeatures.longLasting",
+            "meta": { "en": { "title": "Long-Lasting Material" }, "vi": { "title": "Chất liệu bền bỉ" } }
+          }
+        ],
+        "wideFeature": {
+          "type": "image",
+          "aspect": "aspect-[16/7]",
+          "src": "https://row.transformertable.com/cdn/shop/files/image-easy-to-store.jpg?v=1746734648&width=1500",
+          "translationKey": "OutdoorFeatures.easyToStore",
+          "meta": { "en": { "title": "Easy to Store" }, "vi": { "title": "Dễ dàng lưu trữ" } }
+        }
+      }
+    ]
+  },
+
+  "virtualTourMedia": {
+    "note": "All images and icons used in the Virtual Tour section (/virtual-tour route).",
+    "bookingUrl": "https://calendly.com/transformertable",
+    "heroImage": {
+      "src": "https://transformertable.com/cdn/shop/files/virtual_2c013663-af7d-431b-b433-b1c4b3b0a28e.jpg?v=1735114535&width=1000",
+      "alt": "Virtual Tour Demo",
+      "usage": "Book a session promo — rotated card image"
+    },
+    "stepIcons": [
+      {
+        "step": 1,
+        "src": "https://transformertable.com/cdn/shop/files/ICONS_WEB_FINAL-03-1.webp?v=1661662627&width=150",
+        "translationKey": "VirtualTour.step1Title",
+        "meta": { "en": { "title": "Book Your Session" }, "vi": { "title": "Đặt lịch hẹn" } }
+      },
+      {
+        "step": 2,
+        "src": "https://transformertable.com/cdn/shop/files/ICONS_WEB_FINAL-19-1.webp?v=1661664004&width=150",
+        "translationKey": "VirtualTour.step2Title",
+        "meta": { "en": { "title": "Meet Your Guide" }, "vi": { "title": "Gặp gỡ hướng dẫn viên" } }
+      },
+      {
+        "step": 3,
+        "src": "https://transformertable.com/cdn/shop/files/ICONS_WEB_FINAL-06.webp?v=1661664028&width=150",
+        "translationKey": "VirtualTour.step3Title",
+        "meta": { "en": { "title": "Explore the Collection" }, "vi": { "title": "Khám phá bộ sưu tập" } }
+      }
+    ],
+    "expectationImages": [
+      {
+        "index": 1,
+        "src": "https://transformertable.com/cdn/shop/files/tour-1.jpg?v=1735115028&width=1000",
+        "imageLeft": true,
+        "translationKey": "VirtualTour.expect1Title",
+        "meta": {
+          "en": { "title": "See the Table in Action", "description": "Watch our expert extend, fold and demonstrate every feature of your chosen configuration live." },
+          "vi": { "title": "Xem bàn hoạt động thực tế", "description": "Xem chuyên gia của chúng tôi mở rộng, gập và trình diễn mọi tính năng của cấu hình bạn chọn theo thời gian thực." }
+        }
+      },
+      {
+        "index": 2,
+        "src": "https://transformertable.com/cdn/shop/files/buffet.jpg?v=1716950290&width=1000",
+        "imageLeft": false,
+        "translationKey": "VirtualTour.expect2Title",
+        "meta": {
+          "en": { "title": "Get All Your Questions Answered", "description": "Our experts are on hand to answer any questions you may have about sizing, materials, delivery and assembly." },
+          "vi": { "title": "Giải đáp mọi thắc mắc", "description": "Chuyên gia của chúng tôi luôn sẵn sàng giải đáp mọi câu hỏi về kích thước, chất liệu, giao hàng và lắp ráp." }
+        }
+      },
+      {
+        "index": 3,
+        "src": "https://transformertable.com/cdn/shop/files/virtualtour3_cae70e73-f329-497e-9a7b-728ece9cd0dd.jpg?v=1661664186&width=1000",
+        "imageLeft": true,
+        "translationKey": "VirtualTour.expect3Title",
+        "meta": {
+          "en": { "title": "Find the Perfect Fit for Your Home", "description": "Our team will help you find the right size, finish and accessories to suit your space and lifestyle." },
+          "vi": { "title": "Tìm sản phẩm phù hợp nhất", "description": "Đội ngũ của chúng tôi sẽ giúp bạn tìm đúng kích thước, màu sắc và phụ kiện phù hợp với không gian và phong cách sống." }
+        }
+      }
+    ]
+  }
+}

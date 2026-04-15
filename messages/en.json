@@ -14,8 +14,17 @@
     "loading": "Loading...",
     "error": "Something went wrong",
     "footer": {
-      "desc": "Leading the revolution of smart internal spaces with cutting-edge robotics.",
-      "rights": "All rights reserved."
+      "whyPartner": "WHY RETAILERS PARTNER WITH US",
+      "partner1": "Dropshipping support model",
+      "partner2": "Free display samples, including shipping",
+      "partner3": "Minimum order starting from 1 set",
+      "partner4": "Easy to display and consult customers",
+      "contactInfo": "Contact Information",
+      "contactPersonLabel": "Contact:",
+      "contactPerson": "Mr. Hong",
+      "social": "Social Media",
+      "rights": "All rights reserved.",
+      "globalPartner": "PARTNERING WITH RETAIL PARTNERS GLOBALLY"
     }
   },
   "hero": {
@@ -86,9 +95,31 @@
     "title": "Loved by Visionaries",
     "subtitle": "Join thousands of satisfied owners worldwide",
     "reviews": [
-      { "name": "David Chen", "role": "Architect", "content": "The robotic sofa is a game changer for small urban apartments. Incredible engineering." },
-      { "name": "Sarah Miller", "role": "Tech Enthusiast", "content": "Finally, furniture that understands technology. The Lumina bed has improved my sleep quality tenfold." },
-      { "name": "James Wilson", "role": "CEO, Nexus Design", "content": "Modern aesthetics combined with futuristic robotics. Transformer Robotics is the Tesla of furniture." }
+      {
+        "name": "David Chen",
+        "role": "Architect",
+        "content": "The robotic sofa is a game changer for small urban apartments. Incredible engineering."
+      },
+      {
+        "name": "Sarah Miller",
+        "role": "Tech Enthusiast",
+        "content": "Finally, furniture that understands technology. The Lumina bed has improved my sleep quality tenfold."
+      },
+      {
+        "name": "James Wilson",
+        "role": "Smart Home Guru",
+        "content": "Minimalist aesthetics with maximalist function. Transformer Table makes every square inch count."
+      }
     ]
+  },
+  "product": {
+    "back": "Back",
+    "loading": "Loading...",
+    "notFound": "Product not found.",
+    "colorOptions": "Color Options",
+    "description": "Description",
+    "specifications": "Technical Specifications",
+    "noSpecs": "No technical specifications available.",
+    "premiumNote": "Premium product from Transformer Robotics."
   }
 }
