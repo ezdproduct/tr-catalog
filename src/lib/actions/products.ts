@@ -37,8 +37,6 @@ export async function createProduct(formData: FormData) {
   try {
     const name = formData.get('name') as string;
     const description = (formData.get('description') as string) || '';
-    const priceStr = formData.get('price') as string;
-    const price = priceStr ? parseFloat(priceStr) : 0;
     const category_id = formData.get('category_id') as string;
     const metadataStr = formData.get('metadata') as string;
     const metadata = metadataStr ? JSON.parse(metadataStr) : {};
@@ -56,7 +54,7 @@ export async function createProduct(formData: FormData) {
     }
 
     const { error } = await supabase.from('products').insert([{
-      name, description, price, category_id,
+      name, description, category_id,
       image_urls, metadata
     }]);
 
@@ -73,8 +71,6 @@ export async function updateProduct(id: string, formData: FormData) {
   try {
     const name = formData.get('name') as string;
     const description = (formData.get('description') as string) || '';
-    const priceStr = formData.get('price') as string;
-    const price = priceStr ? parseFloat(priceStr) : 0;
     const category_id = formData.get('category_id') as string;
     const metadataStr = formData.get('metadata') as string;
     const metadata = metadataStr ? JSON.parse(metadataStr) : {};
@@ -92,7 +88,7 @@ export async function updateProduct(id: string, formData: FormData) {
       }
     }
 
-    const updateData: any = { name, description, price, category_id, metadata };
+    const updateData: any = { name, description, category_id, metadata };
 
     // Kết hợp ảnh cũ (nếu có tham số existing_images) và ảnh mới
     if (existingImagesStr !== null) {

@@ -53,7 +53,6 @@ export default function FeaturedProducts() {
                   <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#64748b' }}>
                     {product.categories?.name || 'Furniture'}
                   </span>
-                  <span style={{ fontWeight: 900, color: '#ef4444', fontSize: '1.2rem' }}>${product.price}</span>
                 </div>
                 <h3 style={{ fontSize: '1.1rem', fontWeight: 800, marginBottom: '1.2rem', color: '#000' }}>{product.name}</h3>
 

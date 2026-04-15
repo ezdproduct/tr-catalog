@@ -89,8 +89,8 @@ export default function Home() {
       </section>
 
       {/* Nova Featured Section */}
-      <section style={{ background: '#000', padding: '6rem 0', position: 'relative', overflow: 'hidden' }}>
-        <div className="container" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', alignItems: 'center', gap: '4rem', maxWidth: '1400px' }}>
+      <section style={{ background: '#000', minHeight: '100vh', display: 'flex', alignItems: 'center', position: 'relative', overflow: 'hidden' }}>
+        <div className="container" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', alignItems: 'center', gap: '4rem', maxWidth: '1400px', width: '100%' }}>
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}

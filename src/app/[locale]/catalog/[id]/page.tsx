@@ -54,21 +54,7 @@ export default function ProductDetailPage() {
   return (
     <main style={{ background: '#ffffff', minHeight: '100vh' }}>
       <Navbar />
-      <div className="container" style={{ padding: '20px 1.5rem 0' }}>
-        <button
-          onClick={() => router.back()}
-          style={{
-            display: 'flex', alignItems: 'center', gap: '0.5rem',
-            background: 'transparent', border: 'none', cursor: 'pointer',
-            padding: '1rem 0', color: '#64748b', fontWeight: 700,
-            fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '1px'
-          }}
-        >
-          <ChevronLeft size={18} /> {t('back')}
-        </button>
-      </div>
-
-      <div className="container" style={{ padding: '0 1.5rem 100px' }}>
+      <div className="container" style={{ padding: '120px 1.5rem 100px' }}>
         <div className="detail-grid">
 
           {/* Left: Enhanced Image Gallery */}
@@ -136,23 +122,7 @@ export default function ProductDetailPage() {
             {/* Color options removed per user request */}
 
             <div style={{ marginTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '3rem' }}>
-              <div>
-                <p style={{ fontSize: '1.05rem', color: '#475569', lineHeight: 1.7, whiteSpace: 'pre-wrap', margin: 0 }}>
-                  {product.description || metadata?.meta?.vi?.description || metadata?.meta?.en?.description || 'Sản phẩm cao cấp từ Transformer Robotics.'}
-                </p>
-              </div>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                {metadata && Object.entries(metadata).filter(([_, v]) => typeof v === 'string' || typeof v === 'number').map(([key, value], i) => (
-                  <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', padding: '0.8rem 0', borderBottom: '1px dashed #f1f5f9' }}>
-                    <div style={{ fontWeight: 800, color: '#64748b', fontSize: '0.85rem', textTransform: 'uppercase', minWidth: '120px' }}>{key}</div>
-                    <div style={{ fontWeight: 700, color: '#1a1a1a', fontSize: '0.95rem', textAlign: 'right', flex: 1, paddingLeft: '1rem' }}>{value as any}</div>
-                  </div>
-                ))}
-
-                {(!metadata || Object.entries(metadata).filter(([_, v]) => typeof v === 'string' || typeof v === 'number').length === 0) && (
-                  <div style={{ color: '#94a3b8', fontSize: '0.9rem', fontStyle: 'italic' }}>{t('noSpecs')}</div>
-                )}
+              <div style={{ marginTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '3rem' }}>
               </div>
             </div>
           </div>

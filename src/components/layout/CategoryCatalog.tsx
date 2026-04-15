@@ -91,7 +91,7 @@ export default function CategoryCatalog() {
                   <div style={{
                     width: '100%',
                     height: '100%',
-                    background: isSelected ? 'var(--primary)' : '#f8fafc',
+                    background: isSelected ? '#ffffff' : '#f8fafc',
                     transition: 'all 0.5s ease'
                   }} />
                 ) : (
@@ -102,7 +102,7 @@ export default function CategoryCatalog() {
                       width: '100%',
                       height: '100%',
                       objectFit: 'cover',
-                      filter: isSelected ? 'brightness(1)' : 'brightness(0.7) grayscale(0.5)',
+                      filter: isSelected ? 'brightness(1.1) contrast(1.1)' : 'brightness(0.7) grayscale(0.5)',
                       transition: 'all 0.5s ease'
                     }}
                   />
@@ -110,7 +110,7 @@ export default function CategoryCatalog() {
                 <div style={{
                   position: 'absolute',
                   inset: 0,
-                  background: isSelected ? 'transparent' : 'rgba(0,0,0,0.2)',
+                  background: isSelected ? 'rgba(255,255,255,0.9)' : 'rgba(0,0,0,0.2)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -119,12 +119,12 @@ export default function CategoryCatalog() {
                 }}>
                   <h3 style={{
                     fontSize: '1rem',
-                    fontWeight: 700,
-                    color: '#fff',
+                    fontWeight: 800,
+                    color: isSelected ? 'var(--primary)' : '#fff',
                     margin: 0,
                     textTransform: 'uppercase',
                     letterSpacing: '0.1em',
-                    textShadow: '0 2px 10px rgba(0,0,0,0.5)',
+                    textShadow: isSelected ? 'none' : '0 2px 10px rgba(0,0,0,0.5)',
                     textAlign: 'center'
                   }}>
                     {idx === 0 ? (locale === 'vi' ? 'TẤT CẢ SẢN PHẨM' : 'ALL PRODUCTS') : cat.name}
@@ -169,7 +169,7 @@ export default function CategoryCatalog() {
                         position: 'relative',
                         aspectRatio: '1/1',
                         overflow: 'hidden',
-                        background: '#f8fafc',
+                        background: '#ffffff',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center'
@@ -205,8 +205,9 @@ export default function CategoryCatalog() {
                           fontWeight: 700,
                           letterSpacing: '0.1em',
                           textTransform: 'uppercase',
-                          transform: 'translateY(100%)',
-                          transition: 'transform 0.3s ease'
+                          transform: 'translateY(10px)',
+                          opacity: 0,
+                          transition: 'all 0.3s ease'
                         }}>
                           Xem chi tiết
                         </div>
@@ -258,7 +259,8 @@ export default function CategoryCatalog() {
           transform: translateY(-8px);
         }
         .product-card-new:hover .hover-action {
-          transform: translateY(0);
+          transform: translateY(0) !important;
+          opacity: 1 !important;
         }
 
         @media (max-width: 1200px) {
