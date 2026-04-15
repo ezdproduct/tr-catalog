@@ -66,12 +66,12 @@ export default function Navbar() {
           style={{
             display: 'flex', alignItems: 'center', gap: '10px',
             padding: '10px 18px',
-            background: 'rgba(255, 255, 255, 0.15)',
+            background: 'rgba(0, 0, 0, 0.05)',
             backdropFilter: 'blur(10px)',
-            borderRadius: '14px', border: '1px solid rgba(255, 255, 255, 0.2)',
+            borderRadius: '14px', border: '1px solid rgba(0, 0, 0, 0.1)',
             cursor: 'pointer', transition: 'all 0.3s',
-            color: '#ffffff',
-            boxShadow: '0 4px 15px rgba(0,0,0,0.1)'
+            color: '#000000',
+            boxShadow: '0 2px 10px rgba(0,0,0,0.05)'
           }}
           onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255, 255, 255, 0.25)')}
           onMouseLeave={(e) => (e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)')}
