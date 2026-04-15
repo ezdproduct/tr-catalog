@@ -697,7 +697,7 @@ export default function AdminPage() {
     );
 }
 
-function NavItem({ icon, label, active, onClick }: any) {
+function NavItem({ icon, label, active, onClick }: { icon: any, label: string, active: boolean, onClick: () => void }) {
     return (
         <button
             onClick={onClick}
@@ -718,7 +718,7 @@ function NavItem({ icon, label, active, onClick }: any) {
     );
 }
 
-function PageHeader({ title, subtitle, action }: any) {
+function PageHeader({ title, subtitle, action }: { title: string, subtitle: string, action?: React.ReactNode }) {
     return (
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '3rem' }}>
             <div>
@@ -733,7 +733,7 @@ function PageHeader({ title, subtitle, action }: any) {
     );
 }
 
-function SummaryCard({ label, value, color = '#000' }: any) {
+function SummaryCard({ label, value, color = '#000' }: { label: string, value: string | number, color?: string }) {
     return (
         <div style={{
             background: '#fff', padding: '2rem', borderRadius: '2rem',
