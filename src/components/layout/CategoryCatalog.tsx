@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '@/lib/supabase';
 import { LayoutGrid } from 'lucide-react';
@@ -10,6 +10,7 @@ import { Link } from '@/routing';
 export default function CategoryCatalog() {
   const t_common = useTranslations('common');
   const t_catalog = useTranslations('catalog');
+  const locale = useLocale();
   const [categories, setCategories] = useState<any[]>([]);
   const [selectedCat, setSelectedCat] = useState<string | null>(null);
   const [products, setProducts] = useState<any[]>([]);
@@ -30,25 +31,27 @@ export default function CategoryCatalog() {
     if (!selectedCat) return;
     const fetchProducts = async () => {
       setLoading(true);
-      const { data } = await supabase
-        .from('products')
-        .select('*')
-        .eq('category_id', selectedCat)
-        .order('created_at', { ascending: false });
+
+      let query = supabase.from('products').select('*');
+
+      // If the selected category is the first one, show all products
+      if (selectedCat !== categories[0]?.id) {
+        query = query.eq('category_id', selectedCat);
+      }
+
+      const { data } = await query.order('created_at', { ascending: false });
+
       setProducts(data || []);
       setLoading(false);
     };
     fetchProducts();
-  }, [selectedCat]);
+  }, [selectedCat, categories]);
 
   return (
-    <section className="category-section" style={{ background: '#ffffff' }}>
-      <div className="container">
+    <section id="catalog" className="category-section" style={{ background: '#ffffff', borderTop: '1px solid #eee' }}>
+      <div className="container" style={{ maxWidth: '1600px' }}>
 
-        {/* Title */}
-        <div className="category-title-wrapper">
-          <h2 style={{ fontSize: '1.2rem', fontWeight: 400, color: '#535252ff', margin: 0 }}>{t_catalog('title')}</h2>
-        </div>
+        {/* Header Section Removed as requested */}
 
         {/* Minimalist Horizontal Categories Slider */}
         <div
@@ -57,63 +60,74 @@ export default function CategoryCatalog() {
             display: 'flex',
             alignItems: 'center',
             overflowX: 'auto',
-            scrollSnapType: 'x mandatory'
+            scrollSnapType: 'x mandatory',
+            paddingBottom: '2rem'
           }}
         >
-          {categories.map((cat) => {
+          {categories.map((cat, idx) => {
             const isSelected = selectedCat === cat.id;
 
             return (
               <div
                 key={cat.id}
                 onClick={() => setSelectedCat(cat.id)}
-                className={`category-item ${isSelected ? 'selected' : ''}`}
+                className={`category-item-new ${isSelected ? 'active' : ''}`}
                 style={{
                   cursor: 'pointer',
-                  textAlign: 'center',
                   flexShrink: 0,
-                  scrollSnapAlign: 'center',
-                  display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+                  scrollSnapAlign: 'start',
+                  width: '320px',
+                  marginRight: '20px',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  aspectRatio: '16/10',
+                  borderRadius: '12px',
+                  transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+                  boxShadow: isSelected ? '0 20px 40px rgba(0,0,0,0.15)' : 'none',
+                  border: isSelected ? '2px solid var(--primary)' : '1px solid #eee'
                 }}
               >
-                <div
-                  className="category-image-wrapper"
-                  style={{
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  }}
-                >
-                  {cat.image_url ? (
-                    <img
-                      src={cat.image_url}
-                      alt={cat.name}
-                      style={{
-                        width: '100%', height: '100%', objectFit: 'contain',
-                        mixBlendMode: 'darken',
-                        filter: 'brightness(1.05) contrast(1.05)',
-                        transformOrigin: 'center bottom',
-                      }}
-                    />
-                  ) : (
-                    <LayoutGrid className="category-icon" color={isSelected ? '#ef4444' : '#94a3b8'} />
-                  )}
-                </div>
-
-                <div className="category-name-wrapper" style={{
-                  overflow: 'hidden',
-                }}>
-                  <h3
+                {idx === 0 ? (
+                  <div style={{
+                    width: '100%',
+                    height: '100%',
+                    background: isSelected ? 'var(--primary)' : '#f8fafc',
+                    transition: 'all 0.5s ease'
+                  }} />
+                ) : (
+                  <img
+                    src={cat.bannerImage || cat.image_url}
+                    alt={cat.name}
                     style={{
-                      fontSize: '1rem',
-                      fontWeight: 800,
-                      color: '#ef4444',
-                      paddingTop: '0.8rem',
-                      margin: 0,
-                      textTransform: 'uppercase',
-                      letterSpacing: '2px',
-                      whiteSpace: 'nowrap'
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      filter: isSelected ? 'brightness(1)' : 'brightness(0.7) grayscale(0.5)',
+                      transition: 'all 0.5s ease'
                     }}
-                  >
-                    {cat.name}
+                  />
+                )}
+                <div style={{
+                  position: 'absolute',
+                  inset: 0,
+                  background: isSelected ? 'transparent' : 'rgba(0,0,0,0.2)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: '1rem',
+                  transition: 'background 0.5s'
+                }}>
+                  <h3 style={{
+                    fontSize: '1rem',
+                    fontWeight: 700,
+                    color: '#fff',
+                    margin: 0,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.1em',
+                    textShadow: '0 2px 10px rgba(0,0,0,0.5)',
+                    textAlign: 'center'
+                  }}>
+                    {idx === 0 ? (locale === 'vi' ? 'TẤT CẢ SẢN PHẨM' : 'ALL PRODUCTS') : cat.name}
                   </h3>
                 </div>
               </div>
@@ -127,45 +141,91 @@ export default function CategoryCatalog() {
 
         {/* Dynamic Product Grid */}
         {loading ? (
-          <div style={{ textAlign: 'center', padding: '5rem', color: '#000', fontWeight: 900, letterSpacing: '2px' }}>{t_common('loading')}</div>
+          <div style={{ textAlign: 'center', padding: '10rem', color: 'var(--text-muted)', fontFamily: "'Evolventa', sans-serif", letterSpacing: '0.2em' }}>{t_common('loading')}</div>
         ) : (
-          <div className="catalog-grid" style={{ borderTop: '1px solid #f1f5f9', borderLeft: '1px solid #f1f5f9', background: '#fff' }}>
+          <div className="catalog-grid" style={{ marginTop: '2rem' }}>
             <AnimatePresence mode="popLayout">
               {products.map((product) => {
-                const catName = categories.find(c => c.id === selectedCat)?.name || 'CONSOLE';
                 return (
                   <Link key={product.id} href={`/catalog/${product.id}`} style={{ textDecoration: 'none', display: 'block' }}>
                     <motion.div
                       layout
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.4 }}
                       style={{
                         background: '#ffffff',
-                        borderRight: '1px solid #f1f5f9',
-                        borderBottom: '1px solid #f1f5f9',
-                        padding: '1.5rem 1.2rem',
-                        cursor: 'pointer', transition: 'background 0.3s',
-                        display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
-                        height: '100%', minHeight: '300px'
+                        cursor: 'pointer',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        height: '100%',
+                        position: 'relative',
+                        transition: 'transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1)'
                       }}
-                      className="product-card-frame"
+                      className="product-card-new"
                     >
-                      {/* Top Status Removed */}
-                      <div style={{ height: '30px' }} />
-
-                      {/* Image Center */}
-                      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
+                      {/* Image Frame */}
+                      <div className="product-image-frame" style={{
+                        position: 'relative',
+                        aspectRatio: '1/1',
+                        overflow: 'hidden',
+                        background: '#f8fafc',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                      }}>
                         {product.image_urls?.[0] ? (
-                          <img src={product.image_urls[0]} alt={product.name} style={{ width: '105%', height: '105%', maxHeight: '190px', objectFit: 'contain', mixBlendMode: 'darken', filter: 'brightness(1.05) contrast(1.05)' }} />
+                          <img
+                            src={product.image_urls[0]}
+                            alt={product.name}
+                            style={{
+                              width: '100%',
+                              height: '100%',
+                              objectFit: 'contain',
+                              padding: '2rem',
+                              transition: 'transform 0.6s ease'
+                            }}
+                            className="product-img"
+                          />
                         ) : (
-                          <div style={{ color: '#cbd5e1' }}><LayoutGrid size={24} /></div>
+                          <div style={{ color: '#cbd5e1' }}><LayoutGrid size={48} /></div>
                         )}
+
+                        {/* Hover Overlay */}
+                        <div className="hover-action" style={{
+                          position: 'absolute',
+                          bottom: '0',
+                          left: '0',
+                          right: '0',
+                          background: 'var(--primary)',
+                          color: '#fff',
+                          padding: '0.8rem',
+                          textAlign: 'center',
+                          fontSize: '0.8rem',
+                          fontWeight: 700,
+                          letterSpacing: '0.1em',
+                          textTransform: 'uppercase',
+                          transform: 'translateY(100%)',
+                          transition: 'transform 0.3s ease'
+                        }}>
+                          Xem chi tiết
+                        </div>
                       </div>
 
-                      {/* Name Bottom */}
-                      <h3 className="product-name" style={{ fontSize: '0.9rem', fontWeight: 500, color: '#1a1a1a', margin: 0, textAlign: 'left', transition: 'color 0.2s' }}>
-                        {product.name}
-                      </h3>
+                      {/* Info Panel */}
+                      <div style={{ padding: '1.5rem 0' }}>
+                        <h3 style={{
+                          fontSize: '0.9rem',
+                          fontWeight: 600,
+                          color: '#1a1a1a',
+                          margin: '0',
+                          lineHeight: 1.4,
+                          fontFamily: "'Montserrat', sans-serif",
+                          textAlign: 'center'
+                        }}>
+                          {product.name}
+                        </h3>
+                      </div>
                     </motion.div>
                   </Link>
                 );
@@ -180,96 +240,39 @@ export default function CategoryCatalog() {
         .category-section {
           padding: 80px 0 100px;
         }
-        .category-title-wrapper {
-          // margin-bottom: 2rem;
-        }
         .category-slider {
           -ms-overflow-style: none;
           scrollbar-width: none;
-          gap: 3rem;
-          padding: 0 1rem;
-          margin-bottom: 3rem;
+          padding: 0 1rem 2rem;
+          cursor: grab;
         }
-        .category-item {
-          width: 180px;
-          opacity: 0.6;
-          transition: opacity 0.3s;
-        }
-        .category-item.selected {
-          opacity: 1;
-        }
-        .category-image-wrapper {
-          width: 100%;
-          height: 140px;
-        }
-        .category-item.selected .category-image-wrapper {
-          height: 140px;
-        }
-        .category-name-wrapper {
-          height: 40px;
-          opacity: 0.5;
-          transition: opacity 0.3s;
-        }
-        .category-item.selected .category-name-wrapper {
-          height: 40px;
-          opacity: 1;
-        }
-        .category-icon { width: 30px; height: 30px; }
-        .category-item.selected .category-icon { width: 60px; height: 60px; }
+        .category-slider:active { cursor: grabbing; }
 
         .catalog-grid {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
-          gap: 0;
-        }
-        .product-card-frame:hover {
-           background: #fafafa !important;
-        }
-        .product-card-frame:hover .product-name {
-           color: #ef4444 !important;
+          gap: 2rem;
         }
 
-        .category-divider {
-          margin-bottom: 3rem;
+        .product-card-new:hover {
+          transform: translateY(-8px);
+        }
+        .product-card-new:hover .hover-action {
+          transform: translateY(0);
         }
 
-        @media (max-width: 1024px) {
-          .catalog-grid { grid-template-columns: repeat(2, 1fr); }
+        @media (max-width: 1200px) {
+          .catalog-grid { grid-template-columns: repeat(3, 1fr); }
         }
 
-        @media (max-width: 640px) {
-          .category-section {
-            padding: 40px 0 60px;
-          }
-          .category-title-wrapper {
-            // margin-bottom: 1rem;
-          }
-          .category-slider {
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-            padding: 0 0.5rem;
-          }
-          .category-item {
-            width: 80px;
-          }
-          .category-item.selected {
-            width: 180px;
-          }
-          .category-image-wrapper {
-            height: 80px;
-          }
-          .category-item.selected .category-image-wrapper {
-            height: 160px;
-          }
-          .category-item.selected .category-name-wrapper {
-            height: 40px;
-          }
-          .category-item.selected h3 {
-            font-size: 0.8rem !important;
-          }
-          .category-divider {
-            margin-bottom: 1.5rem !important;
-          }
+        @media (max-width: 768px) {
+          .category-section { padding: 40px 0 60px; }
+          .catalog-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+          .category-item-new { width: 220px !important; }
+        }
+
+        @media (max-width: 480px) {
+          .catalog-grid { grid-template-columns: 1fr; }
         }
       `}</style>
     </section>

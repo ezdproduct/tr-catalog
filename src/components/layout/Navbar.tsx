@@ -3,27 +3,38 @@
 import { useTranslations, useLocale } from 'next-intl';
 import { Link, usePathname, useRouter } from '@/routing';
 import { useState, useEffect, useRef } from 'react';
-import { Menu, X, Globe, LogIn, ChevronDown } from 'lucide-react';
+import { Menu, ChevronDown, LayoutGrid } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { supabase } from '@/lib/supabase';
 
 export default function Navbar() {
   const t = useTranslations('common');
   const locale = useLocale();
   const pathname = usePathname();
-  const router = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLangOpen, setIsLangOpen] = useState(false);
+  const [isShopOpen, setIsShopOpen] = useState(false);
+  const [categories, setCategories] = useState<any[]>([]);
   const langRef = useRef<HTMLDivElement>(null);
+  const shopRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const fetchCats = async () => {
+      const { data } = await supabase.from('categories').select('*').order('name');
+      setCategories(data || []);
+    };
+    fetchCats();
+
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 50);
     };
 
     const handleClickOutside = (event: MouseEvent) => {
       if (langRef.current && !langRef.current.contains(event.target as Node)) {
         setIsLangOpen(false);
+      }
+      if (shopRef.current && !shopRef.current.contains(event.target as Node)) {
+        setIsShopOpen(false);
       }
     };
 
@@ -43,98 +54,180 @@ export default function Navbar() {
 
   const currentLang = languages.find(l => l.code === locale) || languages[0];
 
-  const handleLangChange = (code: string) => {
-    router.replace(pathname, { locale: code as any });
-    setIsLangOpen(false);
-    setIsMenuOpen(false);
-  };
-
-  const navLinks = [
-    { href: '/', label: t('home') },
-    { href: '/', label: t('catalog') },
-  ];
-
   return (
-    <div style={{
-      position: 'absolute', top: '20px', right: '20px', zIndex: 1100,
-      display: 'flex', gap: '1rem', alignItems: 'center'
+    <header style={{
+      position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1100,
+      padding: isScrolled ? '0.5rem 1rem' : '0', width: '100%',
+      transition: 'all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1)'
     }}>
-      {/* Language Switcher Dropdown Only */}
-      <div style={{ position: 'relative' }} ref={langRef}>
-        <button
-          onClick={() => setIsLangOpen(!isLangOpen)}
-          style={{
-            display: 'flex', alignItems: 'center', gap: '10px',
-            padding: '10px 18px',
-            background: 'rgba(0, 0, 0, 0.05)',
-            backdropFilter: 'blur(10px)',
-            borderRadius: '14px', border: '1px solid rgba(0, 0, 0, 0.1)',
-            cursor: 'pointer', transition: 'all 0.3s',
-            color: '#000000',
-            boxShadow: '0 2px 10px rgba(0,0,0,0.05)'
-          }}
-          onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255, 255, 255, 0.25)')}
-          onMouseLeave={(e) => (e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)')}
-        >
-          <img
-            src={`https://flagcdn.com/w40/${currentLang.flag}.png`}
-            style={{ width: '22px', height: '16px', objectFit: 'cover', borderRadius: '3px' }}
-            alt={currentLang.name}
-          />
-          <span style={{ fontWeight: 800, fontSize: '0.9rem', letterSpacing: '0.5px' }}>{currentLang.label}</span>
-          <motion.div animate={{ rotate: isLangOpen ? 180 : 0 }}>
-            <ChevronDown size={14} />
-          </motion.div>
-        </button>
-
-        <AnimatePresence>
-          {isLangOpen && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 10 }}
+      <div style={{
+        maxWidth: isScrolled ? '1400px' : '100%',
+        margin: '0 auto', width: '100%',
+        transition: 'all 0.5s ease'
+      }}>
+        <nav style={{
+          background: isScrolled ? 'rgba(255, 255, 255, 0.85)' : 'transparent',
+          backdropFilter: isScrolled ? 'blur(20px)' : 'none',
+          WebkitBackdropFilter: isScrolled ? 'blur(20px)' : 'none',
+          borderRadius: isScrolled ? '1rem' : '0',
+          boxShadow: isScrolled ? '0 4px 30px rgba(0,0,0,0.05)' : 'none',
+          border: isScrolled ? '1px solid rgba(255, 255, 255, 0.3)' : 'none',
+          padding: isScrolled ? '0.8rem 2rem' : '2rem 4rem',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          transition: 'all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1)',
+          marginTop: isScrolled ? '10px' : '0'
+        }}>
+          {/* Left: Logo */}
+          <Link href="/" style={{ display: 'flex', alignItems: 'center' }}>
+            <img
+              src="/logo-do.svg"
+              alt="Transformer Robotics"
               style={{
-                position: 'absolute', top: '120%', right: 0,
-                background: 'rgba(255, 255, 255, 0.95)',
-                backdropFilter: 'blur(20px)',
-                borderRadius: '18px',
-                boxShadow: '0 15px 50px rgba(0,0,0,0.2)',
-                border: '1px solid #ffffff', overflow: 'hidden',
-                width: '180px', zIndex: 1200
+                height: isScrolled ? '38px' : '46px',
+                width: 'auto',
+                filter: isScrolled ? 'none' : 'brightness(0) invert(1)',
+                transition: 'all 0.5s ease'
               }}
+            />
+          </Link>
+
+          {/* Right side: Shop Dropdown & Language */}
+          <div style={{ display: 'flex', gap: '3rem', alignItems: 'center' }}>
+
+            {/* Shop Dropdown Trigger */}
+            <div
+              style={{ position: 'relative' }}
+              ref={shopRef}
+              onMouseEnter={() => setIsShopOpen(true)}
+              onMouseLeave={() => setIsShopOpen(false)}
             >
-              {languages.map((lang, idx) => (
-                <button
-                  key={`${lang.code}-${idx}`}
-                  onClick={() => handleLangChange(lang.code)}
-                  style={{
-                    width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                    padding: '14px 22px', border: 'none', background: 'transparent',
-                    cursor: 'pointer', transition: 'all 0.2s', color: '#000000',
-                    textAlign: 'left'
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.background = '#f1f5f9')}
-                  onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
-                >
-                  <span style={{ fontSize: '0.85rem', color: '#64748b', fontWeight: 700, width: '35px' }}>{lang.name}</span>
-                  <img
-                    src={`https://flagcdn.com/w40/${lang.flag}.png`}
-                    style={{ width: '24px', height: '18px', objectFit: 'cover', borderRadius: '3px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}
-                    alt={lang.name}
-                  />
-                  <span style={{ fontWeight: 900, fontSize: '0.9rem', width: '35px', textAlign: 'right' }}>{lang.label}</span>
-                </button>
-              ))}
-            </motion.div>
-          )}
-        </AnimatePresence>
+              <button style={{
+                background: 'none', border: 'none', cursor: 'pointer',
+                display: 'flex', alignItems: 'center', gap: '8px',
+                color: isScrolled ? '#333' : '#fff',
+                fontSize: '0.85rem', fontWeight: 700,
+                textTransform: 'uppercase', letterSpacing: '0.1em'
+              }}>
+                {locale === 'vi' ? 'DANH MỤC' : 'CATALOG'}
+                <motion.div animate={{ rotate: isShopOpen ? 180 : 0 }}>
+                  <ChevronDown size={14} />
+                </motion.div>
+              </button>
+
+              <AnimatePresence>
+                {isShopOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 15 }}
+                    style={{
+                      position: 'absolute', top: '100%', left: '50%', x: '-50%',
+                      paddingTop: '20px', zIndex: 1200
+                    }}
+                  >
+                    <div style={{
+                      background: 'white', border: '1px solid #f1f5f9',
+                      borderRadius: '1.2rem', boxShadow: '0 20px 50px rgba(0,0,0,0.15)',
+                      padding: '1.5rem', width: '320px', display: 'grid', gridTemplateColumns: '1fr', gap: '5px'
+                    }}>
+                      {categories.map(cat => (
+                        <Link
+                          key={cat.id}
+                          href="/#catalog"
+                          onClick={() => setIsShopOpen(false)}
+                          style={{
+                            display: 'flex', alignItems: 'center', gap: '12px', padding: '10px 12px',
+                            borderRadius: '10px', textDecoration: 'none', color: '#64748b',
+                            fontSize: '0.9rem', transition: 'all 0.2s'
+                          }}
+                          className="hover-item"
+                        >
+                          <img src={cat.image_url || cat.bannerImage} style={{ width: '40px', height: '30px', objectFit: 'cover', borderRadius: '4px' }} alt="" />
+                          <span>{cat.name}</span>
+                        </Link>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Lang switcher */}
+            <div style={{ position: 'relative' }} ref={langRef}>
+              <button
+                onClick={() => setIsLangOpen(!isLangOpen)}
+                style={{
+                  display: 'flex', alignItems: 'center', gap: '10px',
+                  padding: '8px 16px',
+                  background: isScrolled ? '#f8fafc' : 'rgba(255,255,255,0.1)',
+                  border: 'none',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  color: isScrolled ? '#333' : '#fff',
+                  backdropFilter: isScrolled ? 'none' : 'blur(10px)'
+                }}
+              >
+                <img
+                  src={`https://flagcdn.com/w40/${currentLang.flag}.png`}
+                  style={{ width: '20px', height: '14px', objectFit: 'cover' }}
+                  alt={currentLang.name}
+                />
+                <span style={{ fontWeight: 700, fontSize: '0.8rem' }}>{currentLang.label}</span>
+                <motion.div animate={{ rotate: isLangOpen ? 180 : 0 }}>
+                  <ChevronDown size={14} />
+                </motion.div>
+              </button>
+
+              <AnimatePresence>
+                {isLangOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                    style={{
+                      position: 'absolute', top: '120%', right: 0,
+                      background: 'white', borderRadius: '12px',
+                      boxShadow: '0 10px 40px rgba(0,0,0,0.1)',
+                      border: '1px solid #f1f5f9', overflow: 'hidden',
+                      width: '140px', zIndex: 1200
+                    }}
+                  >
+                    {languages.map((lang) => (
+                      <Link
+                        key={lang.code}
+                        href={pathname}
+                        locale={lang.code as any}
+                        onClick={() => setIsLangOpen(false)}
+                        style={{
+                          width: '100%', display: 'flex', alignItems: 'center', gap: '10px',
+                          padding: '12px 16px', border: 'none', background: 'transparent',
+                          cursor: 'pointer', transition: 'all 0.2s', color: '#333',
+                          textDecoration: 'none'
+                        }}
+                      >
+                        <img
+                          src={`https://flagcdn.com/w40/${lang.flag}.png`}
+                          style={{ width: '20px', height: '14px', objectFit: 'cover' }}
+                          alt={lang.name}
+                        />
+                        <span style={{ fontWeight: 600, fontSize: '0.85rem' }}>{lang.name}</span>
+                      </Link>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </div>
+        </nav>
       </div>
 
       <style jsx>{`
+        .hover-bg-gray:hover { background: #f1f5f9 !important; }
+        .hover-item:hover { background: #f8fafc !important; color: #1a1a1a !important; }
         @media (max-width: 768px) {
-          div { top: 15px; right: 15px; }
+          nav { padding: ${isScrolled ? '0.6rem 1rem' : '1rem 2rem'} !important; }
         }
       `}</style>
-    </div>
+    </header>
   );
 }
