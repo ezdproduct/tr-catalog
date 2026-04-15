@@ -23,7 +23,7 @@ export default function ProductDetailPage() {
         .select('*, categories(name)')
         .eq('id', id)
         .single();
-      
+
       if (data) setProduct(data);
       setLoading(false);
     };
@@ -52,21 +52,21 @@ export default function ProductDetailPage() {
     <main style={{ background: '#ffffff', minHeight: '100vh' }}>
       <div className="container" style={{ padding: '40px 1.5rem 100px' }}>
         <div className="detail-grid">
-          
+
           {/* Left: Enhanced Image Gallery */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
             <motion.div
               layoutId="main-img"
               onClick={() => setIsZoomed(true)}
-              style={{ 
+              style={{
                 width: '100%', height: '550px', borderRadius: '32px', background: '#f8fafc',
                 overflow: 'hidden', border: '1px solid #f1f5f9', cursor: 'zoom-in', position: 'relative'
               }}
             >
               <AnimatePresence mode="wait">
-                <motion.img 
+                <motion.img
                   key={activeImg}
-                  src={images[activeImg]} 
+                  src={images[activeImg]}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
@@ -75,25 +75,25 @@ export default function ProductDetailPage() {
                 />
               </AnimatePresence>
               <div style={{ position: 'absolute', bottom: '1.5rem', right: '1.5rem', background: 'rgba(255,255,255,0.8)', padding: '0.6rem', borderRadius: '12px', backdropFilter: 'blur(4px)' }}>
-                 <Maximize2 size={20} color="#1a1a1a" />
+                <Maximize2 size={20} color="#1a1a1a" />
               </div>
             </motion.div>
 
             {/* Thumbnails with Horizontal Scroll */}
             <div style={{ position: 'relative' }}>
-              <div 
-                style={{ 
-                  display: 'flex', gap: '1rem', overflowX: 'auto', 
+              <div
+                style={{
+                  display: 'flex', gap: '1rem', overflowX: 'auto',
                   paddingBottom: '1rem', scrollSnapType: 'x mandatory'
-                }} 
+                }}
                 className="no-scrollbar"
               >
                 {images.map((img: string, idx: number) => (
-                  <button 
-                    key={idx} 
+                  <button
+                    key={idx}
                     onClick={() => setActiveImg(idx)}
-                    style={{ 
-                      width: '110px', height: '110px', flex: '0 0 110px', borderRadius: '20px', 
+                    style={{
+                      width: '110px', height: '110px', flex: '0 0 110px', borderRadius: '20px',
                       overflow: 'hidden', border: activeImg === idx ? '3px solid #ef4444' : '1px solid #e2e8f0',
                       background: 'white', transition: '0.2s', padding: 0, cursor: 'pointer',
                       scrollSnapAlign: 'start'
@@ -110,39 +110,68 @@ export default function ProductDetailPage() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#ef4444', fontWeight: 800, textTransform: 'uppercase', fontSize: '1rem', marginBottom: '1rem' }}>
-                 <Box size={18} /> {product.categories?.name || 'CHI TIẾT'}
+                <Box size={18} /> {product.categories?.name || 'SẢN PHẨM'}
               </div>
-              <h1 style={{ fontSize: '3.5rem', fontWeight: 900, marginBottom: '1rem', lineHeight: 1, letterSpacing: '-2px' }}>{product.name}</h1>
-              <div style={{ fontSize: '2.8rem', fontWeight: 900, color: '#ef4444' }}>
-                $ {(product.price || 0).toLocaleString()}
+              <h1 style={{ fontSize: '3rem', fontWeight: 900, marginBottom: '1rem', lineHeight: 1.1, letterSpacing: '-1px' }}>{product.name}</h1>
+
+              <div style={{ display: 'flex', alignItems: 'end', gap: '1rem', marginBottom: '1rem' }}>
+                <div style={{ fontSize: '2.5rem', fontWeight: 900, color: '#ef4444' }}>
+                  $ {(product.price || 0).toLocaleString()}
+                </div>
+                {metadata?.price?.compare && (
+                  <div style={{ fontSize: '1.2rem', fontWeight: 700, color: '#94a3b8', textDecoration: 'line-through', paddingBottom: '0.5rem' }}>
+                    {metadata.price.compare}
+                  </div>
+                )}
               </div>
+
+              {metadata?.price?.savings && (
+                <div style={{ display: 'inline-block', background: '#fef2f2', color: '#ef4444', padding: '0.4rem 0.8rem', borderRadius: '8px', fontWeight: 800, fontSize: '0.9rem' }}>
+                  {metadata.price.savings}
+                </div>
+              )}
             </motion.div>
 
-            <div style={{ borderTop: '2.5px solid #f1f5f9', paddingTop: '2rem' }}>
-               <h3 style={{ fontSize: '1.3rem', fontWeight: 900, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                  <Info size={22} color="#64748b" /> MÔ TẢ SẢN PHẨM
-               </h3>
-               <p style={{ fontSize: '1.15rem', color: '#475569', lineHeight: 1.8, whiteSpace: 'pre-wrap' }}>
-                  {product.description || 'Sản phẩm cao cấp từ Transformer Robotics.'}
-               </p>
-            </div>
-
-            {metadata && Object.keys(metadata).length > 0 && (
-              <div style={{ background: '#f8fafc', padding: '2.5rem', borderRadius: '40px' }}>
-                <h3 style={{ fontSize: '1.3rem', fontWeight: 900, marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                   <Settings size={22} color="#ef4444" /> THÔNG SỐ KỸ THUẬT
-                </h3>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: '1.5rem 2.5rem' }}>
-                  {Object.entries(metadata).map(([key, value]: [string, any]) => (
-                    <div key={key} style={{ display: 'contents' }}>
-                       <div style={{ fontWeight: 800, color: '#64748b', fontSize: '0.9rem', textTransform: 'uppercase' }}>{key}</div>
-                       <div style={{ fontWeight: 700, color: '#1a1a1a', fontSize: '1rem' }}>{value}</div>
-                       <div style={{ gridColumn: '1/-1', height: '1.5px', background: '#e2e8f0' }} />
+            {metadata?.variants && metadata.variants.length > 0 && (
+              <div>
+                <h3 style={{ fontSize: '1.1rem', fontWeight: 800, marginBottom: '1rem', color: '#1a1a1a' }}>TÙY CHỌN MÀU SẮC</h3>
+                <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                  {metadata.variants.map((v: any) => (
+                    <div key={v.id} style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', padding: '0.6rem 1rem', border: '1px solid #e2e8f0', borderRadius: '12px', cursor: 'pointer', transition: 'all 0.2s', background: '#fff' }} className="variant-btn">
+                      {v.swatch && <img src={v.swatch} alt={v.name} style={{ width: '30px', height: '30px', borderRadius: '50%', objectFit: 'cover' }} />}
+                      <span style={{ fontWeight: 700, fontSize: '0.95rem' }}>{v.name}</span>
                     </div>
                   ))}
                 </div>
               </div>
             )}
+
+            <div style={{ borderTop: '2px solid #f1f5f9', paddingTop: '2rem' }}>
+              <h3 style={{ fontSize: '1.2rem', fontWeight: 900, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                <Info size={20} color="#64748b" /> MÔ TẢ SẢN PHẨM
+              </h3>
+              <p style={{ fontSize: '1.05rem', color: '#475569', lineHeight: 1.7, whiteSpace: 'pre-wrap' }}>
+                {product.description || metadata?.meta?.vi?.description || metadata?.meta?.en?.description || 'Sản phẩm cao cấp từ Transformer Robotics.'}
+              </p>
+            </div>
+
+            <div style={{ background: '#f8fafc', padding: '2rem', borderRadius: '24px' }}>
+              <h3 style={{ fontSize: '1.2rem', fontWeight: 900, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                <Settings size={20} color="#ef4444" /> THÔNG SỐ KỸ THUẬT
+              </h3>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                {[
+                  { label: 'MÃ SẢN PHẨM', value: metadata?.sku },
+                  { label: 'PHÂN LOẠI', value: metadata?.type === 'bundle' ? 'Bộ Sản Phẩm' : metadata?.type === 'accessory' ? 'Phụ Kiện' : metadata?.type },
+                  { label: 'TÌNH TRẠNG', value: metadata?.status === 'inStock' ? 'Còn hàng' : metadata?.status === 'soldOut' ? 'Hết hàng' : metadata?.status === 'onlyLeft' ? `Chỉ còn ${metadata.stockCount} sản phẩm` : metadata?.status }
+                ].filter(item => item.value).map((spec, i) => (
+                  <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e2e8f0', paddingBottom: '1rem' }}>
+                    <div style={{ fontWeight: 800, color: '#64748b', fontSize: '0.85rem' }}>{spec.label}</div>
+                    <div style={{ fontWeight: 700, color: '#1a1a1a', fontSize: '1rem' }}>{spec.value}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
 
         </div>
@@ -151,26 +180,26 @@ export default function ProductDetailPage() {
       {/* Lightbox / Zoom Modal */}
       <AnimatePresence>
         {isZoomed && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.95)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}
           >
             <button onClick={() => setIsZoomed(false)} style={{ position: 'absolute', top: '2rem', right: '2rem', background: 'white', border: 'none', padding: '1rem', borderRadius: '50%', cursor: 'pointer' }}>
-               <X size={24} />
+              <X size={24} />
             </button>
-            
+
             <button onClick={prevImg} style={{ position: 'absolute', left: '2rem', background: 'rgba(255,255,255,0.1)', border: 'none', padding: '1.5rem', borderRadius: '50%', color: 'white' }}>
-               <ChevronLeft size={30} />
+              <ChevronLeft size={30} />
             </button>
 
             <img src={images[activeImg]} style={{ maxWidth: '100%', maxHeight: '85vh', objectFit: 'contain' }} />
 
             <button onClick={nextImg} style={{ position: 'absolute', right: '2rem', background: 'rgba(255,255,255,0.1)', border: 'none', padding: '1.5rem', borderRadius: '50%', color: 'white' }}>
-               <ChevronRight size={30} />
+              <ChevronRight size={30} />
             </button>
 
             <div style={{ position: 'absolute', bottom: '3rem', color: 'white', fontWeight: 700, fontSize: '1.2rem' }}>
-               {activeImg + 1} / {images.length}
+              {activeImg + 1} / {images.length}
             </div>
           </motion.div>
         )}
@@ -186,6 +215,10 @@ export default function ProductDetailPage() {
           align-items: start;
         }
         .no-scrollbar::-webkit-scrollbar { display: none; }
+        .variant-btn:hover {
+          border-color: #ef4444 !important;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
         @media (max-width: 1024px) {
           .detail-grid { grid-template-columns: 1fr; gap: 4rem; }
         }

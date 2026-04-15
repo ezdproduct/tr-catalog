@@ -41,57 +41,92 @@ export default function CategoryCatalog() {
   return (
     <section style={{ padding: '60px 0 100px', background: '#ffffff' }}>
       <div className="container">
-        
+
         {/* Title */}
         <div style={{ marginBottom: '3rem' }}>
-           <h2 style={{ fontSize: '2.5rem', fontWeight: 700, color: '#000' }}>Shop By Category</h2>
+          <h2 style={{ fontSize: '2.5rem', fontWeight: 700, color: '#000' }}>Shop By Category</h2>
         </div>
 
-        {/* Clean Grid Categories */}
-        <div className="category-grid" style={{ marginBottom: '5rem' }}>
-          {categories.map((cat) => (
-            <motion.div
-              key={cat.id}
-              onClick={() => setSelectedCat(cat.id)}
-              style={{ 
-                cursor: 'pointer',
-                textAlign: 'center',
-                transition: '0.3s'
-              }}
-            >
-              <div style={{ 
-                width: '100%', aspectRatio: '1/1', 
-                overflow: 'hidden', margin: '0 auto 1.2rem',
-                background: '#ffffff',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                transition: '0.2s',
-                opacity: selectedCat === cat.id ? 1 : 0.6,
-                transform: selectedCat === cat.id ? 'scale(1.05)' : 'scale(1)'
-              }}>
-                 {cat.image_url ? (
-                   <img 
-                    src={cat.image_url} 
-                    alt={cat.name} 
-                    style={{ 
-                        width: '90%', height: '90%', objectFit: 'contain',
-                    }} 
-                   />
-                 ) : (
-                   <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#94a3b8' }}>
-                     <LayoutGrid size={40} />
-                   </div>
-                 )}
+        {/* Minimalist Horizontal Categories Slider */}
+        <div
+          className="no-scrollbar category-slider"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '3rem',
+            overflowX: 'auto',
+            padding: '2rem 1rem 4rem',
+            marginBottom: '3rem',
+            scrollSnapType: 'x mandatory'
+          }}
+        >
+          {categories.map((cat) => {
+            const isSelected = selectedCat === cat.id;
+
+            return (
+              <div
+                key={cat.id}
+                onClick={() => setSelectedCat(cat.id)}
+                style={{
+                  cursor: 'pointer',
+                  textAlign: 'center',
+                  flexShrink: 0,
+                  scrollSnapAlign: 'center',
+                  display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+                  width: isSelected ? (typeof window !== 'undefined' && window.innerWidth < 640 ? '250px' : '380px') : '120px',
+                  opacity: isSelected ? 1 : 0.4,
+                  transition: 'all 0.5s cubic-bezier(0.25, 1, 0.5, 1)'
+                }}
+              >
+                <div
+                  style={{
+                    width: '100%',
+                    aspectRatio: isSelected ? '4/3' : '1/1',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    transition: 'all 0.5s cubic-bezier(0.25, 1, 0.5, 1)'
+                  }}
+                >
+                  {cat.image_url ? (
+                    <img
+                      src={cat.image_url}
+                      alt={cat.name}
+                      style={{
+                        width: '100%', height: '100%', objectFit: 'contain',
+                        mixBlendMode: 'darken',
+                        filter: 'brightness(1.05) contrast(1.05)',
+                        transformOrigin: 'center bottom',
+                        transition: 'all 0.5s cubic-bezier(0.25, 1, 0.5, 1)'
+                      }}
+                    />
+                  ) : (
+                    <LayoutGrid size={isSelected ? 60 : 30} color={isSelected ? '#ef4444' : '#94a3b8'} style={{ transition: 'all 0.5s' }} />
+                  )}
+                </div>
+
+                <div style={{
+                  height: isSelected ? '30px' : '0px',
+                  opacity: isSelected ? 1 : 0,
+                  overflow: 'hidden',
+                  transition: 'all 0.5s cubic-bezier(0.25, 1, 0.5, 1)'
+                }}>
+                  <h3
+                    style={{
+                      fontSize: '1rem',
+                      fontWeight: 800,
+                      color: '#ef4444',
+                      marginTop: '0.8rem',
+                      textTransform: 'uppercase',
+                      letterSpacing: '2px',
+                      whiteSpace: 'nowrap'
+                    }}
+                  >
+                    {cat.name}
+                  </h3>
+                </div>
               </div>
-              <h3 style={{ 
-                  fontSize: '0.9rem', 
-                  fontWeight: selectedCat === cat.id ? 700 : 500, 
-                  color: '#000',
-                  marginTop: '0.5rem'
-              }}>
-                  {cat.name}
-              </h3>
-            </motion.div>
-          ))}
+            )
+          }
+          )}
         </div>
 
         {/* Product Divider or Header */}
@@ -101,66 +136,80 @@ export default function CategoryCatalog() {
         {loading ? (
           <div style={{ textAlign: 'center', padding: '5rem', color: '#000', fontWeight: 900, letterSpacing: '2px' }}>LOADING CATALOG...</div>
         ) : (
-          <div className="catalog-grid">
+          <div className="catalog-grid" style={{ borderTop: '1px solid #f1f5f9', borderLeft: '1px solid #f1f5f9', background: '#fff' }}>
             <AnimatePresence mode="popLayout">
-              {products.map((product) => (
-                <Link key={product.id} href={`/catalog/${product.id}`} style={{ textDecoration: 'none' }}>
-                  <motion.div
-                    layout
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    style={{ 
-                      background: 'transparent', border: 'none', 
-                      padding: '0.2rem', cursor: 'pointer', transition: '0.3s', textAlign: 'center' 
-                    }}
-                    className="product-card-frame"
-                  >
-                    <div style={{ 
-                      aspectRatio: '1/1', background: '#f8fafc', borderRadius: '8px', 
-                      overflow: 'hidden', marginBottom: '0.8rem', border: 'none'
-                    }}>
-                      {product.image_urls?.[0] ? (
-                        <img src={product.image_urls[0]} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-                      ) : (
-                        <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#cbd5e1' }}><LayoutGrid size={24} /></div>
-                      )}
-                    </div>
-                    <h3 style={{ fontSize: '0.85rem', fontWeight: 900, color: '#1a1a1a', textTransform: 'uppercase', lineHeight: 1.2, margin: '0 auto' }}>
-                       {product.name}
-                    </h3>
-                  </motion.div>
-                </Link>
-              ))}
+              {products.map((product) => {
+                const catName = categories.find(c => c.id === selectedCat)?.name || 'CONSOLE';
+                return (
+                  <Link key={product.id} href={`/catalog/${product.id}`} style={{ textDecoration: 'none', display: 'block' }}>
+                    <motion.div
+                      layout
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      style={{
+                        background: '#ffffff',
+                        borderRight: '1px solid #f1f5f9',
+                        borderBottom: '1px solid #f1f5f9',
+                        padding: '1.5rem 1.2rem',
+                        cursor: 'pointer', transition: 'background 0.3s',
+                        display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
+                        height: '100%', minHeight: '300px'
+                      }}
+                      className="product-card-frame"
+                    >
+                      {/* Top Status */}
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.65rem', fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                        <span>{catName}</span>
+                        <span style={{ fontSize: '1rem', lineHeight: 0, paddingBottom: '4px' }}>•</span>
+                      </div>
+
+                      {/* Image Center */}
+                      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
+                        {product.image_urls?.[0] ? (
+                          <img src={product.image_urls[0]} alt={product.name} style={{ width: '100%', height: '100%', maxHeight: '180px', objectFit: 'contain', mixBlendMode: 'darken', filter: 'brightness(1.05) contrast(1.05)' }} />
+                        ) : (
+                          <div style={{ color: '#cbd5e1' }}><LayoutGrid size={24} /></div>
+                        )}
+                      </div>
+
+                      {/* Name Bottom */}
+                      <h3 className="product-name" style={{ fontSize: '0.9rem', fontWeight: 500, color: '#1a1a1a', margin: 0, textAlign: 'left', transition: 'color 0.2s' }}>
+                        {product.name}
+                      </h3>
+                    </motion.div>
+                  </Link>
+                );
+              })}
             </AnimatePresence>
           </div>
         )}
       </div>
 
       <style jsx>{`
-        .category-grid {
-          display: grid;
-          grid-template-columns: repeat(6, 1fr);
-          gap: 3rem 2rem;
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .category-slider {
+          -ms-overflow-style: none;  /* IE and Edge */
+          scrollbar-width: none;  /* Firefox */
         }
         .catalog-grid {
           display: grid;
-          grid-template-columns: repeat(6, 1fr);
-          gap: 2.5rem 1rem;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 0;
         }
         .product-card-frame:hover {
-           transform: translateY(-5px);
+           background: #fafafa !important;
+        }
+        .product-card-frame:hover .product-name {
+           color: #ef4444 !important;
         }
         @media (max-width: 1200px) {
-          .category-grid { grid-template-columns: repeat(4, 1fr); }
-          .catalog-grid { grid-template-columns: repeat(5, 1fr); }
+          .catalog-grid { grid-template-columns: repeat(3, 1fr); }
         }
-        @media (max-width: 900px) {
-          .category-grid { grid-template-columns: repeat(3, 1fr); }
-          .catalog-grid { grid-template-columns: repeat(4, 1fr); }
+        @media (max-width: 1024px) {
+          .catalog-grid { grid-template-columns: repeat(2, 1fr); }
         }
         @media (max-width: 640px) {
-          .category-grid { grid-template-columns: repeat(2, 1fr); }
-          .catalog-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem 0.5rem; }
+          .catalog-grid { grid-template-columns: 1fr; }
         }
       `}</style>
     </section>
