@@ -133,19 +133,7 @@ export default function ProductDetailPage() {
               <h1 style={{ fontSize: '2rem', fontWeight: 900, marginBottom: '1rem', lineHeight: 1.1, letterSpacing: '-1px' }}>{product.name}</h1>
             </motion.div>
 
-            {metadata?.variants && metadata.variants.length > 0 && (
-              <div>
-                <h3 style={{ fontSize: '1.1rem', fontWeight: 800, marginBottom: '1rem', color: '#1a1a1a' }}>{t('colorOptions')}</h3>
-                <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-                  {metadata.variants.map((v: any) => (
-                    <div key={v.id} style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', padding: '0.6rem 1rem', background: '#f8fafc', borderRadius: '12px', cursor: 'pointer', transition: 'all 0.2s' }} className="variant-btn">
-                      {v.swatch && <img src={v.swatch} alt={v.name} style={{ width: '30px', height: '30px', borderRadius: '50%', objectFit: 'cover' }} />}
-                      <span style={{ fontWeight: 700, fontSize: '0.95rem' }}>{v.name}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
+            {/* Color options removed per user request */}
 
             <div style={{ marginTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '3rem' }}>
               <div>
