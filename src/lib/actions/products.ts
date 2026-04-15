@@ -14,7 +14,7 @@ export async function getProducts(page: number = 1, pageSize: number = 10) {
       .select('*, categories(name)', { count: 'exact' })
       .order('created_at', { ascending: false })
       .range(from, to);
-    
+
     if (error) throw error;
     return { data, count };
   } catch (err) {
@@ -32,7 +32,7 @@ export async function createProduct(formData: FormData) {
     const category_id = formData.get('category_id') as string;
     const metadataStr = formData.get('metadata') as string;
     const metadata = metadataStr ? JSON.parse(metadataStr) : {};
-    
+
     const files = formData.getAll('images') as File[];
     const image_urls: string[] = [];
 
@@ -46,7 +46,7 @@ export async function createProduct(formData: FormData) {
     }
 
     const { error } = await supabase.from('products').insert([{
-      name, description, price, category_id, 
+      name, description, price, category_id,
       image_urls, metadata
     }]);
 
@@ -68,7 +68,8 @@ export async function updateProduct(id: string, formData: FormData) {
     const category_id = formData.get('category_id') as string;
     const metadataStr = formData.get('metadata') as string;
     const metadata = metadataStr ? JSON.parse(metadataStr) : {};
-    
+    const existingImagesStr = formData.get('existing_images') as string;
+
     const files = formData.getAll('images') as File[];
     const new_image_urls: string[] = [];
 
@@ -82,7 +83,12 @@ export async function updateProduct(id: string, formData: FormData) {
     }
 
     const updateData: any = { name, description, price, category_id, metadata };
-    if (new_image_urls.length > 0) {
+
+    // Kết hợp ảnh cũ (nếu có tham số existing_images) và ảnh mới
+    if (existingImagesStr !== null) {
+      const existingImages = JSON.parse(existingImagesStr);
+      updateData.image_urls = [...existingImages, ...new_image_urls];
+    } else if (new_image_urls.length > 0) {
       updateData.image_urls = new_image_urls;
     }
 

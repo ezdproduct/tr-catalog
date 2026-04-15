@@ -276,6 +276,16 @@ function WorkerFriendlyModal({ activeTab, item, onClose, onSuccess }: any) {
   const [categories, setCategories] = useState<any[]>([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState(item?.category_id || '');
 
+  // Trạng thái ảnh cũ
+  const [existingImages, setExistingImages] = useState<string[]>(() => {
+    if (!item) return [];
+    if (activeTab === 'Products') return item.image_urls || [];
+    return item.image_url ? [item.image_url] : [];
+  });
+
+  // Trạng thái ảnh mới chọn
+  const [newFiles, setNewFiles] = useState<{ file: File, preview: string }[]>([]);
+
   useEffect(() => {
     getCategories(1, 100).then(res => {
       setCategories(res.data || []);
@@ -284,6 +294,13 @@ function WorkerFriendlyModal({ activeTab, item, onClose, onSuccess }: any) {
     });
   }, [item]);
 
+  useEffect(() => {
+    return () => {
+      // Dọn dẹp object url để tránh rò rỉ bộ nhớ
+      newFiles.forEach(f => URL.revokeObjectURL(f.preview));
+    };
+  }, [newFiles]);
+
   const addField = () => setFields([...fields, { key: '', value: '' }]);
   const updateField = (index: number, k: string, v: string) => {
     const newFields = [...fields];
@@ -291,13 +308,57 @@ function WorkerFriendlyModal({ activeTab, item, onClose, onSuccess }: any) {
     setFields(newFields);
   };
 
+  const handleFileChange = (e: any) => {
+    const files = Array.from(e.target.files) as File[];
+    if (files.length === 0) return;
+
+    const newFilesWithPreview = files.map(file => ({
+      file,
+      preview: URL.createObjectURL(file)
+    }));
+
+    if (activeTab === 'Products') {
+      setNewFiles(prev => [...prev, ...newFilesWithPreview]);
+    } else {
+      setNewFiles(newFilesWithPreview.slice(0, 1));
+      setExistingImages([]); // Đối với danh mục chỉ có 1 ảnh, chọn ảnh mới thì bỏ ảnh cũ
+    }
+
+    e.target.value = null; // reset input
+  };
+
+  const handleRemoveExistingImage = (index: number) => {
+    setExistingImages(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const handleRemoveNewFile = (index: number) => {
+    setNewFiles(prev => {
+      const updated = [...prev];
+      URL.revokeObjectURL(updated[index].preview);
+      updated.splice(index, 1);
+      return updated;
+    });
+  };
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     setLoading(true);
     const formData = new FormData(e.target);
+
     const metadata: any = {};
     fields.forEach(f => { if (f.key) metadata[f.key] = f.value; });
     formData.append('metadata', JSON.stringify(metadata));
+
+    // Phân bổ hình ảnh vào FormData
+    if (activeTab === 'Products') {
+      formData.append('existing_images', JSON.stringify(existingImages));
+      newFiles.forEach(f => formData.append('images', f.file));
+    } else {
+      formData.append('existing_image', existingImages[0] || '');
+      if (newFiles.length > 0) {
+        formData.append('image', newFiles[0].file);
+      }
+    }
 
     try {
       if (item) {
@@ -359,26 +420,63 @@ function WorkerFriendlyModal({ activeTab, item, onClose, onSuccess }: any) {
           )}
 
           <div style={{ padding: '1.5rem', background: '#f8fafc', borderRadius: '20px', border: '1px dashed #cbd5e1' }}>
-            <label style={{ fontWeight: 800, display: 'block', marginBottom: '0.8rem', fontSize: '0.9rem' }}>Hình ảnh (Nhiều ảnh cho sản phẩm):</label>
-            <input name={activeTab === 'Products' ? 'images' : 'image'} type="file" multiple={activeTab === 'Products'} accept="image/*" />
+            <label style={{ fontWeight: 800, display: 'block', marginBottom: '0.8rem', fontSize: '0.9rem' }}>
+              {activeTab === 'Products' ? 'Hình ảnh (Nhiều ảnh cho sản phẩm):' : 'Hình ảnh (Chọn 1 ảnh):'}
+            </label>
+            <input
+              type="file"
+              multiple={activeTab === 'Products'}
+              accept="image/*"
+              onChange={handleFileChange}
+            />
+
+            {/* Vùng hiển thị ảnh cũ */}
+            {existingImages.length > 0 && (
+              <div style={{ marginTop: '1rem' }}>
+                <p style={{ fontSize: '0.8rem', fontWeight: 700, color: '#64748b', marginBottom: '0.5rem' }}>Ảnh đã lưu hiện tại:</p>
+                <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                  {existingImages.map((img, idx) => (
+                    <div key={idx} style={{ position: 'relative', width: '80px', height: '80px' }}>
+                      <img src={img} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '10px', border: '1px solid #e2e8f0' }} />
+                      <button type="button" onClick={() => handleRemoveExistingImage(idx)} style={{ position: 'absolute', top: '-5px', right: '-5px', background: '#ef4444', color: 'white', border: 'none', borderRadius: '50%', width: '20px', height: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', fontSize: '12px', padding: 0 }}><X size={14} /></button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Vùng hiển thị ảnh mới chọn */}
+            {newFiles.length > 0 && (
+              <div style={{ marginTop: '1rem' }}>
+                <p style={{ fontSize: '0.8rem', fontWeight: 700, color: '#3b82f6', marginBottom: '0.5rem' }}>Ảnh mới chuẩn bị tải lên:</p>
+                <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                  {newFiles.map((nf, idx) => (
+                    <div key={idx} style={{ position: 'relative', width: '80px', height: '80px' }}>
+                      <img src={nf.preview} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '10px', border: '2px solid #3b82f6' }} />
+                      <button type="button" onClick={() => handleRemoveNewFile(idx)} style={{ position: 'absolute', top: '-5px', right: '-5px', background: '#ef4444', color: 'white', border: 'none', borderRadius: '50%', width: '20px', height: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', fontSize: '12px', padding: 0 }}><X size={14} /></button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           <div style={{ borderTop: '1px solid #f1f5f9', paddingTop: '1rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
               <label style={{ fontWeight: 800, fontSize: '0.9rem' }}>Thông số kĩ thuật / Metadata:</label>
-              <button type="button" onClick={addField} style={{ color: '#ef4444', fontWeight: 800, fontSize: '0.85rem' }}>+ THÊM DÒNG</button>
+              <button type="button" onClick={addField} style={{ color: '#ef4444', fontWeight: 800, fontSize: '0.85rem', background: 'transparent', border: 'none', cursor: 'pointer' }}>+ THÊM DÒNG</button>
             </div>
             {fields.map((f, i) => (
               <div key={i} style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.6rem' }}>
                 <input placeholder="Tên (Loại gỗ)" value={f.key} onChange={(e) => updateField(i, e.target.value, f.value)} style={{ flex: 1, padding: '0.7rem', border: '1px solid #e2e8f0', borderRadius: '10px', fontSize: '0.85rem' }} />
-                <input placeholder="Valor (Gỗ sồi)" value={f.value} onChange={(e) => updateField(i, f.key, e.target.value)} style={{ flex: 1, padding: '0.7rem', border: '1px solid #e2e8f0', borderRadius: '10px', fontSize: '0.85rem' }} />
+                <input placeholder="Giá trị (Gỗ sồi)" value={f.value} onChange={(e) => updateField(i, f.key, e.target.value)} style={{ flex: 1, padding: '0.7rem', border: '1px solid #e2e8f0', borderRadius: '10px', fontSize: '0.85rem' }} />
               </div>
             ))}
           </div>
 
           <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
-            <button type="button" onClick={onClose} style={{ flex: 1, padding: '1rem', borderRadius: '15px', background: '#f1f5f9', fontWeight: 700 }}>HỦY</button>
-            <button type="submit" disabled={loading} style={{ flex: 2, padding: '1rem', borderRadius: '15px', background: '#ef4444', color: 'white', fontWeight: 900 }}>
+            <button type="button" onClick={onClose} style={{ flex: 1, padding: '1rem', borderRadius: '15px', background: '#f1f5f9', fontWeight: 700, border: 'none', cursor: 'pointer' }}>HỦY</button>
+            <button type="submit" disabled={loading} style={{ flex: 2, padding: '1rem', borderRadius: '15px', background: '#ef4444', color: 'white', fontWeight: 900, border: 'none', cursor: 'pointer' }}>
               {loading ? 'ĐANG LƯU...' : 'LƯU DỮ LIỆU'}
             </button>
           </div>

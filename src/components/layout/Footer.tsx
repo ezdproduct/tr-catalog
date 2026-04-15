@@ -5,7 +5,7 @@ export default function Footer() {
   const t = useTranslations('common');
 
   return (
-    <footer style={{ background: '#0a0a0a', padding: '6rem 1rem 3rem' }}>
+    <footer style={{ background: '#0a0a0a', padding: '4rem 1rem 2rem' }}>
       <div className="container">
 
         {/* Dark Rounded Container */}
@@ -17,35 +17,35 @@ export default function Footer() {
         }}>
           <div className="footer-grid">
 
-            {/* Column 1: WHY RETAILERS PARTNER WITH US */}
+            {/* Column 1: LÝ DO HỢP TÁC CÙNG CHÚNG TÔI */}
             <div>
               <h4 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '2rem', letterSpacing: '0.5px', color: '#ffffff' }}>
-                Why Retailers Partner With Us
+                Tại Sao Đại Lý Nên Hợp Tác Với Chúng Tôi
               </h4>
               <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '1.2rem', fontSize: '1rem', color: '#d1d5db', padding: 0 }}>
                 <li style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
                   <span style={{ color: '#ef4444', fontWeight: 'bold' }}>✓</span>
-                  <span>We offer dropshipping</span>
+                  <span>Hỗ trợ mô hình dropshipping</span>
                 </li>
                 <li style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
                   <span style={{ color: '#ef4444', fontWeight: 'bold' }}>✓</span>
-                  <span>Free floor model + shipping included</span>
+                  <span>Miễn phí hàng trưng bày, bao gồm phí vận chuyển</span>
                 </li>
                 <li style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
                   <span style={{ color: '#ef4444', fontWeight: 'bold' }}>✓</span>
-                  <span>Minimum order quantity is 1 set</span>
+                  <span>Số lượng đặt hàng tối thiểu chỉ từ 1 bộ</span>
                 </li>
                 <li style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
                   <span style={{ color: '#ef4444', fontWeight: 'bold' }}>✓</span>
-                  <span>Easy to demonstrate and sell</span>
+                  <span>Dễ dàng trưng bày và tư vấn khách hàng</span>
                 </li>
               </ul>
             </div>
 
-            {/* Column 2: CONTACT INFO */}
+            {/* Column 2: THÔNG TIN LIÊN HỆ */}
             <div>
               <h4 style={{ fontSize: '0.9rem', fontWeight: 800, marginBottom: '2rem', letterSpacing: '1px', color: '#ffffff', textTransform: 'uppercase' }}>
-                Contact Info
+                Thông tin liên hệ
               </h4>
               <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '1.2rem', fontSize: '0.95rem', color: '#9ca3af', padding: 0 }}>
                 <li>
@@ -58,10 +58,10 @@ export default function Footer() {
               </ul>
             </div>
 
-            {/* Column 3: SOCIAL MEDIA */}
+            {/* Column 3: MẠNG XÃ HỘI */}
             <div>
               <h4 style={{ fontSize: '0.9rem', fontWeight: 800, marginBottom: '2rem', letterSpacing: '1px', color: '#ffffff', textTransform: 'uppercase' }}>
-                Social Media
+                Mạng xã hội
               </h4>
               <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '1rem', fontSize: '1rem', padding: 0 }}>
                 <li><a href="#" className="social-link">Instagram</a></li>
@@ -80,9 +80,9 @@ export default function Footer() {
           color: '#6b7280',
           fontWeight: 500
         }}>
-          <div>© 2026 Transformer Robotics. All rights reserved.</div>
+          <div>© 2026 Transformer Robotics. Mọi quyền được bảo lưu.</div>
           <div style={{ marginTop: '0.5rem', letterSpacing: '1px', fontSize: '0.7rem', textTransform: 'uppercase' }}>
-            Supporting Retail Partners Globally
+            Đồng hành cùng các đối tác đại lý trên toàn cầu
           </div>
         </div>
 

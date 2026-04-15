@@ -44,7 +44,7 @@ export default function CategoryCatalog() {
 
         {/* Title */}
         <div style={{ marginBottom: '0rem' }}>
-          <h2 style={{ fontSize: '1.2rem', fontWeight: 400, color: '#535252ff' }}>Product Catalog</h2>
+          <h2 style={{ fontSize: '1.2rem', fontWeight: 400, color: '#535252ff' }}>Danh mục sản phẩm</h2>
         </div>
 
         {/* Minimalist Horizontal Categories Slider */}
@@ -75,15 +75,15 @@ export default function CategoryCatalog() {
                   display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
                   width: isSelected ? (typeof window !== 'undefined' && window.innerWidth < 640 ? '250px' : '380px') : '120px',
                   opacity: isSelected ? 1 : 0.4,
-                  transition: 'all 0.5s cubic-bezier(0.25, 1, 0.5, 1)'
+                  transition: 'all 0.4s ease-in-out'
                 }}
               >
                 <div
                   style={{
                     width: '100%',
-                    aspectRatio: isSelected ? '4/3' : '1/1',
+                    height: isSelected ? '240px' : '120px',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    transition: 'all 0.5s cubic-bezier(0.25, 1, 0.5, 1)'
+                    transition: 'all 0.4s ease-in-out'
                   }}
                 >
                   {cat.image_url ? (
@@ -95,26 +95,27 @@ export default function CategoryCatalog() {
                         mixBlendMode: 'darken',
                         filter: 'brightness(1.05) contrast(1.05)',
                         transformOrigin: 'center bottom',
-                        transition: 'all 0.5s cubic-bezier(0.25, 1, 0.5, 1)'
+                        transition: 'all 0.4s ease-in-out'
                       }}
                     />
                   ) : (
-                    <LayoutGrid size={isSelected ? 60 : 30} color={isSelected ? '#ef4444' : '#94a3b8'} style={{ transition: 'all 0.5s' }} />
+                    <LayoutGrid size={isSelected ? 60 : 30} color={isSelected ? '#ef4444' : '#94a3b8'} style={{ transition: 'all 0.4s ease-in-out' }} />
                   )}
                 </div>
 
                 <div style={{
-                  height: isSelected ? '30px' : '0px',
+                  height: isSelected ? '50px' : '0px',
                   opacity: isSelected ? 1 : 0,
                   overflow: 'hidden',
-                  transition: 'all 0.5s cubic-bezier(0.25, 1, 0.5, 1)'
+                  transition: 'all 0.4s ease-in-out'
                 }}>
                   <h3
                     style={{
                       fontSize: '1rem',
                       fontWeight: 800,
                       color: '#ef4444',
-                      marginTop: '0.8rem',
+                      paddingTop: '0.8rem',
+                      margin: 0,
                       textTransform: 'uppercase',
                       letterSpacing: '2px',
                       whiteSpace: 'nowrap'
