@@ -1,4 +1,5 @@
 'use client';
+export const dynamic = 'force-dynamic';
 import { useState, useEffect } from 'react';
 import {
   Box, List, LogOut, Plus, Search, Edit, Trash2, X, Menu, Settings, DollarSign, ChevronLeft, ChevronRight, ImageIcon
