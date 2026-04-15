@@ -39,12 +39,12 @@ export default function CategoryCatalog() {
   }, [selectedCat]);
 
   return (
-    <section style={{ padding: '60px 0 100px', background: '#ffffff' }}>
+    <section className="category-section" style={{ background: '#ffffff' }}>
       <div className="container">
 
         {/* Title */}
-        <div style={{ marginBottom: '0rem' }}>
-          <h2 style={{ fontSize: '1.2rem', fontWeight: 400, color: '#535252ff' }}>Danh mục sản phẩm</h2>
+        <div className="category-title-wrapper">
+          <h2 style={{ fontSize: '1.2rem', fontWeight: 400, color: '#535252ff', margin: 0 }}>Danh mục sản phẩm</h2>
         </div>
 
         {/* Minimalist Horizontal Categories Slider */}
@@ -53,10 +53,7 @@ export default function CategoryCatalog() {
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '3rem',
             overflowX: 'auto',
-            padding: '2rem 1rem 0rem',
-            marginBottom: '3rem',
             scrollSnapType: 'x mandatory'
           }}
         >
@@ -67,21 +64,19 @@ export default function CategoryCatalog() {
               <div
                 key={cat.id}
                 onClick={() => setSelectedCat(cat.id)}
+                className={`category-item ${isSelected ? 'selected' : ''}`}
                 style={{
                   cursor: 'pointer',
                   textAlign: 'center',
                   flexShrink: 0,
                   scrollSnapAlign: 'center',
                   display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-                  width: isSelected ? (typeof window !== 'undefined' && window.innerWidth < 640 ? '250px' : '380px') : '120px',
-                  opacity: isSelected ? 1 : 0.4,
                   transition: 'all 0.4s ease-in-out'
                 }}
               >
                 <div
+                  className="category-image-wrapper"
                   style={{
-                    width: '100%',
-                    height: isSelected ? '240px' : '120px',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     transition: 'all 0.4s ease-in-out'
                   }}
@@ -99,13 +94,11 @@ export default function CategoryCatalog() {
                       }}
                     />
                   ) : (
-                    <LayoutGrid size={isSelected ? 60 : 30} color={isSelected ? '#ef4444' : '#94a3b8'} style={{ transition: 'all 0.4s ease-in-out' }} />
+                    <LayoutGrid className="category-icon" color={isSelected ? '#ef4444' : '#94a3b8'} style={{ transition: 'all 0.4s ease-in-out' }} />
                   )}
                 </div>
 
-                <div style={{
-                  height: isSelected ? '50px' : '0px',
-                  opacity: isSelected ? 1 : 0,
+                <div className="category-name-wrapper" style={{
                   overflow: 'hidden',
                   transition: 'all 0.4s ease-in-out'
                 }}>
@@ -131,7 +124,7 @@ export default function CategoryCatalog() {
         </div>
 
         {/* Product Divider or Header */}
-        <div style={{ height: '1px', background: '#f1f5f9', marginBottom: '3rem' }} />
+        <div className="category-divider" style={{ height: '1px', background: '#f1f5f9' }} />
 
         {/* Dynamic Product Grid */}
         {loading ? (
@@ -188,10 +181,45 @@ export default function CategoryCatalog() {
 
       <style jsx>{`
         .no-scrollbar::-webkit-scrollbar { display: none; }
-        .category-slider {
-          -ms-overflow-style: none;  /* IE and Edge */
-          scrollbar-width: none;  /* Firefox */
+        .category-section {
+          padding: 80px 0 100px;
         }
+        .category-title-wrapper {
+          margin-bottom: 2rem;
+        }
+        .category-slider {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+          gap: 3rem;
+          padding: 0 1rem;
+          margin-bottom: 3rem;
+        }
+        .category-item {
+          width: 120px;
+          opacity: 0.4;
+        }
+        .category-item.selected {
+          width: 380px;
+          opacity: 1;
+        }
+        .category-image-wrapper {
+          width: 100%;
+          height: 120px;
+        }
+        .category-item.selected .category-image-wrapper {
+          height: 240px;
+        }
+        .category-name-wrapper {
+          height: 0;
+          opacity: 0;
+        }
+        .category-item.selected .category-name-wrapper {
+          height: 50px;
+          opacity: 1;
+        }
+        .category-icon { width: 30px; height: 30px; }
+        .category-item.selected .category-icon { width: 60px; height: 60px; }
+
         .catalog-grid {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
@@ -203,14 +231,48 @@ export default function CategoryCatalog() {
         .product-card-frame:hover .product-name {
            color: #ef4444 !important;
         }
-        @media (max-width: 1200px) {
-          .catalog-grid { grid-template-columns: repeat(3, 1fr); }
+
+        .category-divider {
+          margin-bottom: 3rem;
         }
+
         @media (max-width: 1024px) {
           .catalog-grid { grid-template-columns: repeat(2, 1fr); }
         }
+
         @media (max-width: 640px) {
-          .catalog-grid { grid-template-columns: 1fr; }
+          .category-section {
+            padding: 40px 0 60px;
+          }
+          .category-title-wrapper {
+            margin-bottom: 1rem;
+          }
+          .category-slider {
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding: 0 0.5rem;
+          }
+          .category-item {
+            width: 80px;
+          }
+          .category-item.selected {
+            width: 180px;
+          }
+          .category-image-wrapper {
+            height: 80px;
+          }
+          .category-item.selected .category-image-wrapper {
+            height: 160px;
+          }
+          .category-item.selected .category-name-wrapper {
+            height: 40px;
+          }
+          .category-item.selected h3 {
+            font-size: 0.8rem !important;
+          }
+          .category-divider {
+            margin-bottom: 1.5rem !important;
+          }
         }
       `}</style>
     </section>
