@@ -11,7 +11,7 @@ export default function CatalogPage() {
 
   return (
     <main>
-      <Navbar />
+      <Navbar forceSolid={true} />
       <div style={{ padding: '60px 0 60px', background: 'radial-gradient(circle at top, #f0f7ff 0%, #ffffff 100%)' }}>
         <div className="container" style={{ textAlign: 'center' }}>
           <motion.h1

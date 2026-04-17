@@ -8,6 +8,7 @@ import { LayoutGrid, ChevronRight, Box, X, Maximize2, ChevronLeft } from 'lucide
 import { supabase } from '@/lib/supabase';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import OtherProductsCarousel from '@/components/layout/OtherProductsCarousel';
 
 export default function ProductDetailPage() {
   const t = useTranslations('product');
@@ -53,61 +54,69 @@ export default function ProductDetailPage() {
 
   return (
     <main style={{ background: '#ffffff', minHeight: '100vh' }}>
-      <Navbar />
+      <Navbar forceSolid={true} />
       <div className="container" style={{ padding: '120px 1.5rem 100px' }}>
         <div className="detail-grid">
 
           {/* Left: Enhanced Image Gallery */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+          <div className="product-gallery">
+
+            {/* Thumbnails list - Vertical Scroll */}
+            <div className="thumbnails-container no-scrollbar">
+              {images.map((img: string, idx: number) => (
+                <button
+                  key={idx}
+                  onClick={() => setActiveImg(idx)}
+                  style={{
+                    width: '80px',
+                    height: '80px',
+                    flex: '0 0 80px',
+                    borderRadius: '16px',
+                    overflow: 'hidden',
+                    border: activeImg === idx ? '3px solid #ef4444' : '2px solid transparent',
+                    background: '#f8fafc',
+                    transition: 'all 0.3s ease',
+                    padding: 0,
+                    cursor: 'pointer',
+                    boxShadow: activeImg === idx ? '0 8px 16px rgba(239, 68, 68, 0.2)' : 'none'
+                  }}
+                >
+                  <img
+                    src={img}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      filter: activeImg === idx ? 'none' : 'grayscale(0.3) opacity(0.7)'
+                    }}
+                    alt={`Thumbnail ${idx}`}
+                  />
+                </button>
+              ))}
+            </div>
+
+            {/* Main Display Image */}
             <motion.div
               layoutId="main-img"
               onClick={() => setIsZoomed(true)}
-              style={{
-                width: '100%', height: '550px', borderRadius: '32px', background: '#ffffff',
-                overflow: 'hidden', cursor: 'zoom-in', position: 'relative'
-              }}
+              className="main-image-display"
             >
               <AnimatePresence mode="wait">
                 <motion.img
                   key={activeImg}
                   src={images[activeImg]}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                  style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '1rem' }}
                   alt={product.name}
                 />
               </AnimatePresence>
-              <div style={{ position: 'absolute', bottom: '1.5rem', right: '1.5rem', background: 'rgba(255,255,255,0.8)', padding: '0.6rem', borderRadius: '12px', backdropFilter: 'blur(4px)' }}>
+              <div style={{ position: 'absolute', bottom: '1.5rem', right: '1.5rem', background: 'rgba(255,255,255,0.8)', padding: '0.6rem', borderRadius: '12px', backdropFilter: 'blur(4px)', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
                 <Maximize2 size={20} color="#1a1a1a" />
               </div>
             </motion.div>
-
-            {/* Thumbnails with Horizontal Scroll */}
-            <div style={{ position: 'relative' }}>
-              <div
-                style={{
-                  display: 'flex', gap: '1rem', overflowX: 'auto',
-                  paddingBottom: '1rem', scrollSnapType: 'x mandatory'
-                }}
-                className="no-scrollbar"
-              >
-                {images.map((img: string, idx: number) => (
-                  <button
-                    key={idx}
-                    onClick={() => setActiveImg(idx)}
-                    style={{
-                      width: '110px', height: '110px', flex: '0 0 110px', borderRadius: '20px',
-                      overflow: 'hidden', border: 'none',
-                      background: 'white', transition: '0.2s', padding: 0, cursor: 'pointer',
-                      scrollSnapAlign: 'start', opacity: activeImg === idx ? 1 : 0.4
-                    }}
-                  >
-                    <img src={img} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                  </button>
-                ))}
-              </div>
-            </div>
           </div>
 
           {/* Right: Info */}
@@ -158,7 +167,59 @@ export default function ProductDetailPage() {
         )}
       </AnimatePresence>
 
+      <OtherProductsCarousel currentId={id as string} />
+
+      <Footer />
+
       <style jsx>{`
+        .product-gallery {
+          display: flex;
+          gap: 2rem;
+          height: auto;
+          align-items: flex-start;
+          flex-direction: column;
+        }
+        .thumbnails-container {
+          width: 100%;
+          height: 120px;
+          display: flex;
+          flex-direction: row;
+          gap: 1rem;
+          overflow-x: auto;
+          overflow-y: hidden;
+          padding-bottom: 0.5rem;
+          flex-shrink: 0;
+        }
+        .main-image-display {
+          width: 100%;
+          height: auto;
+          aspect-ratio: 1/1;
+          border-radius: 32px;
+          background: #ffffff;
+          overflow: hidden;
+          cursor: zoom-in;
+          position: relative;
+          border: 1px solid #f1f5f9;
+        }
+
+        @media (min-width: 1024px) {
+          .product-gallery {
+            flex-direction: row;
+            height: 650px;
+          }
+          .thumbnails-container {
+            width: 110px;
+            height: 464px;
+            flex-direction: column;
+            overflow-y: auto;
+            overflow-x: hidden;
+          }
+          .main-image-display {
+            flex: 1;
+            height: 100%;
+          }
+        }
+
         .detail-grid {
           display: grid;
           grid-template-columns: 1.2fr 1fr;
