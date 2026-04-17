@@ -201,18 +201,21 @@ export default function CategoryCatalog() {
                         {/* Hover Overlay */}
                         <div className="hover-action" style={{
                           position: 'absolute',
-                          inset: 0,
-                          background: 'rgba(0,0,0,0.7)',
+                          bottom: 0,
+                          left: 0,
+                          right: 0,
+                          height: '40%',
+                          background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 60%, transparent 100%)',
                           color: '#fff',
                           display: 'flex',
                           flexDirection: 'column',
                           alignItems: 'center',
-                          justifyContent: 'center',
-                          padding: '1rem',
+                          justifyContent: 'flex-end',
+                          padding: '0.8rem 0.5rem',
                           textAlign: 'center',
                           opacity: 0,
-                          transition: 'all 0.3s ease',
-                          backdropFilter: 'blur(8px)'
+                          transition: 'all 0.4s ease',
+                          backdropFilter: 'blur(2px)'
                         }}>
                           <h3 style={{
                             fontSize: '0.8rem',
