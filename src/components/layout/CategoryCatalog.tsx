@@ -281,10 +281,10 @@ export default function CategoryCatalog() {
             borderBottom: idx % 2 === 1 ? '1px solid #f0f0f0' : 'none',
           }}>
             {/* Main Category Header with Parallax-like decoration */}
-            <div style={{ padding: '0 2rem', marginBottom: '3rem', position: 'relative' }}>
+            <div style={{ padding: '0 2rem', marginBottom: '3rem', position: 'relative', textAlign: 'center' }}>
               <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8 }}
               >
@@ -295,12 +295,12 @@ export default function CategoryCatalog() {
                   textTransform: 'uppercase',
                   margin: 0,
                   color: '#000',
-                  lineHeight: 0.9,
+                  lineHeight: 1,
                   fontFamily: "'Montserrat', sans-serif"
                 }}>
                   {group.category}
                 </h2>
-                <div style={{ marginTop: '0.8rem', maxWidth: '800px', borderLeft: '2px solid #eee', paddingLeft: '1rem' }}>
+                <div style={{ marginTop: '1rem', maxWidth: '800px', margin: '1rem auto 0' }}>
                   <p style={{ color: '#555', fontSize: '1.05rem', lineHeight: 1.4, margin: 0, fontWeight: 500 }}>
                     Nâng tầm không gian sống với công nghệ biến hình đột phá. Thiết kế tinh xảo, chất liệu thượng hạng.
                   </p>
