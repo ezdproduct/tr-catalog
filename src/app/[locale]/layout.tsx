@@ -3,6 +3,12 @@ import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/routing';
 import '../../styles/globals.css';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Transformer Robotics™ | #1 Modular Dining Furniture',
+  description: 'Shop the world\'s best modular dining furniture. Extendable dining tables, modular sectionals & more. Free Shipping.',
+}
 import { Be_Vietnam_Pro, Montserrat } from 'next/font/google';
 
 const beVietnamPro = Be_Vietnam_Pro({
