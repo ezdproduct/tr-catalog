@@ -166,7 +166,9 @@ export default function CategoryCatalog() {
                         flexDirection: 'column',
                         height: '100%',
                         position: 'relative',
-                        transition: 'transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1)'
+                        border: '1px solid #f1f5f9',
+                        overflow: 'hidden',
+                        transition: 'all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1)'
                       }}
                       className="product-card-new"
                     >
@@ -187,8 +189,7 @@ export default function CategoryCatalog() {
                             style={{
                               width: '100%',
                               height: '100%',
-                              objectFit: 'contain',
-                              padding: '2rem',
+                              objectFit: 'cover',
                               transition: 'transform 0.6s ease'
                             }}
                             className="product-img"
@@ -220,7 +221,7 @@ export default function CategoryCatalog() {
                       </div>
 
                       {/* Info Panel */}
-                      <div style={{ padding: '1.5rem 0' }}>
+                      <div style={{ padding: '1rem 0.5rem' }}>
                         <h3 style={{
                           fontSize: '0.9rem',
                           fontWeight: 600,
