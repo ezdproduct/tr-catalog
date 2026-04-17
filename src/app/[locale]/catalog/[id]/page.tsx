@@ -7,7 +7,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { LayoutGrid, ChevronRight, Box, X, Maximize2, ChevronLeft } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import Navbar from '@/components/layout/Navbar';
-import Footer from '@/components/layout/Footer';
 import OtherProductsCarousel from '@/components/layout/OtherProductsCarousel';
 
 export default function ProductDetailPage() {
@@ -168,8 +167,6 @@ export default function ProductDetailPage() {
       </AnimatePresence>
 
       <OtherProductsCarousel currentId={id as string} />
-
-      <Footer />
 
       <style jsx>{`
         .product-gallery {

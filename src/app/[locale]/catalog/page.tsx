@@ -1,7 +1,6 @@
 'use client';
 import { useTranslations } from 'next-intl';
 import Navbar from '@/components/layout/Navbar';
-import Footer from '@/components/layout/Footer';
 import Categories from '@/components/layout/Categories';
 import FeaturedProducts from '@/components/layout/FeaturedProducts';
 import { motion } from 'framer-motion';
@@ -36,7 +35,6 @@ export default function CatalogPage() {
       <div style={{ padding: '0 0 100px' }}>
         <FeaturedProducts />
       </div>
-      <Footer />
     </main>
   );
 }
