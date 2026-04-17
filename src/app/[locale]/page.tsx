@@ -54,18 +54,18 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
             style={{
-              fontSize: 'clamp(1rem, 2vw, 1.5rem)',
+              fontSize: 'clamp(0.9rem, 1.5vw, 1.2rem)',
               color: '#f3f4f6',
-              maxWidth: '700px',
+              maxWidth: '900px',
               margin: '0 auto 2.5rem',
               fontWeight: 400,
+              lineHeight: 1.5,
               letterSpacing: '0.05em',
               textShadow: '0 2px 10px rgba(0,0,0,0.5)',
               fontFamily: "'Montserrat', sans-serif"
             }}
           >
-            Nâng tầm không gian sống với công nghệ biến hình đột phá.
-            Thiết kế tinh xảo, chất liệu thượng hạng.
+            Nâng tầm không gian sống với công nghệ biến hình đột phá. Thiết kế tinh xảo, chất liệu thượng hạng.
           </motion.p>
 
           <motion.div

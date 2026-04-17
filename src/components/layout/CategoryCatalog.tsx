@@ -84,7 +84,7 @@ function SubCategoryRow({ subName, products }: { subName: string, products: any[
     .replace(/^Transformer Round Sideboard - /g, '');
 
   return (
-    <div className="sub-category-row" style={{ marginBottom: '4rem', position: 'relative' }}>
+    <div className="sub-category-row" style={{ marginBottom: '2.5rem', position: 'relative' }}>
       {/* Sub-category Header */}
       <div style={{
         display: 'flex',
@@ -270,18 +270,18 @@ export default function CategoryCatalog() {
   if (loading) return <div style={{ height: '600px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><LoadingScreen /></div>;
 
   return (
-    <section id="catalog" style={{ background: '#ffffff', minHeight: '100vh', padding: '40px 0 120px' }}>
+    <section id="catalog" style={{ background: '#ffffff', minHeight: '100vh', padding: '40px 0 80px' }}>
       <div style={{ maxWidth: '100%', margin: '0 auto' }}>
 
         {groupedData.map((group, idx) => (
           <div key={group.category} style={{
             background: idx % 2 === 1 ? '#fafafa' : 'transparent',
-            padding: idx === 0 ? '0 0 8rem 0' : '8rem 0',
+            padding: idx === 0 ? '0 0 5rem 0' : '5rem 0',
             borderTop: idx % 2 === 1 ? '1px solid #f0f0f0' : 'none',
             borderBottom: idx % 2 === 1 ? '1px solid #f0f0f0' : 'none',
           }}>
             {/* Main Category Header with Parallax-like decoration */}
-            <div style={{ padding: '0 2rem', marginBottom: '4rem', position: 'relative' }}>
+            <div style={{ padding: '0 2rem', marginBottom: '3rem', position: 'relative' }}>
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -300,9 +300,9 @@ export default function CategoryCatalog() {
                 }}>
                   {group.category}
                 </h2>
-                <div style={{ marginTop: '2rem', maxWidth: '600px', borderLeft: '3px solid #eee', paddingLeft: '1.5rem' }}>
-                  <p style={{ color: '#666', fontSize: '1.1rem', lineHeight: 1.6, margin: 0 }}>
-                    Khám phá đỉnh cao của thiết kế nội thất thông minh. Sự kết hợp hoàn mỹ giữa công năng đột phá và vẻ đẹp vượt thời gian.
+                <div style={{ marginTop: '0.8rem', maxWidth: '800px', borderLeft: '2px solid #eee', paddingLeft: '1rem' }}>
+                  <p style={{ color: '#555', fontSize: '1.05rem', lineHeight: 1.4, margin: 0, fontWeight: 500 }}>
+                    Nâng tầm không gian sống với công nghệ biến hình đột phá. Thiết kế tinh xảo, chất liệu thượng hạng.
                   </p>
                 </div>
               </motion.div>
