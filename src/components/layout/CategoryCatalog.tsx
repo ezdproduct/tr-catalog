@@ -296,12 +296,20 @@ export default function CategoryCatalog() {
                   margin: 0,
                   color: '#000',
                   lineHeight: 1,
-                  fontFamily: "'Montserrat', sans-serif"
+                  fontFamily: "'Montserrat', sans-serif",
+                  textWrap: 'balance' as any
                 }}>
                   {group.category}
                 </h2>
-                <div style={{ marginTop: '1rem', maxWidth: '800px', margin: '1rem auto 0' }}>
-                  <p style={{ color: '#555', fontSize: '1.05rem', lineHeight: 1.4, margin: 0, fontWeight: 500 }}>
+                <div style={{ marginTop: '1rem', maxWidth: '1000px', margin: '1rem auto 0' }}>
+                  <p style={{
+                    color: '#555',
+                    fontSize: '1.05rem',
+                    lineHeight: 1.5,
+                    margin: 0,
+                    fontWeight: 500,
+                    textWrap: 'balance' as any // Using balance to prevent orphans
+                  }}>
                     Nâng tầm không gian sống với công nghệ biến hình đột phá. Thiết kế tinh xảo, chất liệu thượng hạng.
                   </p>
                 </div>

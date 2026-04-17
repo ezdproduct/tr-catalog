@@ -62,7 +62,8 @@ export default function Home() {
               lineHeight: 1.5,
               letterSpacing: '0.05em',
               textShadow: '0 2px 10px rgba(0,0,0,0.5)',
-              fontFamily: "'Montserrat', sans-serif"
+              fontFamily: "'Montserrat', sans-serif",
+              textWrap: 'balance' as any
             }}
           >
             Nâng tầm không gian sống với công nghệ biến hình đột phá. Thiết kế tinh xảo, chất liệu thượng hạng.
@@ -99,7 +100,7 @@ export default function Home() {
           >
             <span style={{ color: 'var(--primary)', fontWeight: 700, letterSpacing: '0.3em', fontSize: '0.8rem', textTransform: 'uppercase', display: 'block', marginBottom: '1rem' }}>SANG TRỌNG BẬC NHẤT</span>
             <h2 style={{ fontSize: 'clamp(2rem, 5vw, 4rem)', color: '#fff', marginBottom: '1.5rem', lineHeight: 1 }}>BỘ SƯU TẬP<br />NOVA</h2>
-            <p style={{ color: '#9ca3af', fontSize: '1.1rem', marginBottom: '2.5rem', maxWidth: '500px' }}>
+            <p style={{ color: '#9ca3af', fontSize: '1.1rem', marginBottom: '2.5rem', maxWidth: '500px', textWrap: 'balance' as any }}>
               Bản giao hưởng giữa nghệ thuật cơ khí và thiết kế nội thất. Nova không chỉ là một chiếc bàn, mà là một biểu tượng của lối sống hiện đại.
             </p>
             <a href="#catalog" className="btn btn-outline" style={{ borderColor: '#fff', color: '#fff', borderRadius: '0', padding: '1rem 3rem' }}>KHÁM PHÁ NGAY</a>
@@ -129,7 +130,7 @@ export default function Home() {
         <div className="container" style={{ maxWidth: '1400px' }}>
           <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
             <h2 style={{ fontSize: '3rem', marginBottom: '1rem' }}>TUYỆT TÁC TỪ THIÊN NHIÊN</h2>
-            <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem' }}>Tuyển chọn những loại gỗ quý hiếm, xử lý thủ công đạt độ bền thế kỷ.</p>
+            <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', textWrap: 'balance' as any }}>Tuyển chọn những loại gỗ quý hiếm, xử lý thủ công đạt độ bền thế kỷ.</p>
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.5rem' }}>
