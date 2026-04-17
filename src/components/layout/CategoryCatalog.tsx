@@ -1,293 +1,404 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useTranslations, useLocale } from 'next-intl';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import { useLocale } from 'next-intl';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { supabase } from '@/lib/supabase';
-import { LayoutGrid } from 'lucide-react';
+import { ChevronRight, ChevronLeft, ArrowRight } from 'lucide-react';
 import { Link } from '@/routing';
 import LoadingScreen from '@/components/common/LoadingScreen';
 import Image from 'next/image';
 
-export default function CategoryCatalog() {
-  const t_common = useTranslations('common');
-  const t_catalog = useTranslations('catalog');
-  const locale = useLocale();
-  const [categories, setCategories] = useState<any[]>([]);
-  const [selectedCat, setSelectedCat] = useState<string | null>(null);
-  const [products, setProducts] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+// Optimized sub-component that only renders children when in view
+function LazyRow({ subName, products }: { subName: string, products: any[] }) {
+  const [isInView, setIsInView] = useState(false);
+  const rowRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const init = async () => {
-      const { data: cats } = await supabase.from('categories').select('*').order('name');
-      const allProductsCat = {
-        id: 'all',
-        name: locale === 'vi' ? 'TẤT CẢ SẢN PHẨM' : 'ALL PRODUCTS',
-        bannerImage: 'https://pub-83ec56d99c0444bda304e97abb4edd21.r2.dev/Brand%20TR/hero-banner.jpg'
-      };
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '200px' } // Load slightly before it comes into view
+    );
 
-      if (cats) {
-        setCategories([allProductsCat, ...cats]);
-        setSelectedCat('all');
-      }
-    };
-    init();
-  }, [locale]);
-
-  useEffect(() => {
-    if (!selectedCat) return;
-    const fetchProducts = async () => {
-      setLoading(true);
-
-      let query = supabase.from('products').select('*');
-
-      if (selectedCat && selectedCat !== 'all') {
-        query = query.eq('category_id', selectedCat);
-      }
-
-      const { data } = await query.order('sort_order', { ascending: true });
-
-      setProducts(data || []);
-      setLoading(false);
-    };
-    fetchProducts();
-  }, [selectedCat, categories]);
+    if (rowRef.current) observer.observe(rowRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <section id="catalog" className="category-section" style={{ background: '#ffffff', borderTop: '1px solid #eee' }}>
-      <div className="container" style={{ maxWidth: '1600px' }}>
+    <div ref={rowRef} style={{ minHeight: isInView ? 'auto' : '300px' }}>
+      {isInView ? <SubCategoryRow subName={subName} products={products} /> : null}
+    </div>
+  );
+}
 
-        {/* Header Section Removed as requested */}
+// Sub-component for each sub-category row with enhanced UI
+function SubCategoryRow({ subName, products }: { subName: string, products: any[] }) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(true);
 
-        {/* Minimalist Horizontal Categories Slider */}
-        <div
-          className="no-scrollbar category-slider"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            overflowX: 'auto',
-            scrollSnapType: 'x mandatory',
-            paddingBottom: '2rem'
-          }}
-        >
-          {categories.map((cat, idx) => {
-            const isSelected = selectedCat === cat.id;
+  const checkScroll = () => {
+    if (scrollRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+      setShowLeftArrow(scrollLeft > 20);
+      setShowRightArrow(scrollLeft + clientWidth < scrollWidth - 20);
+    }
+  };
 
-            return (
-              <div
-                key={cat.id}
-                onClick={() => setSelectedCat(cat.id)}
-                className={`category-item-new ${isSelected ? 'active' : ''}`}
-                style={{
-                  cursor: 'pointer',
-                  flexShrink: 0,
-                  scrollSnapAlign: 'start',
-                  width: '320px',
-                  marginRight: '20px',
-                  position: 'relative',
-                  overflow: 'hidden',
-                  aspectRatio: '16/10',
-                  borderRadius: '12px',
-                  transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                  boxShadow: isSelected ? '0 20px 40px rgba(0,0,0,0.15)' : 'none',
-                  border: isSelected ? '2px solid var(--primary)' : '1px solid #eee'
-                }}
-              >
-                {(idx !== 0 && (cat.bannerImage || cat.image_url)) ? (
-                  <Image
-                    src={cat.bannerImage || cat.image_url}
-                    alt={cat.name}
-                    fill
-                    sizes="320px"
-                    style={{
-                      objectFit: 'cover',
-                      filter: isSelected ? 'brightness(1.1) contrast(1.1)' : 'brightness(0.7) grayscale(0.5)',
-                      transition: 'all 0.5s ease'
-                    }}
-                    priority={idx < 5}
-                  />
-                ) : (
-                  <div style={{
-                    width: '100%',
-                    height: '100%',
-                    background: isSelected ? '#ffffff' : '#f8fafc',
-                    transition: 'all 0.5s ease'
-                  }} />
-                )}
-                <div style={{
-                  position: 'absolute',
-                  inset: 0,
-                  background: isSelected ? 'rgba(255,255,255,0.9)' : 'rgba(0,0,0,0.2)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: '1rem',
-                  transition: 'background 0.5s'
-                }}>
-                  <h3 style={{
-                    fontSize: '1rem',
-                    fontWeight: 800,
-                    color: isSelected ? 'var(--primary)' : '#fff',
-                    margin: 0,
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.1em',
-                    textShadow: isSelected ? 'none' : '0 2px 10px rgba(0,0,0,0.5)',
-                    textAlign: 'center'
-                  }}>
-                    {idx === 0 ? (locale === 'vi' ? 'TẤT CẢ SẢN PHẨM' : 'ALL PRODUCTS') : cat.name}
-                  </h3>
-                </div>
-              </div>
-            )
-          }
-          )}
+  useEffect(() => {
+    checkScroll();
+    window.addEventListener('resize', checkScroll);
+    return () => window.removeEventListener('resize', checkScroll);
+  }, []);
+
+  const scroll = (direction: 'left' | 'right') => {
+    if (scrollRef.current) {
+      const scrollAmount = scrollRef.current.clientWidth * 0.8;
+      scrollRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  const displayItems = products.flatMap(p =>
+    (p.image_urls || []).map((url: string, idx: number) => ({
+      ...p,
+      displayImage: url,
+      displayId: `${p.id}-${idx}`,
+    }))
+  );
+
+  if (displayItems.length === 0) return null;
+
+  const cleanName = subName
+    .replace(/^Round Dining Set - /g, '')
+    .replace(/^Dining Set-? /g, '')
+    .replace(/^Outdoor Dining Set - /g, '')
+    .replace(/^Table to Desk -? /g, '')
+    .replace(/^Transformer Round Sideboard - /g, '');
+
+  return (
+    <div className="sub-category-row" style={{ marginBottom: '4rem', position: 'relative' }}>
+      {/* Sub-category Header */}
+      <div style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'baseline',
+        marginBottom: '1.5rem',
+        padding: '0 2rem'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <h3 style={{
+            fontSize: '1.1rem',
+            fontWeight: 800,
+            letterSpacing: '0.1em',
+            textTransform: 'uppercase',
+            margin: 0,
+            color: '#111',
+            fontFamily: "'Montserrat', sans-serif"
+          }}>
+            {cleanName}
+          </h3>
         </div>
 
-        {/* Product Divider or Header */}
-        <div className="category-divider" style={{ height: '1px', background: '#f1f5f9' }} />
-
-        {/* Dynamic Product Grid */}
-        {loading ? (
-          <div style={{ height: '400px' }}><LoadingScreen /></div>
-        ) : (
-          <div className="catalog-grid" style={{ marginTop: '2rem' }}>
-            <AnimatePresence mode="popLayout">
-              {products.flatMap(p => (p.image_urls || []).map((url: string, idx: number) => ({ ...p, displayImage: url, displayId: `${p.id}-${idx}` }))).map((item) => {
-                return (
-                  <Link key={item.displayId} href={`/catalog/${item.id}`} style={{ textDecoration: 'none', display: 'block' }}>
-                    <motion.div
-                      layout
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.4 }}
-                      style={{
-                        background: '#ffffff',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        height: '100%',
-                        position: 'relative',
-                        border: '1px solid #f1f5f9',
-                        overflow: 'hidden',
-                        transition: 'all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1)'
-                      }}
-                      className="product-card-new"
-                    >
-                      {/* Image Frame */}
-                      <div className="product-image-frame" style={{
-                        position: 'relative',
-                        aspectRatio: '1/1',
-                        overflow: 'hidden',
-                        background: '#ffffff',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                      }}>
-                        {item.displayImage ? (
-                          <Image
-                            src={item.displayImage}
-                            alt={item.name}
-                            fill
-                            sizes="(max-width: 768px) 50vw, 25vw"
-                            style={{
-                              objectFit: 'cover',
-                              transition: 'transform 0.6s ease'
-                            }}
-                            className="product-img"
-                            loading="lazy"
-                          />
-                        ) : (
-                          <div style={{ color: '#cbd5e1' }}><LayoutGrid size={48} /></div>
-                        )}
-
-                        {/* Hover Overlay */}
-                        <div className="hover-action" style={{
-                          position: 'absolute',
-                          bottom: 0,
-                          left: 0,
-                          right: 0,
-                          height: '50%',
-                          background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 70%, transparent 100%)',
-                          color: '#fff',
-                          padding: '0 1rem 1.2rem',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          alignItems: 'flex-start',
-                          justifyContent: 'flex-end',
-                          textAlign: 'left',
-                          opacity: 0,
-                          transition: 'all 0.4s ease',
-                          backdropFilter: 'blur(3px)'
-                        }}>
-                          <h3 style={{
-                            fontSize: '0.9rem',
-                            fontWeight: 700,
-                            color: '#fff',
-                            margin: '0',
-                            textTransform: 'uppercase',
-                            letterSpacing: '0.05em',
-                            fontFamily: "'Montserrat', sans-serif",
-                            lineHeight: 1.2
-                          }}>
-                            {item.displayImage
-                              ? decodeURIComponent(item.displayImage.split('/').slice(-2, -1)[0] || '')
-                                .replace(/Dining Set - /g, '')
-                                .replace(/Outdoor Dining Set - /g, '')
-                                .replace(/[-_]/g, ' ')
-                              : item.name}
-                          </h3>
-                        </div>
-                      </div>
-
-                    </motion.div>
-                  </Link>
-                );
-              })}
-            </AnimatePresence>
-          </div>
-        )}
+        <div className="discovery-link" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', color: '#888', transition: 'color 0.3s' }}>
+          <span style={{ fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em' }}>View Details</span>
+          <ArrowRight size={14} />
+        </div>
       </div>
 
-      <style jsx>{`
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .category-section {
-          padding: 80px 0 100px;
-        }
-        .category-slider {
+      {/* Custom Scroll Controls - Floating */}
+      {showLeftArrow && (
+        <button
+          onClick={() => scroll('left')}
+          className="scroll-nav-btn left"
+          style={{ left: '1rem' }}
+        >
+          <ChevronLeft size={24} />
+        </button>
+      )}
+      {showRightArrow && (
+        <button
+          onClick={() => scroll('right')}
+          className="scroll-nav-btn right"
+          style={{ right: '1rem' }}
+        >
+          <ChevronRight size={24} />
+        </button>
+      )}
+
+      {/* Horizontal Scroll Area */}
+      <div
+        ref={scrollRef}
+        onScroll={checkScroll}
+        className="hide-scrollbar"
+        style={{
+          display: 'flex',
+          overflowX: 'auto',
+          gap: '1.5rem',
+          padding: '1.5rem 2rem 1rem',
+          scrollSnapType: 'x mandatory',
+          WebkitOverflowScrolling: 'touch',
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none'
+        } as React.CSSProperties}
+      >
+        {displayItems.map((item, idx) => (
+          <Link key={item.displayId} href={`/catalog/${item.id}`} style={{ textDecoration: 'none', flexShrink: 0, width: '320px', scrollSnapAlign: 'start' }}>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx % 4 * 0.1 }}
+              whileHover={{ y: -8 }}
+              className="product-card-premium"
+              style={{ width: '100%' }}
+            >
+              <div className="card-image-wrapper" style={{
+                position: 'relative',
+                width: '100%',
+                paddingBottom: '75%', // Robust 4:3 Aspect Ratio
+                overflow: 'hidden',
+                borderRadius: '8px',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.06)',
+                background: '#f9fafb'
+              }}>
+                <Image
+                  src={item.displayImage.startsWith('//') ? `https:${item.displayImage}` : item.displayImage}
+                  alt={item.name}
+                  fill
+                  sizes="320px"
+                  quality={80}
+                  style={{
+                    objectFit: 'cover',
+                    width: '100%',
+                    height: '100%',
+                    transition: 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)'
+                  }}
+                  className="main-image"
+                  loading="lazy"
+                />
+
+                {/* Status Badge if applicable */}
+                <div style={{ position: 'absolute', top: '12px', right: '12px', zIndex: 10 }}>
+                  <div style={{ background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(4px)', padding: '4px 12px', borderRadius: '4px', fontSize: '0.65rem', fontWeight: 800, color: '#000', letterSpacing: '0.1em' }}>
+                    NEW
+                  </div>
+                </div>
+
+                {/* Glass Overlay on Hover */}
+                <div className="card-overlay">
+                  <div style={{ transform: 'translateY(10px)', transition: 'transform 0.4s' }} className="overlay-content">
+                    <p style={{ margin: 0, fontSize: '0.7rem', fontWeight: 500, opacity: 0.8, color: '#fff' }}>COLLECTION</p>
+                    <h4 style={{ margin: '4px 0 0', fontSize: '0.9rem', fontWeight: 700, color: '#fff' }}>{item.name}</h4>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+type GroupedData = {
+  category: string;
+  subCategories: { name: string; products: any[] }[];
+};
+
+export default function CategoryCatalog() {
+  const locale = useLocale();
+  const [groupedData, setGroupedData] = useState<GroupedData[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const categoryOrder = [
+    'Round Dining Set',
+    'Dining Set',
+    'Outdoor Dining Set',
+    'Table to Desk',
+    'Transformer Round Sideboard',
+  ];
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      const { data: products } = await supabase
+        .from('products')
+        .select('id, name, image_urls, metadata, sort_order')
+        .order('sort_order', { ascending: true });
+
+      if (products) {
+        const catMap: Record<string, Record<string, any[]>> = {};
+
+        products.forEach(p => {
+          const cat = p.metadata?.original_category || (locale === 'vi' ? 'Khác' : 'Other');
+          const folder = p.metadata?.original_folder || p.name;
+
+          if (!catMap[cat]) catMap[cat] = {};
+          if (!catMap[cat][folder]) catMap[cat][folder] = [];
+          catMap[cat][folder].push(p);
+        });
+
+        const sorted: GroupedData[] = Object.entries(catMap)
+          .sort(([a], [b]) => {
+            const ia = categoryOrder.indexOf(a);
+            const ib = categoryOrder.indexOf(b);
+            if (ia !== -1 && ib !== -1) return ia - ib;
+            if (ia !== -1) return -1;
+            if (ib !== -1) return 1;
+            return a.localeCompare(b);
+          })
+          .map(([category, subs]) => ({
+            category,
+            subCategories: Object.entries(subs).map(([name, products]) => ({ name, products }))
+          }));
+
+        setGroupedData(sorted);
+      }
+      setLoading(false);
+    };
+    fetchData();
+  }, [locale]);
+
+  if (loading) return <div style={{ height: '600px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><LoadingScreen /></div>;
+
+  return (
+    <section id="catalog" style={{ background: '#ffffff', minHeight: '100vh', padding: '40px 0 120px' }}>
+      <div style={{ maxWidth: '100%', margin: '0 auto' }}>
+
+        {groupedData.map((group, idx) => (
+          <div key={group.category} style={{
+            background: idx % 2 === 1 ? '#fafafa' : 'transparent',
+            padding: idx === 0 ? '0 0 8rem 0' : '8rem 0',
+            borderTop: idx % 2 === 1 ? '1px solid #f0f0f0' : 'none',
+            borderBottom: idx % 2 === 1 ? '1px solid #f0f0f0' : 'none',
+          }}>
+            {/* Main Category Header with Parallax-like decoration */}
+            <div style={{ padding: '0 2rem', marginBottom: '4rem', position: 'relative' }}>
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', marginBottom: '1rem' }}>
+                  <div style={{ height: '1px', width: '60px', background: '#ddd' }} />
+                  <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--primary)', letterSpacing: '0.4em', textTransform: 'uppercase' }}>
+                    COLLECTION 0{idx + 1}
+                  </span>
+                </div>
+                <h2 style={{
+                  fontSize: 'clamp(2.5rem, 5vw, 4.5rem)',
+                  fontWeight: 900,
+                  letterSpacing: '-0.02em',
+                  textTransform: 'uppercase',
+                  margin: 0,
+                  color: '#000',
+                  lineHeight: 0.9,
+                  fontFamily: "'Montserrat', sans-serif"
+                }}>
+                  {group.category}
+                </h2>
+                <div style={{ marginTop: '2rem', maxWidth: '600px', borderLeft: '3px solid #eee', paddingLeft: '1.5rem' }}>
+                  <p style={{ color: '#666', fontSize: '1.1rem', lineHeight: 1.6, margin: 0 }}>
+                    Khám phá đỉnh cao của thiết kế nội thất thông minh. Sự kết hợp hoàn mỹ giữa công năng đột phá và vẻ đẹp vượt thời gian.
+                  </p>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Sub-categories - Now using LazyRow for performance */}
+            {group.subCategories.map((sub) => (
+              <LazyRow key={sub.name} subName={sub.name} products={sub.products} />
+            ))}
+          </div>
+        ))}
+      </div>
+
+      <style jsx global>{`
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar {
           -ms-overflow-style: none;
           scrollbar-width: none;
-          padding: 0 1rem 2rem;
-          cursor: grab;
-        }
-        .category-slider:active { cursor: grabbing; }
-
-        .catalog-grid {
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 0.75rem;
         }
 
-        .product-card-new:hover {
-          transform: translateY(-8px);
-        }
-        .product-card-new:hover .hover-action {
-          transform: translateY(0) !important;
-          opacity: 1 !important;
+        .scroll-nav-btn {
+          position: absolute;
+          top: 60%;
+          transform: translateY(-50%);
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          border: none;
+          background: rgba(255,255,255,0.95);
+          box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          z-index: 20;
+          transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+          color: #000;
         }
 
-        @media (max-width: 1200px) {
-          .catalog-grid { grid-template-columns: repeat(3, 1fr); }
+        .scroll-nav-btn:hover {
+          background: #000;
+          color: #fff;
+          transform: translateY(-50%) scale(1.1);
+          box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .scroll-nav-btn:active { transform: translateY(-50%) scale(0.95); }
+
+        .product-card-premium:hover .card-image-wrapper {
+          box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+        }
+
+        .product-card-premium:hover .main-image {
+          transform: scale(1.1);
+        }
+
+        .product-card-premium:hover .card-overlay {
+          opacity: 1;
+        }
+
+        .product-card-premium:hover .overlay-content {
+           transform: translateY(0) !important;
+        }
+
+        .card-overlay {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
+          display: flex;
+          align-items: flex-end;
+          padding: 2rem;
+          opacity: 0;
+          transition: opacity 0.4s ease;
+          pointer-events: none;
+          z-index: 5;
+        }
+
+        .discovery-link:hover {
+            color: #000 !important;
+        }
+        
+        .discovery-link:hover .lucide {
+            transform: translateX(4px);
+            transition: transform 0.3s;
         }
 
         @media (max-width: 768px) {
-          .category-section { padding: 40px 0 60px; }
-          .catalog-grid { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
-          .category-item-new { width: 220px !important; }
-        }
-
-        @media (max-width: 480px) {
-          .catalog-grid { grid-template-columns: 1fr; }
+          .scroll-nav-btn { display: none !important; }
+          h2 { font-size: 2.5rem !important; }
+          .category-section { padding: 0 1rem !important; }
         }
       `}</style>
     </section>
