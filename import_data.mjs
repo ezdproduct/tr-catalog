@@ -112,7 +112,8 @@ async function run() {
             image_urls: cleanImages,
             metadata: p.meta || {},
             tag: p.status || '',
-            is_featured: p.sortOrder <= 6
+            is_featured: p.sortOrder <= 6,
+            sort_order: p.sortOrder || 999
         };
     });
 

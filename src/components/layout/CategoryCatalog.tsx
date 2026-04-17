@@ -45,7 +45,7 @@ export default function CategoryCatalog() {
         query = query.eq('category_id', selectedCat);
       }
 
-      const { data } = await query.order('created_at', { ascending: false });
+      const { data } = await query.order('sort_order', { ascending: true });
 
       setProducts(data || []);
       setLoading(false);
@@ -201,39 +201,35 @@ export default function CategoryCatalog() {
                         {/* Hover Overlay */}
                         <div className="hover-action" style={{
                           position: 'absolute',
-                          bottom: '0',
-                          left: '0',
-                          right: '0',
-                          background: 'var(--primary)',
+                          inset: 0,
+                          background: 'rgba(0,0,0,0.7)',
                           color: '#fff',
-                          padding: '0.8rem',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          padding: '1rem',
                           textAlign: 'center',
-                          fontSize: '0.8rem',
-                          fontWeight: 700,
-                          letterSpacing: '0.1em',
-                          textTransform: 'uppercase',
-                          transform: 'translateY(10px)',
                           opacity: 0,
-                          transition: 'all 0.3s ease'
+                          transition: 'all 0.3s ease',
+                          backdropFilter: 'blur(8px)'
                         }}>
-                          Xem chi tiết
+                          <h3 style={{
+                            fontSize: '0.8rem',
+                            fontWeight: 700,
+                            color: '#fff',
+                            margin: '0',
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.05em',
+                            fontFamily: "'Montserrat', sans-serif"
+                          }}>
+                            {item.displayImage
+                              ? decodeURIComponent(item.displayImage.split('/').pop()?.split('.')[0]?.replace(/[-_]/g, ' ') || item.name)
+                              : item.name}
+                          </h3>
                         </div>
                       </div>
 
-                      {/* Info Panel */}
-                      <div style={{ padding: '1rem 0.5rem' }}>
-                        <h3 style={{
-                          fontSize: '0.9rem',
-                          fontWeight: 600,
-                          color: '#1a1a1a',
-                          margin: '0',
-                          lineHeight: 1.4,
-                          fontFamily: "'Montserrat', sans-serif",
-                          textAlign: 'center'
-                        }}>
-                          {item.name}
-                        </h3>
-                      </div>
                     </motion.div>
                   </Link>
                 );
