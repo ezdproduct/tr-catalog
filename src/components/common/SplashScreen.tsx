@@ -78,12 +78,13 @@ export default function SplashScreen() {
                                 >
                                     <img
                                         src="/logo-moi.png"
-                                        alt=""
+                                        alt="Transformer Robotics Logo"
                                         style={{
                                             width: '18rem',
-                                            maxWidth: 'none',
+                                            maxWidth: '70vw',
                                             height: 'auto',
-                                            filter: "brightness(0) saturate(100%) invert(35%) sepia(82%) saturate(1455%) hue-rotate(331deg) brightness(85%) contrast(89%)"
+                                            filter: "brightness(0) saturate(100%) invert(35%) sepia(82%) saturate(1455%) hue-rotate(331deg) brightness(85%) contrast(89%)",
+                                            display: 'block'
                                         }}
                                     />
                                 </motion.div>
