@@ -85,6 +85,34 @@ button {
   }
 }
 
+/* Catalog Specific Styles */
+.catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  /* Gap will be overridden in the component to 1px but keeping it here for fallback */
+}
+
+@media (max-width: 1024px) {
+  .catalog-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .catalog-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.product-card-new:hover .hover-action {
+  opacity: 1 !important;
+}
+
+.product-card-new:hover .product-img {
+  transform: scale(1.05);
+}
+
 /* Glassmorphism */
 .glass-effect {
   background: var(--glass);
