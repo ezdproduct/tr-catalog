@@ -93,14 +93,7 @@ export default function CategoryCatalog() {
                   border: isSelected ? '2px solid var(--primary)' : '1px solid #eee'
                 }}
               >
-                {idx === 0 ? (
-                  <div style={{
-                    width: '100%',
-                    height: '100%',
-                    background: isSelected ? '#ffffff' : '#f8fafc',
-                    transition: 'all 0.5s ease'
-                  }} />
-                ) : (
+                {(idx !== 0 && (cat.bannerImage || cat.image_url)) ? (
                   <img
                     src={cat.bannerImage || cat.image_url}
                     alt={cat.name}
@@ -112,6 +105,13 @@ export default function CategoryCatalog() {
                       transition: 'all 0.5s ease'
                     }}
                   />
+                ) : (
+                  <div style={{
+                    width: '100%',
+                    height: '100%',
+                    background: isSelected ? '#ffffff' : '#f8fafc',
+                    transition: 'all 0.5s ease'
+                  }} />
                 )}
                 <div style={{
                   position: 'absolute',
