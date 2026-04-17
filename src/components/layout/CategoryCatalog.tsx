@@ -258,7 +258,7 @@ export default function CategoryCatalog() {
         .catalog-grid {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
-          gap: 2rem;
+          gap: 0.75rem;
         }
 
         .product-card-new:hover {
@@ -275,7 +275,7 @@ export default function CategoryCatalog() {
 
         @media (max-width: 768px) {
           .category-section { padding: 40px 0 60px; }
-          .catalog-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+          .catalog-grid { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
           .category-item-new { width: 220px !important; }
         }
 
