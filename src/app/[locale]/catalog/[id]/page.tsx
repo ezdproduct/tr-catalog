@@ -8,6 +8,7 @@ import { LayoutGrid, ChevronRight, Box, X, Maximize2, ChevronLeft } from 'lucide
 import { supabase } from '@/lib/supabase';
 import Navbar from '@/components/layout/Navbar';
 import OtherProductsCarousel from '@/components/layout/OtherProductsCarousel';
+import LoadingScreen from '@/components/common/LoadingScreen';
 
 export default function ProductDetailPage() {
   const t = useTranslations('product');
@@ -34,8 +35,8 @@ export default function ProductDetailPage() {
   }, [id]);
 
   if (loading) return (
-    <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#ffffff' }}>
-      <h2 style={{ fontWeight: 900, color: '#ef4444' }}>{t('loading')}</h2>
+    <div style={{ height: '100vh', background: '#ffffff' }}>
+      <LoadingScreen />
     </div>
   );
 

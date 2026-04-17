@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '@/lib/supabase';
 import { LayoutGrid } from 'lucide-react';
 import { Link } from '@/routing';
+import LoadingScreen from '@/components/common/LoadingScreen';
 
 export default function CategoryCatalog() {
   const t_common = useTranslations('common');
@@ -141,7 +142,7 @@ export default function CategoryCatalog() {
 
         {/* Dynamic Product Grid */}
         {loading ? (
-          <div style={{ textAlign: 'center', padding: '10rem', color: 'var(--text-muted)', fontFamily: "'Evolventa', sans-serif", letterSpacing: '0.2em' }}>{t_common('loading')}</div>
+          <div style={{ height: '400px' }}><LoadingScreen /></div>
         ) : (
           <div className="catalog-grid" style={{ marginTop: '2rem' }}>
             <AnimatePresence mode="popLayout">
