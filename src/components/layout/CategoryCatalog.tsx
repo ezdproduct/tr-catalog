@@ -151,9 +151,9 @@ export default function CategoryCatalog() {
         ) : (
           <div className="catalog-grid" style={{ marginTop: '2rem' }}>
             <AnimatePresence mode="popLayout">
-              {products.map((product) => {
+              {products.flatMap(p => (p.image_urls || []).map((url: string, idx: number) => ({ ...p, displayImage: url, displayId: `${p.id}-${idx}` }))).map((item) => {
                 return (
-                  <Link key={product.id} href={`/catalog/${product.id}`} style={{ textDecoration: 'none', display: 'block' }}>
+                  <Link key={item.displayId} href={`/catalog/${item.id}`} style={{ textDecoration: 'none', display: 'block' }}>
                     <motion.div
                       layout
                       initial={{ opacity: 0, scale: 0.95 }}
@@ -180,10 +180,10 @@ export default function CategoryCatalog() {
                         alignItems: 'center',
                         justifyContent: 'center'
                       }}>
-                        {product.image_urls?.[0] ? (
+                        {item.displayImage ? (
                           <img
-                            src={product.image_urls[0]}
-                            alt={product.name}
+                            src={item.displayImage}
+                            alt={item.name}
                             style={{
                               width: '100%',
                               height: '100%',
@@ -230,7 +230,7 @@ export default function CategoryCatalog() {
                           fontFamily: "'Montserrat', sans-serif",
                           textAlign: 'center'
                         }}>
-                          {product.name}
+                          {item.name}
                         </h3>
                       </div>
                     </motion.div>
