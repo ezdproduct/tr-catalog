@@ -3,9 +3,19 @@ import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/routing';
 import '../../styles/globals.css';
-import { Inter } from 'next/font/google';
+import { Be_Vietnam_Pro, Montserrat } from 'next/font/google';
 
-const inter = Inter({ subsets: ['latin'] });
+const beVietnamPro = Be_Vietnam_Pro({
+  subsets: ['vietnamese', 'latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-be-vietnam'
+});
+
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  weight: ['700'],
+  variable: '--font-montserrat'
+});
 
 import SplashScreen from '@/components/common/SplashScreen';
 
@@ -29,7 +39,7 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale}>
-      <body className={inter.className}>
+      <body className={`${beVietnamPro.variable} ${montserrat.variable} font-sans antialiased`}>
         <NextIntlClientProvider messages={messages}>
           <SplashScreen />
           {children}
