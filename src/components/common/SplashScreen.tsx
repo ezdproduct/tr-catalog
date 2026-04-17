@@ -4,6 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 
 export default function SplashScreen() {
     const [isLoading, setIsLoading] = useState(true);
@@ -45,11 +46,14 @@ export default function SplashScreen() {
                     {/* Main Content Area */}
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3rem', position: 'relative', zIndex: 10 }}>
                         {/* Table Image */}
-                        <div style={{ position: 'relative' }}>
-                            <img
+                        <div style={{ position: 'relative', width: '24rem', maxWidth: '80vw', aspectRatio: '1.2/1' }}>
+                            <Image
                                 src="/loading.webp"
                                 alt="Loading Table"
-                                style={{ width: '24rem', maxWidth: '80vw', height: 'auto' }}
+                                fill
+                                sizes="400px"
+                                style={{ objectFit: 'contain' }}
+                                priority
                             />
                         </div>
 
@@ -57,9 +61,11 @@ export default function SplashScreen() {
                             {/* Filling Logo Container */}
                             <div style={{ position: 'relative', width: '18rem', maxWidth: '70vw' }}>
                                 {/* Base Grey Logo */}
-                                <img
+                                <Image
                                     src="/logo-moi.png"
                                     alt=""
+                                    width={288}
+                                    height={100}
                                     style={{ width: '100%', height: 'auto', filter: 'grayscale(100%)', opacity: 0.2 }}
                                 />
 
@@ -76,9 +82,11 @@ export default function SplashScreen() {
                                         overflow: 'hidden'
                                     }}
                                 >
-                                    <img
+                                    <Image
                                         src="/logo-moi.png"
                                         alt="Transformer Robotics Logo"
+                                        width={288}
+                                        height={100}
                                         style={{
                                             width: '18rem',
                                             maxWidth: '70vw',
@@ -86,6 +94,7 @@ export default function SplashScreen() {
                                             filter: "brightness(0) saturate(100%) invert(35%) sepia(82%) saturate(1455%) hue-rotate(331deg) brightness(85%) contrast(89%)",
                                             display: 'block'
                                         }}
+                                        priority
                                     />
                                 </motion.div>
                             </div>

@@ -7,6 +7,7 @@ import { supabase } from '@/lib/supabase';
 import { LayoutGrid } from 'lucide-react';
 import { Link } from '@/routing';
 import LoadingScreen from '@/components/common/LoadingScreen';
+import Image from 'next/image';
 
 export default function CategoryCatalog() {
   const t_common = useTranslations('common');
@@ -94,16 +95,17 @@ export default function CategoryCatalog() {
                 }}
               >
                 {(idx !== 0 && (cat.bannerImage || cat.image_url)) ? (
-                  <img
+                  <Image
                     src={cat.bannerImage || cat.image_url}
                     alt={cat.name}
+                    fill
+                    sizes="320px"
                     style={{
-                      width: '100%',
-                      height: '100%',
                       objectFit: 'cover',
                       filter: isSelected ? 'brightness(1.1) contrast(1.1)' : 'brightness(0.7) grayscale(0.5)',
                       transition: 'all 0.5s ease'
                     }}
+                    priority={idx < 5}
                   />
                 ) : (
                   <div style={{
@@ -183,16 +185,17 @@ export default function CategoryCatalog() {
                         justifyContent: 'center'
                       }}>
                         {item.displayImage ? (
-                          <img
+                          <Image
                             src={item.displayImage}
                             alt={item.name}
+                            fill
+                            sizes="(max-width: 768px) 50vw, 25vw"
                             style={{
-                              width: '100%',
-                              height: '100%',
                               objectFit: 'cover',
                               transition: 'transform 0.6s ease'
                             }}
                             className="product-img"
+                            loading="lazy"
                           />
                         ) : (
                           <div style={{ color: '#cbd5e1' }}><LayoutGrid size={48} /></div>
