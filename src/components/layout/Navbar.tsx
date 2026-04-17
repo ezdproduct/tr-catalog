@@ -123,7 +123,7 @@ export default function Navbar({ forceSolid = false }: { forceSolid?: boolean })
                       {categories.map(cat => (
                         <Link
                           key={cat.id}
-                          href="/#catalog"
+                          href={`/#${cat.slug}`}
                           onClick={() => setIsShopOpen(false)}
                           style={{
                             display: 'flex', alignItems: 'center', gap: '12px', padding: '10px 12px',

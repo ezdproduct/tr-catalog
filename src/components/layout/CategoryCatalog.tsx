@@ -267,6 +267,20 @@ export default function CategoryCatalog() {
     fetchData();
   }, [locale]);
 
+  const getCategorySlug = (category: string) => {
+    const slugMap: Record<string, string> = {
+      'Round Dining Set': 'round-dining-set',
+      'Dining Set': 'dining-set',
+      'Outdoor Dining Set': 'outdoor-dining',
+      'Table to Desk': 'table-to-desk',
+      'Transformer Table To Desk': 'table-to-desk',
+      'Transformer Round Sideboard': 'round-sideboard',
+      'Other': 'dining',
+      'Khác': 'dining'
+    };
+    return slugMap[category] || category.toLowerCase().replace(/\s+/g, '-');
+  };
+
   if (loading) return <div style={{ height: '600px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><LoadingScreen /></div>;
 
   return (
@@ -274,12 +288,17 @@ export default function CategoryCatalog() {
       <div style={{ maxWidth: '100%', margin: '0 auto' }}>
 
         {groupedData.map((group, idx) => (
-          <div key={group.category} style={{
-            background: idx % 2 === 1 ? '#fafafa' : 'transparent',
-            padding: idx === 0 ? '0 0 5rem 0' : '5rem 0',
-            borderTop: idx % 2 === 1 ? '1px solid #f0f0f0' : 'none',
-            borderBottom: idx % 2 === 1 ? '1px solid #f0f0f0' : 'none',
-          }}>
+          <div
+            key={group.category}
+            id={getCategorySlug(group.category)}
+            style={{
+              background: idx % 2 === 1 ? '#fafafa' : 'transparent',
+              padding: idx === 0 ? '0 0 5rem 0' : '5rem 0',
+              borderTop: idx % 2 === 1 ? '1px solid #f0f0f0' : 'none',
+              borderBottom: idx % 2 === 1 ? '1px solid #f0f0f0' : 'none',
+              scrollMarginTop: '100px'
+            }}
+          >
             {/* Main Category Header with Parallax-like decoration */}
             <div style={{ padding: '0 2rem', marginBottom: '3rem', position: 'relative', textAlign: 'center' }}>
               <motion.div
