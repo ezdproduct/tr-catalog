@@ -204,30 +204,34 @@ export default function CategoryCatalog() {
                           bottom: 0,
                           left: 0,
                           right: 0,
-                          height: '40%',
-                          background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 60%, transparent 100%)',
+                          height: '50%',
+                          background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 70%, transparent 100%)',
                           color: '#fff',
+                          padding: '0 1rem 1.2rem',
                           display: 'flex',
                           flexDirection: 'column',
-                          alignItems: 'center',
+                          alignItems: 'flex-start',
                           justifyContent: 'flex-end',
-                          padding: '0.8rem 0.5rem',
-                          textAlign: 'center',
+                          textAlign: 'left',
                           opacity: 0,
                           transition: 'all 0.4s ease',
-                          backdropFilter: 'blur(2px)'
+                          backdropFilter: 'blur(3px)'
                         }}>
                           <h3 style={{
-                            fontSize: '0.8rem',
+                            fontSize: '0.9rem',
                             fontWeight: 700,
                             color: '#fff',
                             margin: '0',
                             textTransform: 'uppercase',
                             letterSpacing: '0.05em',
-                            fontFamily: "'Montserrat', sans-serif"
+                            fontFamily: "'Montserrat', sans-serif",
+                            lineHeight: 1.2
                           }}>
                             {item.displayImage
-                              ? decodeURIComponent(item.displayImage.split('/').pop()?.split('.')[0]?.replace(/[-_]/g, ' ') || item.name)
+                              ? decodeURIComponent(item.displayImage.split('/').slice(-2, -1)[0] || '')
+                                .replace(/Dining Set - /g, '')
+                                .replace(/Outdoor Dining Set - /g, '')
+                                .replace(/[-_]/g, ' ')
                               : item.name}
                           </h3>
                         </div>
