@@ -288,12 +288,6 @@ export default function CategoryCatalog() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.8 }}
               >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', marginBottom: '1rem' }}>
-                  <div style={{ height: '1px', width: '60px', background: '#ddd' }} />
-                  <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--primary)', letterSpacing: '0.4em', textTransform: 'uppercase' }}>
-                    COLLECTION 0{idx + 1}
-                  </span>
-                </div>
                 <h2 style={{
                   fontSize: 'clamp(2.5rem, 5vw, 4.5rem)',
                   fontWeight: 900,
