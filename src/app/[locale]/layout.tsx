@@ -8,19 +8,6 @@ import { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Transformer Robotics™ | #1 Modular Dining Furniture',
   description: 'Shop the world\'s best modular dining furniture. Extendable dining tables, modular sectionals & more. Free Shipping.',
-  openGraph: {
-    title: 'Transformer Robotics™ | #1 Modular Dining Furniture',
-    description: 'Shop the world\'s best modular dining furniture. Extendable dining tables, modular sectionals & more. Free Shipping.',
-    url: 'https://catalog.transformertable.com',
-    siteName: 'Transformer Robotics',
-    locale: 'en_US',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Transformer Robotics™ | #1 Modular Dining Furniture',
-    description: 'Shop the world\'s best modular dining furniture. Extendable dining tables, modular sectionals & more. Free Shipping.',
-  },
 }
 import { Be_Vietnam_Pro, Montserrat } from 'next/font/google';
 

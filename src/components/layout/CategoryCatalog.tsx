@@ -20,13 +20,19 @@ export default function CategoryCatalog() {
   useEffect(() => {
     const init = async () => {
       const { data: cats } = await supabase.from('categories').select('*').order('name');
-      if (cats && cats.length > 0) {
-        setCategories(cats);
-        setSelectedCat(cats[0].id);
+      const allProductsCat = {
+        id: 'all',
+        name: locale === 'vi' ? 'TẤT CẢ SẢN PHẨM' : 'ALL PRODUCTS',
+        bannerImage: 'https://pub-83ec56d99c0444bda304e97abb4edd21.r2.dev/Brand%20TR/hero-banner.jpg'
+      };
+
+      if (cats) {
+        setCategories([allProductsCat, ...cats]);
+        setSelectedCat('all');
       }
     };
     init();
-  }, []);
+  }, [locale]);
 
   useEffect(() => {
     if (!selectedCat) return;
@@ -35,8 +41,7 @@ export default function CategoryCatalog() {
 
       let query = supabase.from('products').select('*');
 
-      // If the selected category is the first one, show all products
-      if (selectedCat !== categories[0]?.id) {
+      if (selectedCat && selectedCat !== 'all') {
         query = query.eq('category_id', selectedCat);
       }
 
