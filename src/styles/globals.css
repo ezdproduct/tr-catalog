@@ -113,7 +113,7 @@ button {
 
 .navbar.scrolled {
   background: var(--glass);
-  box-shadow: var(--shadow);
+  border-bottom: 1px solid var(--border);
 }
 
 /* Hero Section */
@@ -220,4 +220,38 @@ button {
 
 .product-card-new:hover .product-img {
   transform: scale(1.05);
+}
+
+/* Catalog Section Styling */
+.catalog-section {
+  width: 100%;
+  position: relative;
+}
+
+.product-card-hover:hover {
+  border-color: var(--primary) !important;
+}
+
+/* Custom Scrollbar for the catalog */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+@media (max-width: 768px) {
+  .detail .container div {
+    grid-template-columns: 1fr !important;
+  }
 }

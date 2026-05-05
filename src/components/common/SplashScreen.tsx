@@ -15,7 +15,7 @@ export default function SplashScreen() {
 
         const timer = setTimeout(() => {
             setIsLoading(false);
-        }, 1800);
+        }, 1000);
 
         return () => clearTimeout(timer);
     }, [pathname]);

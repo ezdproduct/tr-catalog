@@ -5,7 +5,7 @@ import { Link, usePathname, useRouter } from '@/routing';
 import { useState, useEffect, useRef } from 'react';
 import { Menu, ChevronDown, LayoutGrid } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { supabase } from '@/lib/supabase';
+import { catalogData } from '@/data/catalogData';
 
 export default function Navbar({ forceSolid = false }: { forceSolid?: boolean }) {
   const t = useTranslations('common');
@@ -13,17 +13,10 @@ export default function Navbar({ forceSolid = false }: { forceSolid?: boolean })
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(forceSolid);
   const [isShopOpen, setIsShopOpen] = useState(false);
-  const [categories, setCategories] = useState<any[]>([]);
   const shopRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setIsScrolled(forceSolid || window.scrollY > 50);
-
-    const fetchCats = async () => {
-      const { data } = await supabase.from('categories').select('*').order('name');
-      setCategories(data || []);
-    };
-    fetchCats();
 
     const handleScroll = () => {
       setIsScrolled(forceSolid || window.scrollY > 50);
@@ -42,7 +35,24 @@ export default function Navbar({ forceSolid = false }: { forceSolid?: boolean })
       window.removeEventListener('scroll', handleScroll);
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, []);
+  }, [forceSolid]);
+
+  const scrollTo = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      const offset = 120;
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elementRect = el.getBoundingClientRect().top;
+      const elementPosition = elementRect - bodyRect;
+      const offsetPosition = elementPosition - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+      setIsShopOpen(false);
+    }
+  };
 
   return (
     <header style={{
@@ -58,10 +68,8 @@ export default function Navbar({ forceSolid = false }: { forceSolid?: boolean })
         <nav style={{
           background: isScrolled ? 'rgba(255, 255, 255, 0.85)' : 'transparent',
           backdropFilter: isScrolled ? 'blur(20px)' : 'none',
-          WebkitBackdropFilter: isScrolled ? 'blur(20px)' : 'none',
           borderRadius: isScrolled ? '1rem' : '0',
-          boxShadow: isScrolled ? '0 4px 30px rgba(0,0,0,0.05)' : 'none',
-          border: isScrolled ? '1px solid rgba(255, 255, 255, 0.3)' : 'none',
+          border: isScrolled ? '1px solid rgba(0, 0, 0, 0.05)' : 'none',
           padding: isScrolled ? '0.8rem 2rem' : '2rem 4rem',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           transition: 'all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1)',
@@ -81,24 +89,37 @@ export default function Navbar({ forceSolid = false }: { forceSolid?: boolean })
             />
           </Link>
 
-          {/* Right side: Shop Dropdown & Language */}
-          <div style={{ display: 'flex', gap: '3rem', alignItems: 'center' }}>
-
-            {/* Shop Dropdown Trigger */}
+          {/* Right side: Catalog Dropdown */}
+          <div className="nav-right" style={{ display: 'flex', gap: '3rem', alignItems: 'center' }}>
             <div
               style={{ position: 'relative' }}
               ref={shopRef}
-              onMouseEnter={() => setIsShopOpen(true)}
-              onMouseLeave={() => setIsShopOpen(false)}
+              onMouseLeave={() => {
+                if (window.matchMedia('(min-width: 1024px)').matches) {
+                  setIsShopOpen(false);
+                }
+              }}
             >
-              <button style={{
-                background: 'none', border: 'none', cursor: 'pointer',
-                display: 'flex', alignItems: 'center', gap: '8px',
-                color: isScrolled ? '#333' : '#fff',
-                fontSize: '0.85rem', fontWeight: 700,
-                textTransform: 'uppercase', letterSpacing: '0.1em'
-              }}>
-                CATALOG
+              <button 
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setIsShopOpen(!isShopOpen);
+                }}
+                onMouseEnter={() => {
+                  if (window.matchMedia('(min-width: 1024px)').matches) {
+                    setIsShopOpen(true);
+                  }
+                }}
+                style={{
+                  background: 'none', border: 'none', cursor: 'pointer',
+                  display: 'flex', alignItems: 'center', gap: '8px',
+                  color: isScrolled ? '#333' : '#fff',
+                  fontSize: '0.85rem', fontWeight: 700,
+                  textTransform: 'uppercase', letterSpacing: '0.1em'
+                }}
+              >
+                PRODUCTS
                 <motion.div animate={{ rotate: isShopOpen ? 180 : 0 }}>
                   <ChevronDown size={14} />
                 </motion.div>
@@ -111,30 +132,29 @@ export default function Navbar({ forceSolid = false }: { forceSolid?: boolean })
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 15 }}
                     style={{
-                      position: 'absolute', top: '100%', left: '50%', x: '-50%',
+                      position: 'absolute', top: '100%', right: 0,
                       paddingTop: '20px', zIndex: 1200
                     }}
                   >
                     <div style={{
-                      background: 'white', border: '1px solid #f1f5f9',
-                      borderRadius: '1.2rem', boxShadow: '0 20px 50px rgba(0,0,0,0.15)',
-                      padding: '1.5rem', width: '320px', display: 'grid', gridTemplateColumns: '1fr', gap: '5px'
+                      background: 'white', border: '1px solid #e2e8f0',
+                      borderRadius: '1.2rem',
+                      padding: '1rem', width: '250px', display: 'grid', gridTemplateColumns: '1fr', gap: '5px'
                     }}>
-                      {categories.map(cat => (
-                        <Link
-                          key={cat.id}
-                          href={`/#${cat.slug}`}
-                          onClick={() => setIsShopOpen(false)}
+                      {catalogData.map(line => (
+                        <button
+                          key={line.id}
+                          onClick={() => scrollTo(line.id)}
                           style={{
                             display: 'flex', alignItems: 'center', gap: '12px', padding: '10px 12px',
-                            borderRadius: '10px', textDecoration: 'none', color: '#64748b',
-                            fontSize: '0.9rem', transition: 'all 0.2s'
+                            borderRadius: '10px', background: 'none', border: 'none', cursor: 'pointer',
+                            textAlign: 'left', width: '100%',
+                            color: '#64748b', fontSize: '0.85rem', fontWeight: 600, transition: 'all 0.2s'
                           }}
                           className="hover-item"
                         >
-                          <img src={cat.image_url || cat.bannerImage} style={{ width: '40px', height: '30px', objectFit: 'cover', borderRadius: '4px' }} alt="" />
-                          <span>{cat.name}</span>
-                        </Link>
+                          <span>{line.menuLabel}</span>
+                        </button>
                       ))}
                     </div>
                   </motion.div>
@@ -146,10 +166,10 @@ export default function Navbar({ forceSolid = false }: { forceSolid?: boolean })
       </div>
 
       <style jsx>{`
-        .hover-bg-gray:hover { background: #f1f5f9 !important; }
-        .hover-item:hover { background: #f8fafc !important; color: #1a1a1a !important; }
+        .hover-item:hover { background: #f8fafc !important; color: var(--primary) !important; }
         @media (max-width: 768px) {
-          nav { padding: ${isScrolled ? '0.6rem 1rem' : '1rem 2rem'} !important; }
+          nav { padding: 0.8rem 1rem !important; }
+          .nav-right { gap: 1rem !important; }
         }
       `}</style>
     </header>

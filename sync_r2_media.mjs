@@ -3,7 +3,7 @@ import { S3Client, ListObjectsV2Command } from '@aws-sdk/client-s3';
 import { createClient } from '@supabase/supabase-js';
 import dotenv from 'dotenv';
 
-dotenv.config({ path: '.env.local' });
+dotenv.config();
 
 const s3Client = new S3Client({
     region: 'auto',
