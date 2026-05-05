@@ -29,7 +29,7 @@ export default function OverviewSection({ variant, lineName }: OverviewSectionPr
           color: '#000', 
           fontWeight: 800, 
           letterSpacing: '0.1em', 
-          fontSize: '1.2rem', 
+          fontSize: 'clamp(1rem, 2vw, 1.5rem)', 
           textTransform: 'uppercase', 
           display: 'block' 
         }}>
@@ -173,16 +173,28 @@ export default function OverviewSection({ variant, lineName }: OverviewSectionPr
       </div>
 
       <style jsx>{`
+        .info-panel :global(strong) {
+          color: var(--primary);
+        }
         @media (max-width: 768px) {
+          .overview-header {
+            padding: 2.5rem 1rem 1rem !important;
+          }
+          .overview-header h2 {
+            font-size: 1.08rem !important;
+            line-height: 1.2 !important;
+            max-width: 280px;
+            margin: 0 auto 0.5rem !important;
+          }
+          .overview-header span {
+            font-size: 1rem !important;
+          }
           .main-content {
             flex-direction: column !important;
           }
           .main-content > div {
             flex: 1 1 100% !important;
             width: 100% !important;
-          }
-          .overview-header {
-            padding: 3rem 1rem 1rem !important;
           }
           .info-panel {
             padding: 2rem 1rem !important;

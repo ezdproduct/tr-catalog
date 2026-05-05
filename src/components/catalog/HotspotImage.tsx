@@ -53,18 +53,65 @@ export default function HotspotImage({ src, hotspots, activeHotspotId, onHotspot
                 background: 'transparent',
                 border: 'none',
                 cursor: 'pointer',
-                padding: 0
+                padding: 0,
+                position: 'relative'
               }}
             >
+              {/* Pulsing Waves for Inactive Hotspots */}
+              {!isActive && (
+                <>
+                  <motion.div
+                    animate={{
+                      scale: [1, 2.5],
+                      opacity: [0.5, 0],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeOut",
+                    }}
+                    style={{
+                      position: 'absolute',
+                      width: '20px',
+                      height: '20px',
+                      borderRadius: '50%',
+                      background: 'var(--primary)',
+                      pointerEvents: 'none'
+                    }}
+                  />
+                  <motion.div
+                    animate={{
+                      scale: [1, 2],
+                      opacity: [0.3, 0],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeOut",
+                      delay: 0.5
+                    }}
+                    style={{
+                      position: 'absolute',
+                      width: '20px',
+                      height: '20px',
+                      borderRadius: '50%',
+                      background: 'var(--primary)',
+                      pointerEvents: 'none'
+                    }}
+                  />
+                </>
+              )}
+
               <motion.div
                 whileTap={{ scale: 0.8 }}
                 style={{
-                  width: '24px',
-                  height: '24px',
+                  width: isActive ? '18px' : '14px',
+                  height: isActive ? '18px' : '14px',
                   borderRadius: '50%',
-                  background: isActive ? 'var(--primary)' : 'rgba(0, 0, 0, 0.89)',
-                  boxShadow: isHovered || isActive ? '0 0 15px rgba(0,0,0,0.3)' : 'none',
-                  transition: 'all 0.3s ease'
+                  background: 'var(--primary)',
+                  boxShadow: isHovered || isActive ? '0 0 15px rgba(185, 28, 28, 0.4)' : 'none',
+                  transition: 'all 0.3s ease',
+                  zIndex: 2
                 }}
               />
             </button>

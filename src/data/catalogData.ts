@@ -58,7 +58,7 @@ export const catalogData: ProductLine[] = [
             quickInfo: { name: "R057- BENCH", sku: "R057BEN-C072", dimension: "2620 x 362 x 465 (mm)", thumbnail: `${R2_URL}/6/Untitled-13.png` }
           },
           {
-            x: 50, y: 55, label: "Table", targetItemId: "1-table",
+            x: 50, y: 50, label: "Table", targetItemId: "1-table",
             quickInfo: { name: "R057- TABLE", sku: "R057TAB-C072", dimension: "2676 x 146 x 755 (mm)", thumbnail: `${R2_URL}/6/Untitled-14.png` }
           },
           {
@@ -110,7 +110,7 @@ export const catalogData: ProductLine[] = [
             quickInfo: { name: "R057- BENCH", sku: "R057BEN-C073", dimension: "2620 x 362 x 465 (mm)", thumbnail: `${R2_URL}/5/Untitled-7.png` }
           },
           {
-            x: 50, y: 55, label: "Table", targetItemId: "2-table",
+            x: 50, y: 50, label: "Table", targetItemId: "2-table",
             quickInfo: { name: "R057- TABLE", sku: "R057TAB-C073", dimension: "2676 x 146 x 755 (mm)", thumbnail: `${R2_URL}/5/Untitled-8.png` }
           },
           {

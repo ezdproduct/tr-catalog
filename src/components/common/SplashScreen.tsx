@@ -59,7 +59,7 @@ export default function SplashScreen() {
 
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
                             {/* Filling Logo Container */}
-                            <div style={{ position: 'relative', width: '18rem', maxWidth: '70vw' }}>
+                            <div style={{ position: 'relative', width: '20rem', maxWidth: '70vw' }}>
                                 {/* Base Grey Logo */}
                                 <Image
                                     src="/logo-moi.png"
@@ -88,7 +88,7 @@ export default function SplashScreen() {
                                         width={288}
                                         height={100}
                                         style={{
-                                            width: '18rem',
+                                            width: '20rem',
                                             maxWidth: '70vw',
                                             height: 'auto',
                                             filter: "brightness(0) saturate(100%) invert(35%) sepia(82%) saturate(1455%) hue-rotate(331deg) brightness(85%) contrast(89%)",

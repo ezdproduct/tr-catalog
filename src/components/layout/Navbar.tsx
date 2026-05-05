@@ -70,7 +70,7 @@ export default function Navbar({ forceSolid = false }: { forceSolid?: boolean })
           backdropFilter: isScrolled ? 'blur(20px)' : 'none',
           borderRadius: isScrolled ? '1rem' : '0',
           border: isScrolled ? '1px solid rgba(0, 0, 0, 0.05)' : 'none',
-          padding: isScrolled ? '0.8rem 2rem' : '2rem 4rem',
+          padding: isScrolled ? '0.2rem 2rem' : '2rem 4rem',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           transition: 'all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1)',
           marginTop: isScrolled ? '10px' : '0'
@@ -81,7 +81,7 @@ export default function Navbar({ forceSolid = false }: { forceSolid?: boolean })
               src="/logo-do.svg"
               alt="Transformer Robotics"
               style={{
-                height: isScrolled ? '38px' : '46px',
+                height: isScrolled ? '54px' : '68px',
                 width: 'auto',
                 filter: isScrolled ? 'none' : 'brightness(0) invert(1)',
                 transition: 'all 0.5s ease'
@@ -138,21 +138,32 @@ export default function Navbar({ forceSolid = false }: { forceSolid?: boolean })
                   >
                     <div style={{
                       background: 'white', border: '1px solid #e2e8f0',
-                      borderRadius: '1.2rem',
-                      padding: '1rem', width: '250px', display: 'grid', gridTemplateColumns: '1fr', gap: '5px'
+                      borderRadius: '1.2rem', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.1)',
+                      padding: '0.6rem', width: '260px', display: 'grid', gridTemplateColumns: '1fr', gap: '2px'
                     }}>
                       {catalogData.map(line => (
                         <button
                           key={line.id}
                           onClick={() => scrollTo(line.id)}
                           style={{
-                            display: 'flex', alignItems: 'center', gap: '12px', padding: '10px 12px',
+                            display: 'flex', alignItems: 'center', gap: '12px', padding: '5px 8px',
                             borderRadius: '10px', background: 'none', border: 'none', cursor: 'pointer',
                             textAlign: 'left', width: '100%',
-                            color: '#64748b', fontSize: '0.85rem', fontWeight: 600, transition: 'all 0.2s'
+                            color: '#334155', fontSize: '0.9rem', fontWeight: 700, transition: 'all 0.2s',
+                            letterSpacing: '0.02em'
                           }}
                           className="hover-item"
                         >
+                          <div style={{ 
+                            width: '64px', height: '48px', borderRadius: '8px', overflow: 'hidden', 
+                            flexShrink: 0
+                          }}>
+                            <img 
+                              src={line.variants[0].overviewImage} 
+                              alt={line.menuLabel} 
+                              style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                            />
+                          </div>
                           <span>{line.menuLabel}</span>
                         </button>
                       ))}

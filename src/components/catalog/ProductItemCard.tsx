@@ -13,18 +13,18 @@ export default function ProductItemCard({ item }: ProductItemCardProps) {
 
   return (
     <div style={{ background: '#fff', borderRadius: '12px', overflow: 'hidden', border: '1px solid #eee'}} className="product-card-hover">
-      <div style={{ position: 'relative', width: '100%', aspectRatio: '1/1', background: '#fff', padding: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+      <div style={{ position: 'relative', width: '100%', aspectRatio: '4/3', background: '#fff', padding: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
         <motion.img
           key={isExtended ? 'extended' : 'collapsed'}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           src={isExtended ? item.images.extended : item.images.collapsed}
           alt={item.name}
-          style={{ width: '100%', height: '100%', objectFit: 'contain', transform: 'scale(1.2)' }}
+          style={{ width: '100%', height: '100%', objectFit: 'contain', transform: 'scale(1.43)' }}
         />
         
         {item.images.collapsed !== item.images.extended && (
-          <div style={{ position: 'absolute', bottom: '1rem', left: '1rem', display: 'flex', gap: '0.5rem' }}>
+          <div style={{ position: 'absolute', bottom: '0.5rem', left: '0.5rem', display: 'flex', gap: '0.5rem' }}>
             <button
               onClick={() => setIsExtended(false)}
               style={{
