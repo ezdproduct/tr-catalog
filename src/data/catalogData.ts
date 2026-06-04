@@ -93,8 +93,8 @@ export const catalogData: ProductLine[] = [
             sku: "R057BUF-C072", 
             dimension: "1500 x 480 x 780 (mm)", 
             images: { 
-              collapsed: `${R2_URL}/6/Untitled-15.png`, 
-              extended: `${R2_URL}/6/Untitled-16.png` 
+              collapsed: `${R2_URL}/6/Untitled-16.png`, 
+              extended: `${R2_URL}/6/Untitled-15.png` 
             } 
           },
         ]
@@ -145,8 +145,8 @@ export const catalogData: ProductLine[] = [
             sku: "R057BUF-C073", 
             dimension: "1500 x 480 x 780 (mm)", 
             images: { 
-              collapsed: `${R2_URL}/5/Untitled-9.png`, 
-              extended: `${R2_URL}/5/Untitled-10.png` 
+              collapsed: `${R2_URL}/5/Untitled-10.png`, 
+              extended: `${R2_URL}/5/Untitled-9.png` 
             } 
           },
         ]
