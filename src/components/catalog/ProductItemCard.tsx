@@ -35,7 +35,7 @@ export default function ProductItemCard({ item }: ProductItemCardProps) {
                 textTransform: 'uppercase'
               }}
             >
-              Collapsed
+              {item.name.toLowerCase().includes('buffet') ? 'Close' : 'Collapsed'}
             </button>
             <button
               onClick={() => setIsExtended(true)}
@@ -47,7 +47,7 @@ export default function ProductItemCard({ item }: ProductItemCardProps) {
                 textTransform: 'uppercase'
               }}
             >
-              Extended
+              {item.name.toLowerCase().includes('buffet') ? 'Open' : 'Extended'}
             </button>
           </div>
         )}

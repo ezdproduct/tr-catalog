@@ -25,16 +25,6 @@ export default function OverviewSection({ variant, lineName }: OverviewSectionPr
         }}>
           {lineName}
         </h2>
-        <span style={{ 
-          color: '#000', 
-          fontWeight: 800, 
-          letterSpacing: '0.1em', 
-          fontSize: 'clamp(1rem, 2vw, 1.5rem)', 
-          textTransform: 'uppercase', 
-          display: 'block' 
-        }}>
-          {variant.colorName}
-        </span>
       </div>
       
       {/* Main Content: 2 Columns */}
@@ -158,14 +148,7 @@ export default function OverviewSection({ variant, lineName }: OverviewSectionPr
                   }}
                   dangerouslySetInnerHTML={{ __html: variant.description || "" }}
                 />
-                
-                <div className="overview-thumbnails" style={{ marginTop: '2.5rem', display: 'flex', gap: '0.5rem' }}>
-                   {variant.items.slice(0, 4).map((item, i) => (
-                     <div key={i} className="thumb-box" style={{ width: '100px', height: '100px', overflow: 'hidden', }}>
-                       <img src={item.images.collapsed} alt="" style={{ width: '100%', height: '100%', objectFit: 'contain', transform: 'scale(1.1)', transition: 'transform 0.3s ease' }} />
-                     </div>
-                   ))}
-                </div>
+                {/* bảng màu */}
               </motion.div>
             )}
           </AnimatePresence>
