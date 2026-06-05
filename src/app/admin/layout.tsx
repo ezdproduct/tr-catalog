@@ -9,7 +9,7 @@ export default function AdminLayout({
     children: React.ReactNode;
 }) {
     return (
-        <html lang="en">
+        <html lang="en" suppressHydrationWarning>
             <body className={inter.className}>
                 {children}
             </body>

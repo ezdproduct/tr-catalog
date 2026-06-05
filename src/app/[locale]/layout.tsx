@@ -44,7 +44,7 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning>
       <body className={`${beVietnamPro.variable} ${montserrat.variable} font-sans antialiased`}>
         <NextIntlClientProvider messages={messages}>
           <SplashScreen />
